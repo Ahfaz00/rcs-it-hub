@@ -62,7 +62,7 @@ export function HeroSlider({
             decoding={i === 0 ? "sync" : "async"}
             className={cn("h-full w-full object-cover", i === index && motion.kenburns && "animate-kenburns")}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/25 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background/95 via-background/30 to-transparent" />
         </div>
       ))}
 
@@ -71,7 +71,7 @@ export function HeroSlider({
         <p
           key={index}
           className={cn(
-            "font-display text-sm font-semibold text-primary-foreground drop-shadow md:text-base",
+            "font-display text-sm font-semibold text-foreground drop-shadow md:text-base",
             motion.enabled && "animate-fade-in",
           )}
         >
@@ -90,7 +90,7 @@ export function HeroSlider({
             aria-current={i === index}
             className={cn(
               "h-1.5 rounded-full transition-all duration-500",
-              i === index ? "w-7 bg-accent" : "w-3 bg-primary-foreground/50 hover:bg-primary-foreground/80",
+              i === index ? "w-7 bg-accent" : "w-3 bg-foreground/40 hover:bg-foreground/70",
             )}
           />
         ))}

@@ -147,7 +147,7 @@ function HomeSections() {
                 {s["hero_title"] || "Quality Refurbished Technology. Built for Performance."}
               </h1>
               <p
-                className="animate-fade-in mt-4 max-w-xl text-sm leading-relaxed text-primary-foreground/80 md:text-base"
+                className="animate-fade-in mt-4 max-w-xl text-sm leading-relaxed text-muted-foreground md:text-base"
                 style={{ animationDelay: "220ms" }}
               >
                 {s["hero_subtitle"]}
@@ -175,7 +175,7 @@ function HomeSections() {
             <Reveal
               direction="scale"
               delay={200}
-              className="animate-float overflow-hidden rounded-xl border border-primary-foreground/15 shadow-lift"
+              className="animate-float overflow-hidden rounded-xl border border-border shadow-lift"
             >
               <HeroSlider
                 slides={heroSlides}
@@ -269,14 +269,14 @@ function HomeSections() {
       </section>
 
       {/* Why us */}
-      <section className="bg-primary py-16 text-primary-foreground">
+      <section className="bg-card py-16 text-card-foreground">
         <div className="container-page grid gap-10 lg:grid-cols-2">
           <Reveal direction="left">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">Why buy from us</p>
             <h2 className="mt-3 font-display text-3xl font-bold">
               Honest grading, real testing, practical pricing
             </h2>
-            <p className="mt-4 text-sm leading-relaxed text-primary-foreground/80">{s["footer_text"]}</p>
+            <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{s["footer_text"]}</p>
             <Button asChild className="sheen mt-6 bg-accent text-accent-foreground hover:bg-accent/90">
               <Link to="/about">About our process</Link>
             </Button>
@@ -292,11 +292,11 @@ function HomeSections() {
                 key={item.title}
                 direction="right"
                 delay={i * motion.stagger}
-                className="rounded-lg border border-primary-foreground/15 p-5 transition-colors hover:border-accent/50 hover:bg-primary-foreground/5"
+                className="rounded-lg border border-border p-5 transition-colors hover:border-accent/50 hover:bg-foreground/5"
               >
                 <item.Icon className="h-5 w-5 text-accent" />
                 <p className="mt-3 font-display text-sm font-semibold">{item.title}</p>
-                <p className="mt-1.5 text-xs text-primary-foreground/70">{item.text}</p>
+                <p className="mt-1.5 text-xs text-muted-foreground">{item.text}</p>
               </Reveal>
             ))}
           </div>
@@ -377,7 +377,7 @@ function HomeSections() {
 
       {/* Facility marquee */}
       {showFacility ? (
-        <section className="overflow-hidden border-y border-border bg-primary py-10 text-primary-foreground">
+        <section className="overflow-hidden border-y border-border bg-card py-10 text-card-foreground">
           <div className="container-page">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">
               {s["facility_eyebrow"] || "Inside our facility"}
@@ -391,7 +391,7 @@ function HomeSections() {
               {[...heroSlides, ...heroSlides].map((slide, i) => (
                 <figure
                   key={`${slide.src}-${i}`}
-                  className="relative h-40 w-64 shrink-0 overflow-hidden rounded-lg border border-primary-foreground/15 md:h-48 md:w-80"
+                  className="relative h-40 w-64 shrink-0 overflow-hidden rounded-lg border border-border md:h-48 md:w-80"
                 >
                   <img
                     src={slide.src}

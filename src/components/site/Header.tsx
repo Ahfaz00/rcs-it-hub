@@ -38,7 +38,7 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 w-full">
       {announcement ? (
-        <div className="bg-primary text-primary-foreground">
+        <div className="bg-card text-card-foreground">
           <div className="container-page flex flex-wrap items-center justify-between gap-2 py-1.5 text-xs">
             <p className="font-medium">{announcement}</p>
             <div className="hidden items-center gap-4 sm:flex">
