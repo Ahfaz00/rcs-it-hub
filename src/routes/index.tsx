@@ -7,9 +7,7 @@ import {
   Headphones,
   PackageCheck,
   Quote,
-  ShieldCheck,
   Star,
-  Truck,
 } from "lucide-react";
 
 import { SiteShell } from "@/components/site/SiteShell";
@@ -30,7 +28,6 @@ import {
 import { getHomeData } from "@/lib/public.functions";
 import { siteQueryOptions } from "@/lib/site-query";
 import { mediaUrl } from "@/lib/media";
-import heroFallback from "@/assets/hero-workshop.jpg";
 import slider1 from "@/assets/slider1.jpg.asset.json";
 import slider2 from "@/assets/slider2.jpg.asset.json";
 import slider3 from "@/assets/slider3.jpg.asset.json";
@@ -93,7 +90,6 @@ function HomeSections() {
   const { data: site } = useSuspenseQuery(siteQueryOptions);
   const motion = useMotion();
   const s = site.settings;
-  const heroImage = mediaUrl(s["hero_image"]) ?? heroFallback;
   const products = home.featured.length > 0 ? home.featured : home.latest;
 
   const showHero = readBool(s["section_hero_enabled"], true);
