@@ -103,9 +103,9 @@ export function AdminShell({ children }: { children: ReactNode }) {
         } w-full shrink-0 border-r border-border bg-card lg:block lg:w-64`}
       >
         <div className="sticky top-0 flex h-screen flex-col overflow-y-auto p-4">
-          <Link to="/admin" className="px-2 py-1">
+          <div className="px-2 py-1">
             <Logo compact />
-          </Link>
+          </div>
           <nav className="mt-6 flex-1 space-y-0.5">
             {nav.map((item) => (
               <Link
