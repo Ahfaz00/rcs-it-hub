@@ -74,7 +74,7 @@ function ProductNotFound() {
 function ProductDetail() {
   const { slug } = Route.useParams();
   const { data } = useSuspenseQuery(productQueryOptions(slug));
-  const { data: site } = useSQ(siteQueryOptions);
+  const { data: site } = useSuspenseQuery(siteQueryOptions);
   const [active, setActive] = useState(0);
 
   if (!data) return <ProductNotFound />;
