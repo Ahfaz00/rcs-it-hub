@@ -23,8 +23,11 @@ import { Route as ProductsSlugRouteImport } from './routes/products.$slug'
 import { Route as ServicesIndexRouteImport } from './routes/services.index'
 import { Route as ServicesSlugRouteImport } from './routes/services.$slug'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
+import { Route as AuthenticatedAdminLogsRouteImport } from './routes/_authenticated/admin.logs'
+import { Route as AuthenticatedAdminSettingsRouteImport } from './routes/_authenticated/admin.settings'
 import { Route as ApiMediaSplatRouteImport } from './routes/api/media.$'
 import { Route as AuthenticatedAdminResourceIndexRouteImport } from './routes/_authenticated/admin.$resource.index'
+import { Route as AuthenticatedAdminResourceIdRouteImport } from './routes/_authenticated/admin.$resource.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -95,6 +98,17 @@ const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
   path: '/admin/',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedAdminLogsRoute = AuthenticatedAdminLogsRouteImport.update({
+  id: '/admin/logs',
+  path: '/admin/logs',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedAdminSettingsRoute =
+  AuthenticatedAdminSettingsRouteImport.update({
+    id: '/admin/settings',
+    path: '/admin/settings',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const ApiMediaSplatRoute = ApiMediaSplatRouteImport.update({
   id: '/api/media/$',
   path: '/api/media/$',
@@ -104,6 +118,12 @@ const AuthenticatedAdminResourceIndexRoute =
   AuthenticatedAdminResourceIndexRouteImport.update({
     id: '/admin/$resource/',
     path: '/admin/$resource/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminResourceIdRoute =
+  AuthenticatedAdminResourceIdRouteImport.update({
+    id: '/admin/$resource/$id',
+    path: '/admin/$resource/$id',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 
@@ -120,8 +140,11 @@ export interface FileRoutesByFullPath {
   '/services/$slug': typeof ServicesSlugRoute
   '/products/': typeof ProductsIndexRoute
   '/services/': typeof ServicesIndexRoute
+  '/admin/logs': typeof AuthenticatedAdminLogsRoute
+  '/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/api/media/$': typeof ApiMediaSplatRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
+  '/admin/$resource/$id': typeof AuthenticatedAdminResourceIdRoute
   '/admin/$resource/': typeof AuthenticatedAdminResourceIndexRoute
 }
 export interface FileRoutesByTo {
@@ -137,8 +160,11 @@ export interface FileRoutesByTo {
   '/services/$slug': typeof ServicesSlugRoute
   '/products': typeof ProductsIndexRoute
   '/services': typeof ServicesIndexRoute
+  '/admin/logs': typeof AuthenticatedAdminLogsRoute
+  '/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/api/media/$': typeof ApiMediaSplatRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
+  '/admin/$resource/$id': typeof AuthenticatedAdminResourceIdRoute
   '/admin/$resource': typeof AuthenticatedAdminResourceIndexRoute
 }
 export interface FileRoutesById {
@@ -156,8 +182,11 @@ export interface FileRoutesById {
   '/services/$slug': typeof ServicesSlugRoute
   '/products/': typeof ProductsIndexRoute
   '/services/': typeof ServicesIndexRoute
+  '/_authenticated/admin/logs': typeof AuthenticatedAdminLogsRoute
+  '/_authenticated/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/api/media/$': typeof ApiMediaSplatRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
+  '/_authenticated/admin/$resource/$id': typeof AuthenticatedAdminResourceIdRoute
   '/_authenticated/admin/$resource/': typeof AuthenticatedAdminResourceIndexRoute
 }
 export interface FileRouteTypes {
@@ -175,8 +204,11 @@ export interface FileRouteTypes {
     | '/services/$slug'
     | '/products/'
     | '/services/'
+    | '/admin/logs'
+    | '/admin/settings'
     | '/api/media/$'
     | '/admin/'
+    | '/admin/$resource/$id'
     | '/admin/$resource/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -192,8 +224,11 @@ export interface FileRouteTypes {
     | '/services/$slug'
     | '/products'
     | '/services'
+    | '/admin/logs'
+    | '/admin/settings'
     | '/api/media/$'
     | '/admin'
+    | '/admin/$resource/$id'
     | '/admin/$resource'
   id:
     | '__root__'
@@ -210,8 +245,11 @@ export interface FileRouteTypes {
     | '/services/$slug'
     | '/products/'
     | '/services/'
+    | '/_authenticated/admin/logs'
+    | '/_authenticated/admin/settings'
     | '/api/media/$'
     | '/_authenticated/admin/'
+    | '/_authenticated/admin/$resource/$id'
     | '/_authenticated/admin/$resource/'
   fileRoutesById: FileRoutesById
 }
@@ -332,6 +370,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin/logs': {
+      id: '/_authenticated/admin/logs'
+      path: '/admin/logs'
+      fullPath: '/admin/logs'
+      preLoaderRoute: typeof AuthenticatedAdminLogsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/settings': {
+      id: '/_authenticated/admin/settings'
+      path: '/admin/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AuthenticatedAdminSettingsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/api/media/$': {
       id: '/api/media/$'
       path: '/api/media/$'
@@ -346,16 +398,29 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminResourceIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin/$resource/$id': {
+      id: '/_authenticated/admin/$resource/$id'
+      path: '/admin/$resource/$id'
+      fullPath: '/admin/$resource/$id'
+      preLoaderRoute: typeof AuthenticatedAdminResourceIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminLogsRoute: typeof AuthenticatedAdminLogsRoute
+  AuthenticatedAdminSettingsRoute: typeof AuthenticatedAdminSettingsRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
+  AuthenticatedAdminResourceIdRoute: typeof AuthenticatedAdminResourceIdRoute
   AuthenticatedAdminResourceIndexRoute: typeof AuthenticatedAdminResourceIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminLogsRoute: AuthenticatedAdminLogsRoute,
+  AuthenticatedAdminSettingsRoute: AuthenticatedAdminSettingsRoute,
   AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
+  AuthenticatedAdminResourceIdRoute: AuthenticatedAdminResourceIdRoute,
   AuthenticatedAdminResourceIndexRoute: AuthenticatedAdminResourceIndexRoute,
 }
 
