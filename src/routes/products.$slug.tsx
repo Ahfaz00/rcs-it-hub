@@ -90,6 +90,9 @@ function ProductDetail() {
     ...images.filter((i) => i.image_url !== product.main_image_url),
   ];
   const activeImage = mediaUrl(gallery[active]?.image_url);
+  const lightboxImages: LightboxImage[] = gallery
+    .map((g) => ({ src: mediaUrl(g.image_url) ?? "", alt: g.alt_text || product.name }))
+    .filter((g) => g.src !== "");
 
   const specGroups: { title: string; rows: [string, unknown][] }[] = [
     {
