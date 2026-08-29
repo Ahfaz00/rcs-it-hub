@@ -95,7 +95,9 @@ function AuthPage() {
           className="mt-8 space-y-4 rounded-lg border border-border bg-card p-6 shadow-card"
         >
           <div>
-            <h1 className="font-display text-lg font-bold">Staff sign in</h1>
+            <h1 className="font-display text-lg font-bold">
+              {mode === "signin" ? "Staff sign in" : "Create staff account"}
+            </h1>
             <p className="mt-1 text-sm text-muted-foreground">
               Admin access for managing the website content.
             </p>
@@ -116,22 +118,34 @@ function AuthPage() {
             <Input
               id="password"
               type="password"
-              autoComplete="current-password"
+              autoComplete={mode === "signin" ? "current-password" : "new-password"}
+              minLength={8}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
           </div>
           <Button type="submit" className="w-full" disabled={busy}>
-            {busy ? "Signing in..." : "Sign in"}
+            {busy
+              ? mode === "signin"
+                ? "Signing in..."
+                : "Creating account..."
+              : mode === "signin"
+                ? "Sign in"
+                : "Create account"}
           </Button>
-          <button
-            type="button"
-            onClick={onReset}
-            className="w-full text-xs text-muted-foreground underline-offset-2 hover:underline"
-          >
-            Forgot password?
-          </button>
+          <div className="flex items-center justify-between text-xs text-muted-foreground">
+            <button
+              type="button"
+              onClick={() => setMode(mode === "signin" ? "signup" : "signin")}
+              className="underline-offset-2 hover:underline"
+            >
+              {mode === "signin" ? "Create an account" : "I already have an account"}
+            </button>
+            <button type="button" onClick={onReset} className="underline-offset-2 hover:underline">
+              Forgot password?
+            </button>
+          </div>
         </form>
         <div className="mt-6 text-center">
           <Link to="/" className="text-xs text-muted-foreground hover:text-foreground">
