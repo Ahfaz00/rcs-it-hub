@@ -404,7 +404,8 @@ function HomePage() {
               <Link to="/contact">Contact us</Link>
             </Button>
           </div>
-        </div>
+        </Reveal>
+
       </section>
     </SiteShell>
   );
