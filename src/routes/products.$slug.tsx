@@ -189,15 +189,29 @@ function ProductDetail() {
 
       <div className="container-page grid gap-10 py-10 lg:grid-cols-2">
         <div>
-          <div className="flex aspect-4/3 items-center justify-center overflow-hidden rounded-lg border border-border bg-card">
+          <div className="group relative flex aspect-4/3 items-center justify-center overflow-hidden rounded-lg border border-border bg-card">
             {activeImage ? (
-              <img
-                src={activeImage}
-                alt={gallery[active]?.alt_text || product.name}
-                className="h-full w-full object-contain p-6"
-                width={800}
-                height={600}
-              />
+              <>
+                <button
+                  type="button"
+                  onClick={() => setLightbox(true)}
+                  aria-label="Open image viewer"
+                  className="h-full w-full cursor-zoom-in"
+                >
+                  <img
+                    key={activeImage}
+                    src={activeImage}
+                    alt={gallery[active]?.alt_text || product.name}
+                    decoding="async"
+                    className="animate-fade-in h-full w-full object-contain p-6 transition-transform duration-700 ease-out group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+                    width={800}
+                    height={600}
+                  />
+                </button>
+                <span className="pointer-events-none absolute bottom-3 right-3 inline-flex items-center gap-1.5 rounded-full bg-primary/80 px-3 py-1.5 text-xs font-medium text-primary-foreground opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                  <Expand className="h-3.5 w-3.5" /> Click to zoom
+                </span>
+              </>
             ) : (
               <div className="flex flex-col items-center gap-2 text-muted-foreground">
                 <ImageOff className="h-10 w-10" />
@@ -214,15 +228,18 @@ function ProductDetail() {
                 <button
                   key={img.id}
                   onClick={() => setActive(i)}
+                  onDoubleClick={() => setLightbox(true)}
                   aria-label={`View image ${i + 1}`}
-                  className={`h-20 w-20 shrink-0 overflow-hidden rounded-md border p-1 ${
-                    i === active ? "border-accent" : "border-border"
+                  aria-current={i === active}
+                  className={`h-20 w-20 shrink-0 overflow-hidden rounded-md border p-1 transition-all duration-300 hover:-translate-y-0.5 ${
+                    i === active ? "border-accent shadow-card" : "border-border opacity-70 hover:opacity-100"
                   }`}
                 >
                   <img
                     src={mediaUrl(img.image_url) ?? ""}
                     alt={img.alt_text || ""}
                     loading="lazy"
+                    decoding="async"
                     className="h-full w-full object-contain"
                   />
                 </button>
