@@ -167,6 +167,15 @@ function ProductDetail() {
 
   return (
     <SiteShell>
+      <MotionProvider settings={site.settings}>
+      {lightbox && lightboxImages.length > 0 ? (
+        <Lightbox
+          images={lightboxImages}
+          index={Math.min(active, lightboxImages.length - 1)}
+          onIndexChange={setActive}
+          onClose={() => setLightbox(false)}
+        />
+      ) : null}
       <div className="border-b border-border bg-surface">
         <nav className="container-page py-3 text-xs text-muted-foreground" aria-label="Breadcrumb">
           <Link to="/" className="hover:text-foreground">
