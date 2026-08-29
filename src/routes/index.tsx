@@ -181,21 +181,24 @@ function HomePage() {
           action={{ to: "/products", label: "View all products" }}
         />
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {site.categories.map((c) => (
-            <Link
-              key={c.id}
-              to="/products"
-              search={{ category: c.slug }}
-              className="group rounded-lg border border-border bg-card p-5 shadow-card transition-shadow hover:shadow-lift"
-            >
-              <span className="inline-flex h-10 w-10 items-center justify-center rounded-md bg-accent/15 text-accent">
-                <Icon name={c.icon} className="h-5 w-5" />
-              </span>
-              <h3 className="mt-4 font-display text-base font-semibold group-hover:text-accent">{c.name}</h3>
-              {c.short_description ? (
-                <p className="mt-1.5 text-sm text-muted-foreground">{c.short_description}</p>
-              ) : null}
-            </Link>
+          {site.categories.map((c, i) => (
+            <Reveal key={c.id} delay={i * 80}>
+              <Link
+                to="/products"
+                search={{ category: c.slug }}
+                className="hover-lift group block h-full rounded-lg border border-border bg-card p-5 shadow-card"
+              >
+                <span className="inline-flex h-10 w-10 items-center justify-center rounded-md bg-accent/15 text-accent transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">
+                  <Icon name={c.icon} className="h-5 w-5" />
+                </span>
+                <h3 className="mt-4 font-display text-base font-semibold transition-colors group-hover:text-accent">
+                  {c.name}
+                </h3>
+                {c.short_description ? (
+                  <p className="mt-1.5 text-sm text-muted-foreground">{c.short_description}</p>
+                ) : null}
+              </Link>
+            </Reveal>
           ))}
         </div>
       </section>
@@ -210,10 +213,13 @@ function HomePage() {
               action={{ to: "/products", label: "See all" }}
             />
             <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-              {products.slice(0, 8).map((p) => (
-                <ProductCard key={p.id} product={p} />
+              {products.slice(0, 8).map((p, i) => (
+                <Reveal key={p.id} delay={(i % 4) * 80} className="h-full [&>*]:h-full">
+                  <ProductCard product={p} />
+                </Reveal>
               ))}
             </div>
+
           </div>
         </section>
       ) : null}
