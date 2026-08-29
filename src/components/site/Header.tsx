@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { Menu, Phone, Search, MessageCircle, X } from "lucide-react";
+import { Menu, Phone, Search, MessageCircle } from "lucide-react";
 
 import { Logo } from "./Logo";
 import { Button } from "@/components/ui/button";
