@@ -361,9 +361,35 @@ function HomePage() {
         </section>
       ) : null}
 
+      {/* Facility marquee */}
+      <section className="overflow-hidden border-y border-border bg-primary py-10 text-primary-foreground">
+        <div className="container-page">
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">Inside our facility</p>
+          <h2 className="mt-2 font-display text-2xl font-bold md:text-3xl">Stock, testing benches and dispatch</h2>
+        </div>
+        <div className="group relative mt-7 flex overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)]">
+          <div className="animate-marquee flex w-max gap-4 pr-4 group-hover:[animation-play-state:paused]">
+            {[...heroSlides, ...heroSlides].map((slide, i) => (
+              <figure
+                key={`${slide.src}-${i}`}
+                className="relative h-40 w-64 shrink-0 overflow-hidden rounded-lg border border-primary-foreground/15 md:h-48 md:w-80"
+              >
+                <img
+                  src={slide.src}
+                  alt={slide.alt}
+                  loading="lazy"
+                  className="h-full w-full object-cover transition-transform duration-700 hover:scale-110"
+                />
+              </figure>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* CTA */}
       <section className="border-y border-border bg-accent/10">
-        <div className="container-page flex flex-col items-center gap-5 py-12 text-center">
+        <Reveal className="container-page flex flex-col items-center gap-5 py-12 text-center">
+
           <h2 className="font-display text-2xl font-bold md:text-3xl">
             Need a bulk quote or a specific configuration?
           </h2>
