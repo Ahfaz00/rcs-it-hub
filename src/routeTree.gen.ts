@@ -24,6 +24,7 @@ import { Route as ServicesIndexRouteImport } from './routes/services.index'
 import { Route as ServicesSlugRouteImport } from './routes/services.$slug'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
 import { Route as ApiMediaSplatRouteImport } from './routes/api/media.$'
+import { Route as AuthenticatedAdminResourceIndexRouteImport } from './routes/_authenticated/admin.$resource.index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -99,6 +100,12 @@ const ApiMediaSplatRoute = ApiMediaSplatRouteImport.update({
   path: '/api/media/$',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAdminResourceIndexRoute =
+  AuthenticatedAdminResourceIndexRouteImport.update({
+    id: '/admin/$resource/',
+    path: '/admin/$resource/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -115,6 +122,7 @@ export interface FileRoutesByFullPath {
   '/services/': typeof ServicesIndexRoute
   '/api/media/$': typeof ApiMediaSplatRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
+  '/admin/$resource/': typeof AuthenticatedAdminResourceIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -131,6 +139,7 @@ export interface FileRoutesByTo {
   '/services': typeof ServicesIndexRoute
   '/api/media/$': typeof ApiMediaSplatRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
+  '/admin/$resource': typeof AuthenticatedAdminResourceIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -149,6 +158,7 @@ export interface FileRoutesById {
   '/services/': typeof ServicesIndexRoute
   '/api/media/$': typeof ApiMediaSplatRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
+  '/_authenticated/admin/$resource/': typeof AuthenticatedAdminResourceIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -167,6 +177,7 @@ export interface FileRouteTypes {
     | '/services/'
     | '/api/media/$'
     | '/admin/'
+    | '/admin/$resource/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -183,6 +194,7 @@ export interface FileRouteTypes {
     | '/services'
     | '/api/media/$'
     | '/admin'
+    | '/admin/$resource'
   id:
     | '__root__'
     | '/'
@@ -200,6 +212,7 @@ export interface FileRouteTypes {
     | '/services/'
     | '/api/media/$'
     | '/_authenticated/admin/'
+    | '/_authenticated/admin/$resource/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -326,15 +339,24 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiMediaSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/admin/$resource/': {
+      id: '/_authenticated/admin/$resource/'
+      path: '/admin/$resource'
+      fullPath: '/admin/$resource/'
+      preLoaderRoute: typeof AuthenticatedAdminResourceIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
+  AuthenticatedAdminResourceIndexRoute: typeof AuthenticatedAdminResourceIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
+  AuthenticatedAdminResourceIndexRoute: AuthenticatedAdminResourceIndexRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
