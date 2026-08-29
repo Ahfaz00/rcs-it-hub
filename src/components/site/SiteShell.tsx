@@ -40,12 +40,12 @@ export function PageHero({
   breadcrumb?: ReactNode;
 }) {
   return (
-    <section className="border-b border-border bg-primary text-primary-foreground">
+    <section className="border-b border-border bg-card text-card-foreground">
       <div className="container-page py-12 md:py-16">
-        {breadcrumb ? <div className="mb-3 text-xs text-primary-foreground/70">{breadcrumb}</div> : null}
+        {breadcrumb ? <div className="mb-3 text-xs text-muted-foreground">{breadcrumb}</div> : null}
         <h1 className="font-display text-3xl font-bold md:text-4xl">{title}</h1>
         {subtitle ? (
-          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-primary-foreground/80 md:text-base">
+          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground md:text-base">
             {subtitle}
           </p>
         ) : null}
