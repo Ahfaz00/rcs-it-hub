@@ -36,3 +36,10 @@ export function slugify(value: string) {
     .replace(/^-+|-+$/g, "")
     .slice(0, 80);
 }
+
+/** Returns a same-origin relative path from a CMS setting, or the fallback. */
+export function safePath(value: string | null | undefined, fallback: string) {
+  const v = (value ?? "").trim();
+  if (!v.startsWith("/") || v.startsWith("//")) return fallback;
+  return v;
+}
