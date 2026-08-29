@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useSuspenseQuery, queryOptions } from "@tanstack/react-query";
-import { ImageOff, MessageCircle, Phone } from "lucide-react";
+import { Expand, ImageOff, MessageCircle, Phone } from "lucide-react";
 
 import { SiteShell } from "@/components/site/SiteShell";
 import { ProductCard } from "@/components/site/ProductCard";
 import { EnquiryDialog } from "@/components/site/EnquiryDialog";
+import { Lightbox, type LightboxImage } from "@/components/site/Lightbox";
+import { MotionProvider } from "@/components/site/MotionProvider";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { getProductBySlug } from "@/lib/public.functions";
