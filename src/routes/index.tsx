@@ -232,21 +232,26 @@ function HomePage() {
           action={{ to: "/services", label: "All services" }}
         />
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {site.services.slice(0, 6).map((service) => (
-            <Link
-              key={service.id}
-              to="/services/$slug"
-              params={{ slug: service.slug }}
-              className="group rounded-lg border border-border bg-card p-6 shadow-card transition-shadow hover:shadow-lift"
-            >
-              <Icon name={service.icon} className="h-6 w-6 text-accent" />
-              <h3 className="mt-4 font-display text-base font-semibold group-hover:text-accent">
-                {service.title}
-              </h3>
-              <p className="mt-2 text-sm text-muted-foreground">{service.short_description}</p>
-            </Link>
+          {site.services.slice(0, 6).map((service, i) => (
+            <Reveal key={service.id} delay={(i % 3) * 90}>
+              <Link
+                to="/services/$slug"
+                params={{ slug: service.slug }}
+                className="hover-lift group block h-full rounded-lg border border-border bg-card p-6 shadow-card"
+              >
+                <Icon
+                  name={service.icon}
+                  className="h-6 w-6 text-accent transition-transform duration-300 group-hover:scale-110"
+                />
+                <h3 className="mt-4 font-display text-base font-semibold transition-colors group-hover:text-accent">
+                  {service.title}
+                </h3>
+                <p className="mt-2 text-sm text-muted-foreground">{service.short_description}</p>
+              </Link>
+            </Reveal>
           ))}
         </div>
+
       </section>
 
       {/* Why us */}
