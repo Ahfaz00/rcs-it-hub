@@ -15,6 +15,8 @@ import {
 import { SiteShell } from "@/components/site/SiteShell";
 import { ProductCard } from "@/components/site/ProductCard";
 import { Icon } from "@/components/site/Icon";
+import { Reveal } from "@/components/site/Reveal";
+import { HeroSlider, type HeroSlide } from "@/components/site/HeroSlider";
 import { safePath } from "@/lib/format";
 import { Button } from "@/components/ui/button";
 import {
@@ -27,6 +29,22 @@ import { getHomeData } from "@/lib/public.functions";
 import { siteQueryOptions } from "@/lib/site-query";
 import { mediaUrl } from "@/lib/media";
 import heroFallback from "@/assets/hero-workshop.jpg";
+import slider1 from "@/assets/slider1.jpg.asset.json";
+import slider2 from "@/assets/slider2.jpg.asset.json";
+import slider3 from "@/assets/slider3.jpg.asset.json";
+import slider4 from "@/assets/slider4_1.jpg.asset.json";
+import slider5 from "@/assets/slider5_1.jpg.asset.json";
+import slider6 from "@/assets/slider6.jpg.asset.json";
+
+const heroSlides: HeroSlide[] = [
+  { src: slider1.url, alt: "Palletised IT hardware stock in the warehouse", caption: "Warehouse stock, ready for bulk dispatch" },
+  { src: slider6.url, alt: "Rows of refurbished laptops under testing", caption: "Every unit bench-tested before dispatch" },
+  { src: slider4.url, alt: "Stacks of refurbished desktop CPUs", caption: "Desktops and workstations in volume" },
+  { src: slider5.url, alt: "Refurbished business laptops stacked for grading", caption: "Graded, cleaned and inspected" },
+  { src: slider2.url, alt: "Spare parts and accessories racking", caption: "Spares, parts and accessories in stock" },
+  { src: slider3.url, alt: "Accessories and peripherals storage room", caption: "Peripherals and add-ons for every build" },
+];
+
 
 const homeQueryOptions = queryOptions({
   queryKey: ["home-data"],
