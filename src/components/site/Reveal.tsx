@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
+import { useMotion } from "@/components/site/MotionProvider";
 import { cn } from "@/lib/utils";
 
 type Direction = "up" | "left" | "right" | "scale";
@@ -25,9 +26,14 @@ export function Reveal({
   as?: "div" | "section" | "li" | "span";
 }) {
   const ref = useRef<HTMLDivElement>(null);
+  const motion = useMotion();
   const [shown, setShown] = useState(false);
 
   useEffect(() => {
+    if (!motion.enabled) {
+      setShown(true);
+      return;
+    }
     const el = ref.current;
     if (!el) return;
     if (typeof IntersectionObserver === "undefined") {
@@ -47,14 +53,22 @@ export function Reveal({
     );
     observer.observe(el);
     return () => observer.disconnect();
-  }, []);
+  }, [motion.enabled]);
+
+  if (!motion.enabled) {
+    return (
+      <Tag ref={ref as never} className={className}>
+        {children}
+      </Tag>
+    );
+  }
 
   return (
     <Tag
       ref={ref as never}
-      style={{ transitionDelay: `${delay}ms` }}
+      style={{ transitionDelay: `${delay}ms`, transitionDuration: `${motion.duration}ms` }}
       className={cn(
-        "transition-all duration-700 ease-out motion-reduce:transition-none",
+        "transition-all ease-out motion-reduce:transition-none",
         shown ? "translate-x-0 translate-y-0 scale-100 opacity-100 blur-0" : cn("opacity-0 blur-[2px]", hidden[direction]),
         className,
       )}

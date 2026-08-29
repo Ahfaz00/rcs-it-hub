@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
+import { useMotion } from "@/components/site/MotionProvider";
 import { cn } from "@/lib/utils";
 
 export type HeroSlide = {
@@ -17,6 +18,7 @@ export function HeroSlider({
   interval?: number;
   className?: string;
 }) {
+  const motion = useMotion();
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const timer = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -47,8 +49,9 @@ export function HeroSlider({
         <div
           key={slide.src}
           aria-hidden={i !== index}
+          style={{ transitionDuration: `${Math.max(motion.duration, 150)}ms` }}
           className={cn(
-            "absolute inset-0 transition-opacity duration-1000 ease-out",
+            "absolute inset-0 transition-opacity ease-out",
             i === index ? "opacity-100" : "opacity-0",
           )}
         >
@@ -56,7 +59,8 @@ export function HeroSlider({
             src={slide.src}
             alt={slide.alt}
             loading={i === 0 ? "eager" : "lazy"}
-            className={cn("h-full w-full object-cover", i === index && "animate-kenburns")}
+            decoding={i === 0 ? "sync" : "async"}
+            className={cn("h-full w-full object-cover", i === index && motion.kenburns && "animate-kenburns")}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/25 to-transparent" />
         </div>
@@ -66,7 +70,10 @@ export function HeroSlider({
       <div className="pointer-events-none absolute inset-x-0 bottom-0 p-5">
         <p
           key={index}
-          className="animate-fade-in font-display text-sm font-semibold text-primary-foreground drop-shadow md:text-base"
+          className={cn(
+            "font-display text-sm font-semibold text-primary-foreground drop-shadow md:text-base",
+            motion.enabled && "animate-fade-in",
+          )}
         >
           {slides[index]?.caption}
         </p>

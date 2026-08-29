@@ -13,7 +13,14 @@ import { supabase } from "@/integrations/supabase/client";
 
 type SettingRow = { key: string; value: string | null; group_name: string; label: string | null };
 
-const LONG_KEYS = ["address", "default_enquiry_message", "announcement_text", "footer_about", "hero_subtitle"];
+const LONG_KEYS = [
+  "address",
+  "default_enquiry_message",
+  "announcement_text",
+  "footer_about",
+  "hero_subtitle",
+  "cta_text",
+];
 
 export const Route = createFileRoute("/_authenticated/admin/settings")({
   component: SettingsPage,

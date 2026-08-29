@@ -17,6 +17,8 @@ import { ProductCard } from "@/components/site/ProductCard";
 import { Icon } from "@/components/site/Icon";
 import { Reveal } from "@/components/site/Reveal";
 import { HeroSlider, type HeroSlide } from "@/components/site/HeroSlider";
+import { CategoryShowcase, type ShowcaseItem } from "@/components/site/CategoryShowcase";
+import { MotionProvider, readBool, readNum, useMotion } from "@/components/site/MotionProvider";
 import { safePath } from "@/lib/format";
 import { Button } from "@/components/ui/button";
 import {
@@ -44,7 +46,6 @@ const heroSlides: HeroSlide[] = [
   { src: slider2.url, alt: "Spare parts and accessories racking", caption: "Spares, parts and accessories in stock" },
   { src: slider3.url, alt: "Accessories and peripherals storage room", caption: "Peripherals and add-ons for every build" },
 ];
-
 
 const homeQueryOptions = queryOptions({
   queryKey: ["home-data"],
@@ -77,80 +78,114 @@ export const Route = createFileRoute("/")({
 });
 
 function HomePage() {
+  const { data: site } = useSuspenseQuery(siteQueryOptions);
+  return (
+    <SiteShell>
+      <MotionProvider settings={site.settings}>
+        <HomeSections />
+      </MotionProvider>
+    </SiteShell>
+  );
+}
+
+function HomeSections() {
   const { data: home } = useSuspenseQuery(homeQueryOptions);
   const { data: site } = useSuspenseQuery(siteQueryOptions);
+  const motion = useMotion();
   const s = site.settings;
   const heroImage = mediaUrl(s["hero_image"]) ?? heroFallback;
   const products = home.featured.length > 0 ? home.featured : home.latest;
 
-  return (
-    <SiteShell>
-      {/* Hero */}
-      <section className="relative overflow-hidden bg-primary text-primary-foreground">
-        <img
-          src={heroImage}
-          alt=""
-          aria-hidden="true"
-          className="absolute inset-0 h-full w-full object-cover opacity-20"
-        />
-        <div
-          aria-hidden="true"
-          className="absolute -left-24 top-10 h-72 w-72 rounded-full bg-accent/20 blur-3xl animate-float"
-        />
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 opacity-[0.07] [background-image:linear-gradient(to_right,currentColor_1px,transparent_1px),linear-gradient(to_bottom,currentColor_1px,transparent_1px)] [background-size:56px_56px]"
-        />
-        <div className="relative container-page grid gap-10 py-16 md:py-24 lg:grid-cols-2 lg:items-center">
-          <div>
-            <p
-              className="animate-fade-in inline-flex items-center gap-2 rounded-full border border-primary-foreground/25 px-3 py-1 text-xs font-medium uppercase tracking-[0.16em]"
-              style={{ animationDelay: "60ms" }}
-            >
-              <span className="h-1.5 w-1.5 rounded-full bg-accent" />
-              Computer Wholesaler &middot; Navi Mumbai
-            </p>
-            <h1
-              className="animate-fade-in mt-5 font-display text-4xl font-bold leading-tight md:text-5xl"
-              style={{ animationDelay: "140ms" }}
-            >
-              {s["hero_title"] || "Quality Refurbished Technology. Built for Performance."}
-            </h1>
-            <p
-              className="animate-fade-in mt-4 max-w-xl text-sm leading-relaxed text-primary-foreground/80 md:text-base"
-              style={{ animationDelay: "220ms" }}
-            >
-              {s["hero_subtitle"]}
-            </p>
-            <div className="animate-fade-in mt-8 flex flex-wrap gap-3" style={{ animationDelay: "300ms" }}>
-              <Button asChild size="lg" className="sheen bg-accent text-accent-foreground hover:bg-accent/90">
-                <a href={safePath(s["hero_cta1_link"], "/products")}>
-                  {s["hero_cta1_text"] || "Browse Products"}{" "}
-                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </a>
-              </Button>
-              <Button
-                asChild
-                size="lg"
-                variant="outline"
-                className="border-primary-foreground/30 bg-transparent text-primary-foreground hover:bg-primary-foreground/10"
-              >
-                <a href={safePath(s["hero_cta2_link"], "/bulk-orders")}>
-                  {s["hero_cta2_text"] || "Get a Quote"}
-                </a>
-              </Button>
-            </div>
-          </div>
+  const showHero = readBool(s["section_hero_enabled"], true);
+  const showShowcase = readBool(s["section_showcase_enabled"], true);
+  const showTestimonials = readBool(s["section_testimonials_enabled"], true);
+  const showFacility = readBool(s["section_facility_enabled"], true);
+  const showCta = readBool(s["section_cta_enabled"], true);
+  const heroInterval = readNum(s["hero_slider_interval_ms"], 5200, 1500, 30000);
 
-          <Reveal
-            direction="scale"
-            delay={200}
-            className="animate-float overflow-hidden rounded-xl border border-primary-foreground/15 shadow-lift"
-          >
-            <HeroSlider slides={heroSlides} className="aspect-[4/3] w-full sm:aspect-[16/10]" />
-          </Reveal>
-        </div>
-      </section>
+  const showcaseItems: ShowcaseItem[] = site.categories.map((c, i) => ({
+    id: c.id,
+    slug: c.slug,
+    name: c.name,
+    description: c.short_description,
+    icon: c.icon,
+    image: mediaUrl((c as { image_url?: string | null }).image_url) ?? heroSlides[i % heroSlides.length]!.src,
+  }));
+
+  return (
+    <>
+      {/* Hero */}
+      {showHero ? (
+        <section className="relative overflow-hidden bg-primary text-primary-foreground">
+          <img
+            src={heroImage}
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 h-full w-full object-cover opacity-20"
+          />
+          <div
+            aria-hidden="true"
+            className="absolute -left-24 top-10 h-72 w-72 rounded-full bg-accent/20 blur-3xl animate-float"
+          />
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 opacity-[0.07] [background-image:linear-gradient(to_right,currentColor_1px,transparent_1px),linear-gradient(to_bottom,currentColor_1px,transparent_1px)] [background-size:56px_56px]"
+          />
+          <div className="relative container-page grid gap-10 py-16 md:py-24 lg:grid-cols-2 lg:items-center">
+            <div>
+              <p
+                className="animate-fade-in inline-flex items-center gap-2 rounded-full border border-primary-foreground/25 px-3 py-1 text-xs font-medium uppercase tracking-[0.16em]"
+                style={{ animationDelay: "60ms" }}
+              >
+                <span className="h-1.5 w-1.5 rounded-full bg-accent" />
+                Computer Wholesaler &middot; Navi Mumbai
+              </p>
+              <h1
+                className="animate-fade-in mt-5 font-display text-4xl font-bold leading-tight md:text-5xl"
+                style={{ animationDelay: "140ms" }}
+              >
+                {s["hero_title"] || "Quality Refurbished Technology. Built for Performance."}
+              </h1>
+              <p
+                className="animate-fade-in mt-4 max-w-xl text-sm leading-relaxed text-primary-foreground/80 md:text-base"
+                style={{ animationDelay: "220ms" }}
+              >
+                {s["hero_subtitle"]}
+              </p>
+              <div className="animate-fade-in mt-8 flex flex-wrap gap-3" style={{ animationDelay: "300ms" }}>
+                <Button asChild size="lg" className="sheen bg-accent text-accent-foreground hover:bg-accent/90">
+                  <a href={safePath(s["hero_cta1_link"], "/products")}>
+                    {s["hero_cta1_text"] || "Browse Products"}{" "}
+                    <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  </a>
+                </Button>
+                <Button
+                  asChild
+                  size="lg"
+                  variant="outline"
+                  className="border-primary-foreground/30 bg-transparent text-primary-foreground hover:bg-primary-foreground/10"
+                >
+                  <a href={safePath(s["hero_cta2_link"], "/bulk-orders")}>
+                    {s["hero_cta2_text"] || "Get a Quote"}
+                  </a>
+                </Button>
+              </div>
+            </div>
+
+            <Reveal
+              direction="scale"
+              delay={200}
+              className="animate-float overflow-hidden rounded-xl border border-primary-foreground/15 shadow-lift"
+            >
+              <HeroSlider
+                slides={heroSlides}
+                interval={heroInterval}
+                className="aspect-[4/3] w-full sm:aspect-[16/10]"
+              />
+            </Reveal>
+          </div>
+        </section>
+      ) : null}
 
       {/* Trust strip */}
       <section className="border-b border-border bg-surface">
@@ -161,7 +196,7 @@ function HomePage() {
             { Icon: PackageCheck, title: "Bulk supply", text: "Volume orders with consistent configurations." },
             { Icon: Truck, title: "Pan-India delivery", text: "Dispatch across India from Navi Mumbai." },
           ].map((item, i) => (
-            <Reveal key={item.title} delay={i * 90} className="flex gap-3">
+            <Reveal key={item.title} delay={i * motion.stagger} className="flex gap-3">
               <item.Icon className="h-6 w-6 shrink-0 text-accent" />
               <div>
                 <p className="font-display text-sm font-semibold">{item.title}</p>
@@ -172,54 +207,34 @@ function HomePage() {
         </div>
       </section>
 
-
-      {/* Categories */}
-      <section className="container-page py-16">
-        <SectionHeading
-          eyebrow="Shop by category"
-          title="Hardware for every requirement"
-          action={{ to: "/products", label: "View all products" }}
-        />
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {site.categories.map((c, i) => (
-            <Reveal key={c.id} delay={i * 80}>
-              <Link
-                to="/products"
-                search={{ category: c.slug }}
-                className="hover-lift group block h-full rounded-lg border border-border bg-card p-5 shadow-card"
-              >
-                <span className="inline-flex h-10 w-10 items-center justify-center rounded-md bg-accent/15 text-accent transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">
-                  <Icon name={c.icon} className="h-5 w-5" />
-                </span>
-                <h3 className="mt-4 font-display text-base font-semibold transition-colors group-hover:text-accent">
-                  {c.name}
-                </h3>
-                {c.short_description ? (
-                  <p className="mt-1.5 text-sm text-muted-foreground">{c.short_description}</p>
-                ) : null}
-              </Link>
-            </Reveal>
-          ))}
-        </div>
-      </section>
+      {/* Category showcase */}
+      {showShowcase && showcaseItems.length > 0 ? (
+        <section className="container-page py-16">
+          <SectionHeading
+            eyebrow={s["showcase_eyebrow"] || "Shop by category"}
+            title={s["showcase_title"] || "Hardware for every requirement"}
+            action={{ to: "/products", label: "View all products" }}
+          />
+          <CategoryShowcase items={showcaseItems} />
+        </section>
+      ) : null}
 
       {/* Products */}
       {products.length > 0 ? (
         <section className="bg-surface py-16">
           <div className="container-page">
             <SectionHeading
-              eyebrow="Current stock"
-              title="Featured refurbished systems"
+              eyebrow={s["featured_eyebrow"] || "Current stock"}
+              title={s["featured_title"] || "Featured refurbished systems"}
               action={{ to: "/products", label: "See all" }}
             />
             <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
               {products.slice(0, 8).map((p, i) => (
-                <Reveal key={p.id} delay={(i % 4) * 80} className="h-full [&>*]:h-full">
+                <Reveal key={p.id} delay={(i % 4) * motion.stagger} className="h-full [&>*]:h-full">
                   <ProductCard product={p} />
                 </Reveal>
               ))}
             </div>
-
           </div>
         </section>
       ) : null}
@@ -233,7 +248,7 @@ function HomePage() {
         />
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {site.services.slice(0, 6).map((service, i) => (
-            <Reveal key={service.id} delay={(i % 3) * 90}>
+            <Reveal key={service.id} delay={(i % 3) * motion.stagger}>
               <Link
                 to="/services/$slug"
                 params={{ slug: service.slug }}
@@ -251,7 +266,6 @@ function HomePage() {
             </Reveal>
           ))}
         </div>
-
       </section>
 
       {/* Why us */}
@@ -277,7 +291,7 @@ function HomePage() {
               <Reveal
                 key={item.title}
                 direction="right"
-                delay={i * 90}
+                delay={i * motion.stagger}
                 className="rounded-lg border border-primary-foreground/15 p-5 transition-colors hover:border-accent/50 hover:bg-primary-foreground/5"
               >
                 <item.Icon className="h-5 w-5 text-accent" />
@@ -287,7 +301,6 @@ function HomePage() {
             ))}
           </div>
         </div>
-
       </section>
 
       {/* Brands */}
@@ -298,7 +311,7 @@ function HomePage() {
           </p>
           <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
             {home.brands.map((b, i) => (
-              <Reveal key={b.slug} direction="scale" delay={i * 60}>
+              <Reveal key={b.slug} direction="scale" delay={i * Math.round(motion.stagger * 0.75)}>
                 <Link
                   to="/products"
                   search={{ brand: b.slug }}
@@ -309,18 +322,20 @@ function HomePage() {
               </Reveal>
             ))}
           </div>
-
         </section>
       ) : null}
 
       {/* Testimonials */}
-      {home.testimonials.length > 0 ? (
+      {showTestimonials && home.testimonials.length > 0 ? (
         <section className="bg-surface py-16">
           <div className="container-page">
-            <SectionHeading eyebrow="Customer feedback" title="What buyers say" />
+            <SectionHeading
+              eyebrow={s["testimonials_eyebrow"] || "Customer feedback"}
+              title={s["testimonials_title"] || "What buyers say"}
+            />
             <div className="mt-8 grid gap-5 md:grid-cols-3">
               {home.testimonials.slice(0, 3).map((t, i) => (
-                <Reveal key={t.id} delay={i * 110} className="h-full">
+                <Reveal key={t.id} delay={i * motion.stagger} className="h-full">
                   <figure className="hover-lift h-full rounded-lg border border-border bg-card p-6 shadow-card">
                     <Quote className="h-6 w-6 text-accent" />
                     <blockquote className="mt-4 text-sm leading-relaxed text-muted-foreground">
@@ -341,7 +356,6 @@ function HomePage() {
                 </Reveal>
               ))}
             </div>
-
           </div>
         </section>
       ) : null}
@@ -362,52 +376,64 @@ function HomePage() {
       ) : null}
 
       {/* Facility marquee */}
-      <section className="overflow-hidden border-y border-border bg-primary py-10 text-primary-foreground">
-        <div className="container-page">
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">Inside our facility</p>
-          <h2 className="mt-2 font-display text-2xl font-bold md:text-3xl">Stock, testing benches and dispatch</h2>
-        </div>
-        <div className="group relative mt-7 flex overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)]">
-          <div className="animate-marquee flex w-max gap-4 pr-4 group-hover:[animation-play-state:paused]">
-            {[...heroSlides, ...heroSlides].map((slide, i) => (
-              <figure
-                key={`${slide.src}-${i}`}
-                className="relative h-40 w-64 shrink-0 overflow-hidden rounded-lg border border-primary-foreground/15 md:h-48 md:w-80"
-              >
-                <img
-                  src={slide.src}
-                  alt={slide.alt}
-                  loading="lazy"
-                  className="h-full w-full object-cover transition-transform duration-700 hover:scale-110"
-                />
-              </figure>
-            ))}
+      {showFacility ? (
+        <section className="overflow-hidden border-y border-border bg-primary py-10 text-primary-foreground">
+          <div className="container-page">
+            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">
+              {s["facility_eyebrow"] || "Inside our facility"}
+            </p>
+            <h2 className="mt-2 font-display text-2xl font-bold md:text-3xl">
+              {s["facility_title"] || "Stock, testing benches and dispatch"}
+            </h2>
           </div>
-        </div>
-      </section>
+          <div className="group relative mt-7 flex overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)]">
+            <div className="animate-marquee flex w-max gap-4 pr-4 group-hover:[animation-play-state:paused]">
+              {[...heroSlides, ...heroSlides].map((slide, i) => (
+                <figure
+                  key={`${slide.src}-${i}`}
+                  className="relative h-40 w-64 shrink-0 overflow-hidden rounded-lg border border-primary-foreground/15 md:h-48 md:w-80"
+                >
+                  <img
+                    src={slide.src}
+                    alt={slide.alt}
+                    loading="lazy"
+                    decoding="async"
+                    className="h-full w-full object-cover transition-transform duration-700 hover:scale-110 motion-reduce:transition-none"
+                  />
+                </figure>
+              ))}
+            </div>
+          </div>
+        </section>
+      ) : null}
 
       {/* CTA */}
-      <section className="border-y border-border bg-accent/10">
-        <Reveal className="container-page flex flex-col items-center gap-5 py-12 text-center">
-
-          <h2 className="font-display text-2xl font-bold md:text-3xl">
-            Need a bulk quote or a specific configuration?
-          </h2>
-          <p className="max-w-2xl text-sm text-muted-foreground">
-            Send us your requirement and we will come back with availability, configuration options and pricing.
-          </p>
-          <div className="flex flex-wrap justify-center gap-3">
-            <Button asChild size="lg">
-              <Link to="/bulk-orders">Request a quote</Link>
-            </Button>
-            <Button asChild size="lg" variant="outline">
-              <Link to="/contact">Contact us</Link>
-            </Button>
-          </div>
-        </Reveal>
-
-      </section>
-    </SiteShell>
+      {showCta ? (
+        <section className="border-y border-border bg-accent/10">
+          <Reveal className="container-page flex flex-col items-center gap-5 py-12 text-center">
+            <h2 className="font-display text-2xl font-bold md:text-3xl">
+              {s["cta_title"] || "Need a bulk quote or a specific configuration?"}
+            </h2>
+            <p className="max-w-2xl text-sm text-muted-foreground">
+              {s["cta_text"] ||
+                "Send us your requirement and we will come back with availability, configuration options and pricing."}
+            </p>
+            <div className="flex flex-wrap justify-center gap-3">
+              <Button asChild size="lg">
+                <a href={safePath(s["cta_button1_link"], "/bulk-orders")}>
+                  {s["cta_button1_text"] || "Request a quote"}
+                </a>
+              </Button>
+              <Button asChild size="lg" variant="outline">
+                <a href={safePath(s["cta_button2_link"], "/contact")}>
+                  {s["cta_button2_text"] || "Contact us"}
+                </a>
+              </Button>
+            </div>
+          </Reveal>
+        </section>
+      ) : null}
+    </>
   );
 }
 

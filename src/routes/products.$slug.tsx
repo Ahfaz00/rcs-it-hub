@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useSuspenseQuery, queryOptions } from "@tanstack/react-query";
-import { ImageOff, MessageCircle, Phone } from "lucide-react";
+import { Expand, ImageOff, MessageCircle, Phone } from "lucide-react";
 
 import { SiteShell } from "@/components/site/SiteShell";
 import { ProductCard } from "@/components/site/ProductCard";
 import { EnquiryDialog } from "@/components/site/EnquiryDialog";
+import { Lightbox, type LightboxImage } from "@/components/site/Lightbox";
+import { MotionProvider } from "@/components/site/MotionProvider";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { getProductBySlug } from "@/lib/public.functions";
@@ -76,6 +78,7 @@ function ProductDetail() {
   const { data } = useSuspenseQuery(productQueryOptions(slug));
   const { data: site } = useSuspenseQuery(siteQueryOptions);
   const [active, setActive] = useState(0);
+  const [lightbox, setLightbox] = useState(false);
 
   if (!data) return <ProductNotFound />;
   const { product, images, related } = data;
@@ -87,6 +90,9 @@ function ProductDetail() {
     ...images.filter((i) => i.image_url !== product.main_image_url),
   ];
   const activeImage = mediaUrl(gallery[active]?.image_url);
+  const lightboxImages: LightboxImage[] = gallery
+    .map((g) => ({ src: mediaUrl(g.image_url) ?? "", alt: g.alt_text || product.name }))
+    .filter((g) => g.src !== "");
 
   const specGroups: { title: string; rows: [string, unknown][] }[] = [
     {
@@ -161,6 +167,15 @@ function ProductDetail() {
 
   return (
     <SiteShell>
+      <MotionProvider settings={site.settings}>
+      {lightbox && lightboxImages.length > 0 ? (
+        <Lightbox
+          images={lightboxImages}
+          index={Math.min(active, lightboxImages.length - 1)}
+          onIndexChange={setActive}
+          onClose={() => setLightbox(false)}
+        />
+      ) : null}
       <div className="border-b border-border bg-surface">
         <nav className="container-page py-3 text-xs text-muted-foreground" aria-label="Breadcrumb">
           <Link to="/" className="hover:text-foreground">
@@ -189,15 +204,29 @@ function ProductDetail() {
 
       <div className="container-page grid gap-10 py-10 lg:grid-cols-2">
         <div>
-          <div className="flex aspect-4/3 items-center justify-center overflow-hidden rounded-lg border border-border bg-card">
+          <div className="group relative flex aspect-4/3 items-center justify-center overflow-hidden rounded-lg border border-border bg-card">
             {activeImage ? (
-              <img
-                src={activeImage}
-                alt={gallery[active]?.alt_text || product.name}
-                className="h-full w-full object-contain p-6"
-                width={800}
-                height={600}
-              />
+              <>
+                <button
+                  type="button"
+                  onClick={() => setLightbox(true)}
+                  aria-label="Open image viewer"
+                  className="h-full w-full cursor-zoom-in"
+                >
+                  <img
+                    key={activeImage}
+                    src={activeImage}
+                    alt={gallery[active]?.alt_text || product.name}
+                    decoding="async"
+                    className="animate-fade-in h-full w-full object-contain p-6 transition-transform duration-700 ease-out group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+                    width={800}
+                    height={600}
+                  />
+                </button>
+                <span className="pointer-events-none absolute bottom-3 right-3 inline-flex items-center gap-1.5 rounded-full bg-primary/80 px-3 py-1.5 text-xs font-medium text-primary-foreground opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                  <Expand className="h-3.5 w-3.5" /> Click to zoom
+                </span>
+              </>
             ) : (
               <div className="flex flex-col items-center gap-2 text-muted-foreground">
                 <ImageOff className="h-10 w-10" />
@@ -214,15 +243,18 @@ function ProductDetail() {
                 <button
                   key={img.id}
                   onClick={() => setActive(i)}
+                  onDoubleClick={() => setLightbox(true)}
                   aria-label={`View image ${i + 1}`}
-                  className={`h-20 w-20 shrink-0 overflow-hidden rounded-md border p-1 ${
-                    i === active ? "border-accent" : "border-border"
+                  aria-current={i === active}
+                  className={`h-20 w-20 shrink-0 overflow-hidden rounded-md border p-1 transition-all duration-300 hover:-translate-y-0.5 ${
+                    i === active ? "border-accent shadow-card" : "border-border opacity-70 hover:opacity-100"
                   }`}
                 >
                   <img
                     src={mediaUrl(img.image_url) ?? ""}
                     alt={img.alt_text || ""}
                     loading="lazy"
+                    decoding="async"
                     className="h-full w-full object-contain"
                   />
                 </button>
@@ -341,6 +373,7 @@ function ProductDetail() {
           </div>
         </section>
       ) : null}
+      </MotionProvider>
     </SiteShell>
   );
 }
