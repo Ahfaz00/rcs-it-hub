@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useSuspenseQuery, queryOptions } from "@tanstack/react-query";
-import { useSuspenseQuery as useSQ } from "@tanstack/react-query";
 import { ImageOff, MessageCircle, Phone } from "lucide-react";
 
 import { SiteShell } from "@/components/site/SiteShell";
