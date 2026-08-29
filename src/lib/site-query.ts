@@ -9,12 +9,12 @@ export const siteQueryOptions = queryOptions({
   staleTime: 5 * 60 * 1000,
 });
 
-export function whatsappLink(number: string, message: string) {
+export function whatsappLink(number: string, message?: string | null) {
   const digits = (number || "").replace(/\D/g, "");
-  return `https://wa.me/${digits}?text=${encodeURIComponent(message)}`;
+  return `https://wa.me/${digits}?text=${encodeURIComponent(message || "Hello, I would like to enquire about your products.")}`;
 }
 
-export function enquiryMessage(template: string, product?: string) {
+export function enquiryMessage(template: string | null | undefined, product?: string) {
   const base =
     template ||
     "Hello R Computer Solutions, I am interested in {product}. Please share current price, availability and details.";

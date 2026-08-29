@@ -18,13 +18,13 @@ import {
 import { listProducts, getCatalogFilters } from "@/lib/public.functions";
 
 type ProductSearch = {
-  search?: string;
-  category?: string;
-  brand?: string;
-  condition?: string;
-  type?: string;
-  sort?: string;
-  page?: number;
+  search?: string | undefined;
+  category?: string | undefined;
+  brand?: string | undefined;
+  condition?: string | undefined;
+  type?: string | undefined;
+  sort?: string | undefined;
+  page?: number | undefined;
 };
 
 const PER_PAGE = 12;
@@ -51,7 +51,6 @@ export const Route = createFileRoute("/products/")({
     sort: typeof raw['sort'] === "string" && raw['sort'] ? raw['sort'] : undefined,
     page: raw['page'] ? Math.max(1, Number(raw['page'])) : undefined,
   }),
-  searchMiddlewares: [],
   loaderDeps: ({ search }) => search,
   loader: async ({ context, deps }) => {
     await Promise.all([
@@ -264,9 +263,9 @@ function FilterSelect({
   onChange,
 }: {
   label: string;
-  value?: string;
+  value?: string | undefined;
   options: { value: string; label: string }[];
-  onChange: (value?: string) => void;
+  onChange: (value?: string | undefined) => void;
 }) {
   if (options.length === 0) return null;
   return (

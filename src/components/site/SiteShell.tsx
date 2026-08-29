@@ -36,7 +36,7 @@ export function PageHero({
   breadcrumb,
 }: {
   title: string;
-  subtitle?: string;
+  subtitle?: string | undefined;
   breadcrumb?: ReactNode;
 }) {
   return (
