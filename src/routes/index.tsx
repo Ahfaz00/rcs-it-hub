@@ -91,23 +91,42 @@ function HomePage() {
           src={heroImage}
           alt=""
           aria-hidden="true"
-          className="absolute inset-0 h-full w-full object-cover opacity-25"
+          className="absolute inset-0 h-full w-full object-cover opacity-20"
+        />
+        <div
+          aria-hidden="true"
+          className="absolute -left-24 top-10 h-72 w-72 rounded-full bg-accent/20 blur-3xl animate-float"
+        />
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 opacity-[0.07] [background-image:linear-gradient(to_right,currentColor_1px,transparent_1px),linear-gradient(to_bottom,currentColor_1px,transparent_1px)] [background-size:56px_56px]"
         />
         <div className="relative container-page grid gap-10 py-16 md:py-24 lg:grid-cols-2 lg:items-center">
           <div>
-            <p className="inline-flex items-center gap-2 rounded-full border border-primary-foreground/25 px-3 py-1 text-xs font-medium uppercase tracking-[0.16em]">
+            <p
+              className="animate-fade-in inline-flex items-center gap-2 rounded-full border border-primary-foreground/25 px-3 py-1 text-xs font-medium uppercase tracking-[0.16em]"
+              style={{ animationDelay: "60ms" }}
+            >
+              <span className="h-1.5 w-1.5 rounded-full bg-accent" />
               Computer Wholesaler &middot; Navi Mumbai
             </p>
-            <h1 className="mt-5 font-display text-4xl font-bold leading-tight md:text-5xl">
+            <h1
+              className="animate-fade-in mt-5 font-display text-4xl font-bold leading-tight md:text-5xl"
+              style={{ animationDelay: "140ms" }}
+            >
               {s["hero_title"] || "Quality Refurbished Technology. Built for Performance."}
             </h1>
-            <p className="mt-4 max-w-xl text-sm leading-relaxed text-primary-foreground/80 md:text-base">
+            <p
+              className="animate-fade-in mt-4 max-w-xl text-sm leading-relaxed text-primary-foreground/80 md:text-base"
+              style={{ animationDelay: "220ms" }}
+            >
               {s["hero_subtitle"]}
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Button asChild size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90">
+            <div className="animate-fade-in mt-8 flex flex-wrap gap-3" style={{ animationDelay: "300ms" }}>
+              <Button asChild size="lg" className="sheen bg-accent text-accent-foreground hover:bg-accent/90">
                 <a href={safePath(s["hero_cta1_link"], "/products")}>
-                  {s["hero_cta1_text"] || "Browse Products"} <ArrowRight className="ml-2 h-4 w-4" />
+                  {s["hero_cta1_text"] || "Browse Products"}{" "}
+                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </a>
               </Button>
               <Button
@@ -123,13 +142,13 @@ function HomePage() {
             </div>
           </div>
 
-          <div className="hidden overflow-hidden rounded-xl border border-primary-foreground/15 shadow-lift lg:block">
-            <img
-              src={heroImage}
-              alt="Refurbished laptops and workstations being tested at the R Computer Solutions facility"
-              className="h-full w-full object-cover"
-            />
-          </div>
+          <Reveal
+            direction="scale"
+            delay={200}
+            className="animate-float overflow-hidden rounded-xl border border-primary-foreground/15 shadow-lift"
+          >
+            <HeroSlider slides={heroSlides} className="aspect-[4/3] w-full sm:aspect-[16/10]" />
+          </Reveal>
         </div>
       </section>
 
@@ -141,17 +160,18 @@ function HomePage() {
             { Icon: ShieldCheck, title: "Warranty stated upfront", text: "Warranty terms listed on each product page." },
             { Icon: PackageCheck, title: "Bulk supply", text: "Volume orders with consistent configurations." },
             { Icon: Truck, title: "Pan-India delivery", text: "Dispatch across India from Navi Mumbai." },
-          ].map((item) => (
-            <div key={item.title} className="flex gap-3">
+          ].map((item, i) => (
+            <Reveal key={item.title} delay={i * 90} className="flex gap-3">
               <item.Icon className="h-6 w-6 shrink-0 text-accent" />
               <div>
                 <p className="font-display text-sm font-semibold">{item.title}</p>
                 <p className="mt-1 text-xs text-muted-foreground">{item.text}</p>
               </div>
-            </div>
+            </Reveal>
           ))}
         </div>
       </section>
+
 
       {/* Categories */}
       <section className="container-page py-16">
