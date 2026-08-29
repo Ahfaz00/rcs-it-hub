@@ -116,12 +116,10 @@ export function Header() {
               </SheetTrigger>
               <SheetContent side="right" className="w-[88vw] max-w-sm overflow-y-auto p-0">
                 <SheetTitle className="sr-only">Menu</SheetTitle>
-                <div className="flex items-center justify-between border-b border-border p-4">
+                <div className="flex items-center border-b border-border p-4 pr-14">
                   <Logo compact />
-                  <Button variant="ghost" size="icon" onClick={() => setOpen(false)} aria-label="Close menu">
-                    <X className="h-5 w-5" />
-                  </Button>
                 </div>
+
                 <form onSubmit={search} className="border-b border-border p-4">
                   <div className="relative">
                     <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
