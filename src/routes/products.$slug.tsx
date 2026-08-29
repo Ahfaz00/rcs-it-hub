@@ -78,6 +78,7 @@ function ProductDetail() {
   const { data } = useSuspenseQuery(productQueryOptions(slug));
   const { data: site } = useSuspenseQuery(siteQueryOptions);
   const [active, setActive] = useState(0);
+  const [lightbox, setLightbox] = useState(false);
 
   if (!data) return <ProductNotFound />;
   const { product, images, related } = data;
