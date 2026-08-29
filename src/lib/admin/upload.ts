@@ -12,7 +12,7 @@ export async function uploadMedia(file: File, folder = "uploads"): Promise<strin
   const { error } = await supabase.storage.from("media").upload(path, file, {
     cacheControl: "31536000",
     upsert: false,
-    contentType: file.type || undefined,
+    ...(file.type ? { contentType: file.type } : {}),
   });
   if (error) throw new Error(error.message);
   return path;
