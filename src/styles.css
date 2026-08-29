@@ -190,3 +190,104 @@
     padding-inline: 2rem;
   }
 }
+
+/* ---- Motion system ---- */
+@keyframes rcs-kenburns {
+  0% {
+    transform: scale(1.02) translate3d(0, 0, 0);
+  }
+  100% {
+    transform: scale(1.14) translate3d(-1.5%, -1.5%, 0);
+  }
+}
+
+@keyframes rcs-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes rcs-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes rcs-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes rcs-sheen {
+  from {
+    transform: translateX(-120%) skewX(-18deg);
+  }
+  to {
+    transform: translateX(220%) skewX(-18deg);
+  }
+}
+
+@utility animate-kenburns {
+  animation: rcs-kenburns 7s ease-out forwards;
+}
+
+@utility animate-fade-in {
+  animation: rcs-fade-in 0.7s ease-out both;
+}
+
+@utility animate-float {
+  animation: rcs-float 6s ease-in-out infinite;
+}
+
+@utility animate-marquee {
+  animation: rcs-marquee 28s linear infinite;
+}
+
+@utility hover-lift {
+  transition:
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s ease;
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lift);
+  }
+}
+
+@utility sheen {
+  position: relative;
+  overflow: hidden;
+  &::after {
+    content: "";
+    position: absolute;
+    inset-block: 0;
+    width: 40%;
+    background: linear-gradient(90deg, transparent, oklch(1 0 0 / 0.18), transparent);
+    transform: translateX(-120%) skewX(-18deg);
+  }
+  &:hover::after {
+    animation: rcs-sheen 0.9s ease-out;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-kenburns,
+  .animate-float,
+  .animate-marquee,
+  .animate-fade-in {
+    animation: none !important;
+  }
+}
+
