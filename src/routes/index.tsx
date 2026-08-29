@@ -257,31 +257,37 @@ function HomePage() {
       {/* Why us */}
       <section className="bg-primary py-16 text-primary-foreground">
         <div className="container-page grid gap-10 lg:grid-cols-2">
-          <div>
+          <Reveal direction="left">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">Why buy from us</p>
             <h2 className="mt-3 font-display text-3xl font-bold">
               Honest grading, real testing, practical pricing
             </h2>
             <p className="mt-4 text-sm leading-relaxed text-primary-foreground/80">{s["footer_text"]}</p>
-            <Button asChild className="mt-6 bg-accent text-accent-foreground hover:bg-accent/90">
+            <Button asChild className="sheen mt-6 bg-accent text-accent-foreground hover:bg-accent/90">
               <Link to="/about">About our process</Link>
             </Button>
-          </div>
+          </Reveal>
           <div className="grid gap-4 sm:grid-cols-2">
             {[
               { Icon: BadgeCheck, title: "Honest grading", text: "Devices described as they are, with condition notes." },
               { Icon: ClipboardCheck, title: "Structured testing", text: "Display, battery, ports, storage, memory and thermals." },
               { Icon: Headphones, title: "In-house support", text: "Repair, upgrades and AMC handled by our own team." },
               { Icon: PackageCheck, title: "GST invoicing", text: `Registered business${s["gst_number"] ? ` (GST ${s["gst_number"]})` : ""}.` },
-            ].map((item) => (
-              <div key={item.title} className="rounded-lg border border-primary-foreground/15 p-5">
+            ].map((item, i) => (
+              <Reveal
+                key={item.title}
+                direction="right"
+                delay={i * 90}
+                className="rounded-lg border border-primary-foreground/15 p-5 transition-colors hover:border-accent/50 hover:bg-primary-foreground/5"
+              >
                 <item.Icon className="h-5 w-5 text-accent" />
                 <p className="mt-3 font-display text-sm font-semibold">{item.title}</p>
                 <p className="mt-1.5 text-xs text-primary-foreground/70">{item.text}</p>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
+
       </section>
 
       {/* Brands */}
@@ -291,17 +297,19 @@ function HomePage() {
             Brands we supply
           </p>
           <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
-            {home.brands.map((b) => (
-              <Link
-                key={b.slug}
-                to="/products"
-                search={{ brand: b.slug }}
-                className="rounded-md border border-border px-4 py-2 font-display text-sm font-semibold text-muted-foreground transition-colors hover:border-accent hover:text-foreground"
-              >
-                {b.name}
-              </Link>
+            {home.brands.map((b, i) => (
+              <Reveal key={b.slug} direction="scale" delay={i * 60}>
+                <Link
+                  to="/products"
+                  search={{ brand: b.slug }}
+                  className="block rounded-md border border-border px-4 py-2 font-display text-sm font-semibold text-muted-foreground transition-all duration-300 hover:-translate-y-0.5 hover:border-accent hover:text-foreground"
+                >
+                  {b.name}
+                </Link>
+              </Reveal>
             ))}
           </div>
+
         </section>
       ) : null}
 
@@ -311,26 +319,29 @@ function HomePage() {
           <div className="container-page">
             <SectionHeading eyebrow="Customer feedback" title="What buyers say" />
             <div className="mt-8 grid gap-5 md:grid-cols-3">
-              {home.testimonials.slice(0, 3).map((t) => (
-                <figure key={t.id} className="rounded-lg border border-border bg-card p-6 shadow-card">
-                  <Quote className="h-6 w-6 text-accent" />
-                  <blockquote className="mt-4 text-sm leading-relaxed text-muted-foreground">
-                    {t.review}
-                  </blockquote>
-                  <figcaption className="mt-5 border-t border-border pt-4">
-                    <p className="font-display text-sm font-semibold">{t.customer_name}</p>
-                    {t.company ? <p className="text-xs text-muted-foreground">{t.company}</p> : null}
-                    {t.rating ? (
-                      <div className="mt-2 flex gap-0.5" aria-label={`${t.rating} out of 5`}>
-                        {Array.from({ length: t.rating }).map((_, i) => (
-                          <Star key={i} className="h-3.5 w-3.5 fill-accent text-accent" />
-                        ))}
-                      </div>
-                    ) : null}
-                  </figcaption>
-                </figure>
+              {home.testimonials.slice(0, 3).map((t, i) => (
+                <Reveal key={t.id} delay={i * 110} className="h-full">
+                  <figure className="hover-lift h-full rounded-lg border border-border bg-card p-6 shadow-card">
+                    <Quote className="h-6 w-6 text-accent" />
+                    <blockquote className="mt-4 text-sm leading-relaxed text-muted-foreground">
+                      {t.review}
+                    </blockquote>
+                    <figcaption className="mt-5 border-t border-border pt-4">
+                      <p className="font-display text-sm font-semibold">{t.customer_name}</p>
+                      {t.company ? <p className="text-xs text-muted-foreground">{t.company}</p> : null}
+                      {t.rating ? (
+                        <div className="mt-2 flex gap-0.5" aria-label={`${t.rating} out of 5`}>
+                          {Array.from({ length: t.rating }).map((_, si) => (
+                            <Star key={si} className="h-3.5 w-3.5 fill-accent text-accent" />
+                          ))}
+                        </div>
+                      ) : null}
+                    </figcaption>
+                  </figure>
+                </Reveal>
               ))}
             </div>
+
           </div>
         </section>
       ) : null}
