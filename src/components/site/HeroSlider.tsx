@@ -13,15 +13,22 @@ export function HeroSlider({
   slides,
   interval = 5200,
   className,
+  showCaption = true,
+  showDots = true,
+  overlay = true,
 }: {
   slides: HeroSlide[];
   interval?: number;
   className?: string;
+  showCaption?: boolean;
+  showDots?: boolean;
+  overlay?: boolean;
 }) {
   const motion = useMotion();
   const [index, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const timer = useRef<ReturnType<typeof setInterval> | null>(null);
+
 
   const go = useCallback(
     (next: number) => setIndex(((next % slides.length) + slides.length) % slides.length),
