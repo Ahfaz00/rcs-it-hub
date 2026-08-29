@@ -15,6 +15,7 @@ import {
 import { SiteShell } from "@/components/site/SiteShell";
 import { ProductCard } from "@/components/site/ProductCard";
 import { Icon } from "@/components/site/Icon";
+import { safePath } from "@/lib/format";
 import { Button } from "@/components/ui/button";
 import {
   Accordion,
@@ -87,9 +88,9 @@ function HomePage() {
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Button asChild size="lg" className="bg-accent text-accent-foreground hover:bg-accent/90">
-                <Link to="/products">
+                <a href={safePath(s["hero_cta1_link"], "/products")}>
                   {s["hero_cta1_text"] || "Browse Products"} <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
+                </a>
               </Button>
               <Button
                 asChild
@@ -97,7 +98,9 @@ function HomePage() {
                 variant="outline"
                 className="border-primary-foreground/30 bg-transparent text-primary-foreground hover:bg-primary-foreground/10"
               >
-                <Link to="/bulk-orders">{s["hero_cta2_text"] || "Get a Quote"}</Link>
+                <a href={safePath(s["hero_cta2_link"], "/bulk-orders")}>
+                  {s["hero_cta2_text"] || "Get a Quote"}
+                </a>
               </Button>
             </div>
           </div>
