@@ -245,7 +245,7 @@
 }
 
 @utility animate-fade-in {
-  animation: rcs-fade-in 0.7s ease-out both;
+  animation: rcs-fade-in var(--rcs-duration, 0.7s) ease-out both;
 }
 
 @utility animate-float {
@@ -253,7 +253,15 @@
 }
 
 @utility animate-marquee {
-  animation: rcs-marquee 28s linear infinite;
+  animation: rcs-marquee var(--rcs-marquee-duration, 28s) linear infinite;
+}
+
+/* CMS master switch: [data-motion="off"] disables decorative motion. */
+[data-motion="off"] .animate-kenburns,
+[data-motion="off"] .animate-fade-in,
+[data-motion="off"] .animate-float,
+[data-motion="off"] .animate-marquee {
+  animation: none !important;
 }
 
 @utility hover-lift {
