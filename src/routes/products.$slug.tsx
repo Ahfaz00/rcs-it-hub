@@ -373,6 +373,7 @@ function ProductDetail() {
           </div>
         </section>
       ) : null}
+      </MotionProvider>
     </SiteShell>
   );
 }
