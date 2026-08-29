@@ -15,6 +15,7 @@ import {
 import { SiteShell } from "@/components/site/SiteShell";
 import { ProductCard } from "@/components/site/ProductCard";
 import { Icon } from "@/components/site/Icon";
+import { safePath } from "@/lib/format";
 import { Button } from "@/components/ui/button";
 import {
   Accordion,
