@@ -1,5 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
+import { cached } from "./cache.server";
 
 const productFilterSchema = z.object({
   search: z.string().optional(),
@@ -15,7 +16,9 @@ const productFilterSchema = z.object({
 
 export type ProductFilters = z.infer<typeof productFilterSchema>;
 
-export const getSiteData = createServerFn({ method: "GET" }).handler(async () => {
+export const getSiteData = createServerFn({ method: "GET" }).handler(
+async () =>
+  cached("site", 300000, async () => {
   const { createPublicServerClient } = await import("./supabase-public.server");
   const supabase = createPublicServerClient();
 
@@ -41,11 +44,14 @@ export const getSiteData = createServerFn({ method: "GET" }).handler(async () =>
     categories: categories.data ?? [],
     services: services.data ?? [],
   };
-});
+  }),
+);
 
 export const listProducts = createServerFn({ method: "GET" })
   .inputValidator((data: unknown) => productFilterSchema.parse(data ?? {}))
-  .handler(async ({ data }) => {
+  .handler(
+  async ({ data }) =>
+    cached(`products:${JSON.stringify(data)}`, 60000, async () => {
     const { createPublicServerClient } = await import("./supabase-public.server");
     const supabase = createPublicServerClient();
 
@@ -109,11 +115,14 @@ export const listProducts = createServerFn({ method: "GET" })
     if (error) throw new Error(error.message);
 
     return { products: rows ?? [], total: count ?? 0, page, perPage };
-  });
+    }),
+  );
 
 export const getProductBySlug = createServerFn({ method: "GET" })
   .inputValidator((data: unknown) => z.object({ slug: z.string().min(1) }).parse(data))
-  .handler(async ({ data }) => {
+  .handler(
+  async ({ data }) =>
+    cached(`product:${JSON.stringify(data)}`, 60000, async () => {
     const { createPublicServerClient } = await import("./supabase-public.server");
     const supabase = createPublicServerClient();
 
@@ -144,9 +153,12 @@ export const getProductBySlug = createServerFn({ method: "GET" })
     ]);
 
     return { product, images: images.data ?? [], related: related.data ?? [] };
-  });
+    }),
+  );
 
-export const getCatalogFilters = createServerFn({ method: "GET" }).handler(async () => {
+export const getCatalogFilters = createServerFn({ method: "GET" }).handler(
+async () =>
+  cached("filters", 300000, async () => {
   const { createPublicServerClient } = await import("./supabase-public.server");
   const supabase = createPublicServerClient();
 
@@ -164,9 +176,12 @@ export const getCatalogFilters = createServerFn({ method: "GET" }).handler(async
   ].sort();
 
   return { categories: categories.data ?? [], brands: brands.data ?? [], conditions, types };
-});
+  }),
+);
 
-export const getHomeData = createServerFn({ method: "GET" }).handler(async () => {
+export const getHomeData = createServerFn({ method: "GET" }).handler(
+async () =>
+  cached("home", 60000, async () => {
   const { createPublicServerClient } = await import("./supabase-public.server");
   const supabase = createPublicServerClient();
 
@@ -212,9 +227,12 @@ export const getHomeData = createServerFn({ method: "GET" }).handler(async () =>
     brands: brands.data ?? [],
     gallery: gallery.data ?? [],
   };
-});
+  }),
+);
 
-export const listServices = createServerFn({ method: "GET" }).handler(async () => {
+export const listServices = createServerFn({ method: "GET" }).handler(
+async () =>
+  cached("services", 300000, async () => {
   const { createPublicServerClient } = await import("./supabase-public.server");
   const supabase = createPublicServerClient();
   const { data } = await supabase
@@ -223,7 +241,8 @@ export const listServices = createServerFn({ method: "GET" }).handler(async () =
     .eq("is_active", true)
     .order("sort_order");
   return data ?? [];
-});
+  }),
+);
 
 export const getServiceBySlug = createServerFn({ method: "GET" })
   .inputValidator((data: unknown) => z.object({ slug: z.string().min(1) }).parse(data))
@@ -239,14 +258,19 @@ export const getServiceBySlug = createServerFn({ method: "GET" })
     return service;
   });
 
-export const listFaqs = createServerFn({ method: "GET" }).handler(async () => {
+export const listFaqs = createServerFn({ method: "GET" }).handler(
+async () =>
+  cached("faqs", 300000, async () => {
   const { createPublicServerClient } = await import("./supabase-public.server");
   const supabase = createPublicServerClient();
   const { data } = await supabase.from("faqs").select("*").eq("is_active", true).order("sort_order");
   return data ?? [];
-});
+  }),
+);
 
-export const listGallery = createServerFn({ method: "GET" }).handler(async () => {
+export const listGallery = createServerFn({ method: "GET" }).handler(
+async () =>
+  cached("gallery", 300000, async () => {
   const { createPublicServerClient } = await import("./supabase-public.server");
   const supabase = createPublicServerClient();
   const { data } = await supabase
@@ -255,7 +279,8 @@ export const listGallery = createServerFn({ method: "GET" }).handler(async () =>
     .eq("is_active", true)
     .order("sort_order");
   return data ?? [];
-});
+  }),
+);
 
 export const getPageBySlug = createServerFn({ method: "GET" })
   .inputValidator((data: unknown) => z.object({ slug: z.string().min(1) }).parse(data))
