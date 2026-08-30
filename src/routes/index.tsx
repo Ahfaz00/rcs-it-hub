@@ -108,48 +108,42 @@ function HomeSections() {
     <>
       {/* ============ HERO — editorial split, product-led ============ */}
       {showHero ? (
-        <section className="relative isolate overflow-hidden bg-background">
-          <div aria-hidden="true" className="absolute inset-0 grid-blueprint opacity-40" />
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute -right-40 -top-56 h-[46rem] w-[46rem] radial-glow"
-          />
-          <div className="container-page relative z-10 grid items-center gap-14 pb-16 pt-14 md:pb-24 md:pt-20 lg:grid-cols-[1fr_1.05fr] lg:gap-16">
+        <section className="relative isolate overflow-hidden bg-ink-ambient text-white">
+          <div aria-hidden="true" className="absolute inset-0 grid-blueprint opacity-[0.12]" />
+          <div className="container-page relative z-10 grid items-center gap-12 pb-16 pt-14 md:pb-24 md:pt-20 lg:grid-cols-[1fr_1.05fr] lg:gap-16">
             <div>
               <FadeIn y={14}>
-                <p className="text-[0.7rem] font-bold uppercase tracking-[0.28em] text-primary">
-                  R Computer Solutions <span className="text-muted-foreground/60">•</span> The IT Hub
+                <p className="text-eyebrow text-cyan">
+                  R Computer Solutions <span className="text-white/40">•</span> The IT Hub
                 </p>
               </FadeIn>
               <FadeIn delay={0.08} y={20}>
-                <h1 className="mt-6 font-display text-[clamp(2.75rem,7vw,5.25rem)] font-bold uppercase leading-[0.94] tracking-[-0.035em] text-foreground">
+                <h1 className="mt-7 font-display text-hero font-bold uppercase text-white">
                   {s["hero_title"] ? (
                     s["hero_title"]
                   ) : (
                     <>
                       Refurbished
                       <br />
-                      <span className="text-gradient-brand">Technology.</span>
+                      <span className="text-cyan">Technology.</span>
                       <br />
-                      Without
-                      <br />
-                      Compromise.
+                      Built to perform.
                     </>
                   )}
                 </h1>
               </FadeIn>
               <FadeIn delay={0.16}>
-                <p className="mt-7 max-w-md text-base leading-relaxed text-muted-foreground md:text-lg">
+                <p className="mt-7 max-w-md text-body-lg text-white/70">
                   {s["hero_subtitle"] ||
-                    "Business-grade laptops, desktops and workstations — inspected, graded and bench-tested before they leave our Navi Mumbai facility."}
+                    "Business-grade laptops, desktops and workstations — inspected, graded and bench-tested before dispatch."}
                 </p>
               </FadeIn>
               <FadeIn delay={0.24}>
-                <div className="mt-10 flex flex-wrap items-center gap-3">
+                <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
                   <Button
                     asChild
                     size="lg"
-                    className="group h-14 rounded-none bg-navy px-8 text-[0.78rem] font-bold uppercase tracking-[0.14em] text-navy-foreground transition-colors hover:bg-primary"
+                    className="group h-16 rounded-none bg-cyan px-9 text-[0.85rem] font-bold uppercase tracking-[0.14em] text-cyan-foreground transition-transform hover:bg-white active:scale-[0.98] sm:h-15"
                   >
                     <a href={safePath(s["hero_cta1_link"], "/products")}>
                       {s["hero_cta1_text"] || "Explore laptops"}
@@ -160,7 +154,7 @@ function HomeSections() {
                     asChild
                     size="lg"
                     variant="ghost"
-                    className="h-14 rounded-none border-b-2 border-foreground/20 px-2 text-[0.78rem] font-bold uppercase tracking-[0.14em] transition-colors hover:border-primary hover:bg-transparent hover:text-primary"
+                    className="h-16 rounded-none border border-white/25 px-9 text-[0.85rem] font-bold uppercase tracking-[0.14em] text-white transition-colors hover:border-cyan hover:bg-white/5 hover:text-cyan active:scale-[0.98] sm:h-15"
                   >
                     <a href={safePath(s["hero_cta2_link"], "/bulk-orders")}>
                       {s["hero_cta2_text"] || "Get a quote"}
@@ -180,21 +174,12 @@ function HomeSections() {
                   overlay={false}
                   className="aspect-4/3 w-full"
                 />
-                <div
-                  aria-hidden="true"
-                  className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,transparent_60%,oklch(0.19_0.035_255/0.5))]"
-                />
-              </div>
-              <div className="pointer-events-none absolute -bottom-7 -left-3 hidden w-60 bg-card/95 p-5 shadow-lift backdrop-blur sm:block">
-                <p className="font-display text-3xl font-bold tracking-tight text-primary">100%</p>
-                <p className="mt-1 text-[0.72rem] leading-relaxed text-muted-foreground">
-                  of units bench-tested and graded before dispatch.
-                </p>
               </div>
             </FadeIn>
           </div>
         </section>
       ) : null}
+
 
       {/* ============ BRAND MARQUEE ============ */}
       {home.brands.length > 0 ? (
