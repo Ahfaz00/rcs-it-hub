@@ -360,7 +360,7 @@ function HomeSections() {
         <div className="container-page relative grid gap-10 section-y lg:grid-cols-[1.1fr_1fr] lg:items-end">
           <FadeIn>
             <p className="text-eyebrow text-cyan">Workstations</p>
-            <h2 className="mt-5 max-w-2xl font-display text-[clamp(2.1rem,5vw,4rem)] font-bold uppercase leading-[0.96] tracking-[-0.035em] text-white">
+            <h2 className="mt-5 max-w-2xl font-display text-section font-bold uppercase text-white">
               Power when performance matters.
             </h2>
             <p className="mt-6 max-w-lg text-body-lg text-white/70">
@@ -427,7 +427,7 @@ function HomeSections() {
         <div className="container-page grid gap-12 lg:grid-cols-[1fr_1.05fr] lg:items-center lg:gap-20">
           <FadeIn>
             <p className="text-eyebrow text-primary">Bulk &amp; corporate</p>
-            <h2 className="mt-5 font-display text-[clamp(2rem,4.4vw,3.4rem)] font-bold uppercase leading-[0.98] tracking-[-0.03em]">
+            <h2 className="mt-5 font-display text-section font-bold uppercase">
               Your IT procurement partner.
             </h2>
             <p className="mt-6 max-w-lg text-body-lg text-muted-foreground">
@@ -535,7 +535,7 @@ function HomeSections() {
         <section className="container-page grid gap-10 section-y lg:grid-cols-[1fr_1.4fr] lg:gap-20">
           <FadeIn>
             <p className="text-eyebrow text-primary">Questions</p>
-            <h2 className="mt-5 font-display text-[clamp(1.9rem,3.6vw,2.8rem)] font-bold uppercase leading-[1] tracking-[-0.03em]">
+            <h2 className="mt-5 font-display text-section font-bold uppercase">
               Frequently asked
             </h2>
             <Link
@@ -567,7 +567,7 @@ function HomeSections() {
             <p className="text-eyebrow text-primary">
               {s["facility_eyebrow"] || "Inside our facility"}
             </p>
-            <h2 className="mt-4 font-display text-[clamp(1.7rem,3.2vw,2.5rem)] font-bold uppercase leading-[1] tracking-[-0.03em]">
+            <h2 className="mt-4 font-display text-section font-bold uppercase">
               {s["facility_title"] || "Stock, testing benches and dispatch"}
             </h2>
           </div>
@@ -596,7 +596,7 @@ function HomeSections() {
       {showCta ? (
         <section className="bg-navy text-navy-foreground">
           <Reveal className="container-page flex flex-col items-start gap-6 section-y">
-            <h2 className="max-w-3xl font-display text-[clamp(1.9rem,4.2vw,3.2rem)] font-bold uppercase leading-[1] tracking-[-0.03em] text-white">
+            <h2 className="max-w-3xl font-display text-section font-bold uppercase text-white">
               {s["cta_title"] || "Need a bulk quote or a specific configuration?"}
             </h2>
             <p className="max-w-2xl text-body-lg text-white/70">
@@ -644,7 +644,7 @@ function SectionHeading({
       <div className="flex flex-wrap items-end justify-between gap-6 border-b border-border pb-6">
         <div>
           <p className="text-eyebrow text-primary">{eyebrow}</p>
-          <h2 className="mt-4 font-display text-[clamp(1.9rem,4vw,3.1rem)] font-bold uppercase leading-[1] tracking-[-0.03em]">
+          <h2 className="mt-4 font-display text-section font-bold uppercase">
             {title}
           </h2>
         </div>
