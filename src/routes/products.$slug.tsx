@@ -294,7 +294,7 @@ function ProductDetail() {
             </div>
           ) : null}
 
-          <div className="mt-6 rounded-lg border border-border bg-card p-5">
+          <div className="mt-6 rounded-2xl border border-primary/20 bg-card p-5 shadow-card">
             <div className="flex flex-wrap items-baseline gap-3">
               <p className="font-display text-3xl font-bold">
                 {formatPrice(product.price, product.show_price)}
