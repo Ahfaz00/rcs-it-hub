@@ -221,7 +221,7 @@ function HomeSections() {
 
       {/* ============ CATEGORIES — asymmetric editorial ============ */}
       {showShowcase && showcaseItems.length > 0 ? (
-        <section className="container-page py-20 md:py-28">
+        <section className="container-page section-y">
           <SectionHeading
             eyebrow={s["showcase_eyebrow"] || "Shop by category"}
             title={s["showcase_title"] || "Hardware for every requirement"}
@@ -233,7 +233,7 @@ function HomeSections() {
 
       {/* ============ THE CURRENT STOCK ============ */}
       {products.length > 0 ? (
-        <section className="border-y border-border bg-surface py-20 md:py-28">
+        <section className="border-y border-border bg-surface section-y">
           <div className="container-page">
             <SectionHeading
               eyebrow={s["featured_eyebrow"] || "In stock now"}
@@ -252,7 +252,7 @@ function HomeSections() {
       ) : null}
 
       {/* ============ WHY US — editorial, image + list ============ */}
-      <section className="container-page py-20 md:py-28">
+      <section className="container-page section-y">
         <div className="grid gap-12 lg:grid-cols-[1fr_1fr] lg:items-center lg:gap-20">
           <FadeIn y={20}>
             <figure className="relative overflow-hidden">
@@ -269,7 +269,7 @@ function HomeSections() {
 
           <div>
             <FadeIn>
-              <p className="text-[0.7rem] font-bold uppercase tracking-[0.26em] text-primary">Why buy from us</p>
+              <p className="text-eyebrow text-primary">Why buy from us</p>
               <h2 className="mt-5 font-display text-[clamp(2rem,4.4vw,3.4rem)] font-bold uppercase leading-[0.98] tracking-[-0.03em]">
                 Built on testing.
                 <br />
@@ -287,7 +287,7 @@ function HomeSections() {
                 <StaggerItem key={row.title}>
                   <div className="grid gap-1 py-5 sm:grid-cols-[13rem_1fr] sm:gap-6">
                     <p className="font-display text-sm font-bold uppercase tracking-[0.12em]">{row.title}</p>
-                    <p className="text-sm leading-relaxed text-muted-foreground">{row.text}</p>
+                    <p className="text-body text-muted-foreground">{row.text}</p>
                   </div>
                 </StaggerItem>
               ))}
@@ -306,10 +306,10 @@ function HomeSections() {
       </section>
 
       {/* ============ PROCESS — horizontal numbered ============ */}
-      <section className="border-y border-border bg-background py-20 md:py-24">
+      <section className="border-y border-border bg-background section-y">
         <div className="container-page">
           <FadeIn>
-            <p className="text-[0.7rem] font-bold uppercase tracking-[0.26em] text-primary">Our process</p>
+            <p className="text-eyebrow text-primary">Our process</p>
             <h2 className="mt-5 max-w-2xl font-display text-[clamp(1.9rem,4vw,3rem)] font-bold uppercase leading-[1] tracking-[-0.03em]">
               How every unit reaches your desk
             </h2>
@@ -334,7 +334,7 @@ function HomeSections() {
                     {step.n}
                   </span>
                   <h3 className="mt-4 font-display text-sm font-bold uppercase tracking-[0.14em]">{step.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{step.text}</p>
+                  <p className="mt-2 text-body text-muted-foreground">{step.text}</p>
                 </div>
               </StaggerItem>
             ))}
@@ -357,13 +357,13 @@ function HomeSections() {
           aria-hidden="true"
           className="pointer-events-none absolute -bottom-40 right-0 h-[34rem] w-[34rem] rounded-full bg-[radial-gradient(circle,oklch(0.78_0.14_217/0.28),transparent_65%)]"
         />
-        <div className="container-page relative grid gap-10 py-24 md:py-32 lg:grid-cols-[1.1fr_1fr] lg:items-end">
+        <div className="container-page relative grid gap-10 section-y lg:grid-cols-[1.1fr_1fr] lg:items-end">
           <FadeIn>
-            <p className="text-[0.7rem] font-bold uppercase tracking-[0.26em] text-cyan">Workstations</p>
+            <p className="text-eyebrow text-cyan">Workstations</p>
             <h2 className="mt-5 max-w-2xl font-display text-[clamp(2.1rem,5vw,4rem)] font-bold uppercase leading-[0.96] tracking-[-0.035em] text-white">
               Power when performance matters.
             </h2>
-            <p className="mt-6 max-w-lg text-base leading-relaxed text-white/70">
+            <p className="mt-6 max-w-lg text-body-lg text-white/70">
               Xeon and Core workstations for design, engineering and development teams — configured,
               tested and supplied in volume.
             </p>
@@ -399,7 +399,7 @@ function HomeSections() {
 
       {/* ============ SERVICES — minimal list ============ */}
       {site.services.length > 0 ? (
-        <section className="container-page py-20 md:py-28">
+        <section className="container-page section-y">
           <SectionHeading eyebrow="What we do" title="Services beyond the sale" action={{ to: "/services", label: "All services" }} />
           <div className="mt-10 grid divide-y divide-border border-y border-border sm:grid-cols-2 sm:divide-y-0 lg:grid-cols-3">
             {site.services.slice(0, 6).map((service, i) => (
@@ -413,7 +413,7 @@ function HomeSections() {
                   <h3 className="mt-5 font-display text-lg font-semibold tracking-tight transition-colors group-hover:text-primary">
                     {service.title}
                   </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{service.short_description}</p>
+                  <p className="mt-2 text-body text-muted-foreground">{service.short_description}</p>
                   <ArrowRight className="mt-5 h-4 w-4 text-primary opacity-0 transition-all duration-300 group-hover:translate-x-1 group-hover:opacity-100" />
                 </Link>
               </Reveal>
@@ -423,14 +423,14 @@ function HomeSections() {
       ) : null}
 
       {/* ============ B2B ============ */}
-      <section className="border-y border-border bg-surface py-20 md:py-28">
+      <section className="border-y border-border bg-surface section-y">
         <div className="container-page grid gap-12 lg:grid-cols-[1fr_1.05fr] lg:items-center lg:gap-20">
           <FadeIn>
-            <p className="text-[0.7rem] font-bold uppercase tracking-[0.26em] text-primary">Bulk &amp; corporate</p>
+            <p className="text-eyebrow text-primary">Bulk &amp; corporate</p>
             <h2 className="mt-5 font-display text-[clamp(2rem,4.4vw,3.4rem)] font-bold uppercase leading-[0.98] tracking-[-0.03em]">
               Your IT procurement partner.
             </h2>
-            <p className="mt-6 max-w-lg text-base leading-relaxed text-muted-foreground">
+            <p className="mt-6 max-w-lg text-body-lg text-muted-foreground">
               Share your requirement — quantity, configuration and budget — and we revert with availability
               and pricing. GST invoicing, bulk dispatch and AMC support available.
             </p>
@@ -477,7 +477,7 @@ function HomeSections() {
 
       {/* ============ BRANDS ============ */}
       {home.brands.length > 0 ? (
-        <section className="container-page py-20 md:py-24">
+        <section className="container-page section-y">
           <SectionHeading eyebrow="Shop by brand" title="Brands we supply" />
           <div className="mt-10 grid grid-cols-2 gap-px border border-border bg-border sm:grid-cols-3 lg:grid-cols-6">
             {home.brands.map((b, i) => (
@@ -497,7 +497,7 @@ function HomeSections() {
 
       {/* ============ TESTIMONIALS ============ */}
       {showTestimonials && home.testimonials.length > 0 ? (
-        <section className="border-y border-border bg-background py-20 md:py-24">
+        <section className="border-y border-border bg-background section-y">
           <div className="container-page">
             <SectionHeading
               eyebrow={s["testimonials_eyebrow"] || "Customer feedback"}
@@ -508,7 +508,7 @@ function HomeSections() {
                 <Reveal key={t.id} delay={i * motion.stagger} className="h-full">
                   <figure className="flex h-full flex-col bg-background p-8">
                     <Quote className="h-6 w-6 text-primary/40" />
-                    <blockquote className="mt-5 flex-1 text-base leading-relaxed text-foreground/85">
+                    <blockquote className="mt-5 flex-1 text-body-lg text-foreground/85">
                       {t.review}
                     </blockquote>
                     <figcaption className="mt-7">
@@ -532,9 +532,9 @@ function HomeSections() {
 
       {/* ============ FAQ ============ */}
       {home.faqs.length > 0 ? (
-        <section className="container-page grid gap-10 py-20 md:py-24 lg:grid-cols-[1fr_1.4fr] lg:gap-20">
+        <section className="container-page grid gap-10 section-y lg:grid-cols-[1fr_1.4fr] lg:gap-20">
           <FadeIn>
-            <p className="text-[0.7rem] font-bold uppercase tracking-[0.26em] text-primary">Questions</p>
+            <p className="text-eyebrow text-primary">Questions</p>
             <h2 className="mt-5 font-display text-[clamp(1.9rem,3.6vw,2.8rem)] font-bold uppercase leading-[1] tracking-[-0.03em]">
               Frequently asked
             </h2>
@@ -551,7 +551,7 @@ function HomeSections() {
                 <AccordionTrigger className="py-5 text-left font-display text-base font-semibold tracking-tight">
                   {f.question}
                 </AccordionTrigger>
-                <AccordionContent className="pb-5 text-sm leading-relaxed text-muted-foreground">
+                <AccordionContent className="pb-5 text-body text-muted-foreground">
                   {f.answer}
                 </AccordionContent>
               </AccordionItem>
@@ -564,7 +564,7 @@ function HomeSections() {
       {showFacility ? (
         <section className="overflow-hidden border-y border-border bg-card py-14">
           <div className="container-page">
-            <p className="text-[0.7rem] font-bold uppercase tracking-[0.26em] text-primary">
+            <p className="text-eyebrow text-primary">
               {s["facility_eyebrow"] || "Inside our facility"}
             </p>
             <h2 className="mt-4 font-display text-[clamp(1.7rem,3.2vw,2.5rem)] font-bold uppercase leading-[1] tracking-[-0.03em]">
@@ -595,11 +595,11 @@ function HomeSections() {
       {/* ============ CTA ============ */}
       {showCta ? (
         <section className="bg-navy text-navy-foreground">
-          <Reveal className="container-page flex flex-col items-start gap-6 py-20 md:py-24">
+          <Reveal className="container-page flex flex-col items-start gap-6 section-y">
             <h2 className="max-w-3xl font-display text-[clamp(1.9rem,4.2vw,3.2rem)] font-bold uppercase leading-[1] tracking-[-0.03em] text-white">
               {s["cta_title"] || "Need a bulk quote or a specific configuration?"}
             </h2>
-            <p className="max-w-2xl text-base leading-relaxed text-white/70">
+            <p className="max-w-2xl text-body-lg text-white/70">
               {s["cta_text"] ||
                 "Send us your requirement and we will come back with availability, configuration options and pricing."}
             </p>
@@ -643,7 +643,7 @@ function SectionHeading({
     <FadeIn>
       <div className="flex flex-wrap items-end justify-between gap-6 border-b border-border pb-6">
         <div>
-          <p className="text-[0.7rem] font-bold uppercase tracking-[0.26em] text-primary">{eyebrow}</p>
+          <p className="text-eyebrow text-primary">{eyebrow}</p>
           <h2 className="mt-4 font-display text-[clamp(1.9rem,4vw,3.1rem)] font-bold uppercase leading-[1] tracking-[-0.03em]">
             {title}
           </h2>
