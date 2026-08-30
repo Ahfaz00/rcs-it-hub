@@ -119,63 +119,90 @@ function HomeSections() {
 
   return (
     <>
-      {/* Full-bleed hero banner */}
+      {/* Premium split hero */}
       {showHero ? (
-        <section className="relative isolate overflow-hidden bg-navy">
-          <div className="absolute inset-0">
-            <HeroSlider
-              slides={heroSlides}
-              interval={heroInterval}
-              showCaption={false}
-              showDots={false}
-              overlay={false}
-              className="h-full w-full"
-            />
-          </div>
+        <section className="relative isolate overflow-hidden border-b border-border bg-gradient-soft">
+          <div aria-hidden="true" className="absolute inset-0 grid-blueprint opacity-70" />
           <div
             aria-hidden="true"
-            className="absolute inset-0 bg-[linear-gradient(100deg,oklch(0.2_0.05_258/0.94),oklch(0.24_0.06_258/0.78)_45%,oklch(0.24_0.06_258/0.25))]"
+            className="pointer-events-none absolute -right-32 -top-40 h-[38rem] w-[38rem] radial-glow"
           />
-          <div aria-hidden="true" className="absolute inset-0 grid-blueprint opacity-[0.12]" />
-          <div className="container-page relative z-10 flex min-h-[28rem] flex-col justify-center py-16 md:min-h-[36rem] md:py-24">
-            <FadeIn className="max-w-2xl text-navy-foreground" y={24} duration={0.7}>
-              <p className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3.5 py-1.5 text-[0.68rem] font-semibold uppercase tracking-[0.18em] backdrop-blur">
-                <Sparkles className="h-3.5 w-3.5 text-cyan" />
-                Computer Wholesaler &middot; Navi Mumbai
-              </p>
-            </FadeIn>
-            <FadeIn className="max-w-3xl" delay={0.1} y={26} duration={0.7}>
-              <h1 className="font-editorial mt-6 text-4xl leading-[1.05] text-white md:text-6xl">
-                {s["hero_title"] || "Refurbished IT hardware, built for performance"}
-              </h1>
-            </FadeIn>
-            <FadeIn delay={0.2}>
-              <p className="mt-5 max-w-xl text-sm leading-relaxed text-white/75 md:text-base">
-                {s["hero_subtitle"]}
-              </p>
-            </FadeIn>
-            <FadeIn delay={0.3}>
-              <div className="mt-8 flex flex-wrap gap-3">
-                <Button
-                  asChild
-                  size="lg"
-                  className="h-12 rounded-full bg-gradient-brand px-7 text-sm font-semibold text-primary-foreground shadow-glow transition-transform hover:scale-[1.03] active:scale-[0.99]"
-                >
-                  <a href={safePath(s["hero_cta1_link"], "/products")}>
-                    {s["hero_cta1_text"] || "Browse stock"}
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </a>
-                </Button>
-                <Button
-                  asChild
-                  size="lg"
-                  variant="outline"
-                  className="h-12 rounded-full border-white/35 bg-white/10 px-7 text-sm font-semibold text-white backdrop-blur transition-colors hover:bg-white/20 hover:text-white"
-                >
-                  <a href={safePath(s["hero_cta2_link"], "/bulk-orders")}>
-                    {s["hero_cta2_text"] || "Get a quote"}
-                  </a>
-                </Button>
+          <div className="container-page relative z-10 grid items-center gap-12 py-16 md:py-24 lg:grid-cols-[1.05fr_1fr] lg:gap-16">
+            <div>
+              <FadeIn y={18}>
+                <p className="inline-flex items-center gap-2 rounded-full border border-primary/25 bg-primary/8 px-3.5 py-1.5 text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-primary">
+                  <Sparkles className="h-3.5 w-3.5" />
+                  Trusted refurbished IT hardware
+                </p>
+              </FadeIn>
+              <FadeIn delay={0.08} y={22}>
+                <h1 className="mt-6 font-display text-hero text-foreground">
+                  {s["hero_title"] ? (
+                    s["hero_title"]
+                  ) : (
+                    <>
+                      Premium <span className="text-gradient-brand">Refurbished Technology.</span>
+                      <br />
+                      Built for Business.
+                    </>
+                  )}
+                </h1>
+              </FadeIn>
+              <FadeIn delay={0.16}>
+                <p className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg">
+                  {s["hero_subtitle"] ||
+                    "Professionally tested laptops, desktops and workstations from trusted brands — ready for business and backed by reliable support."}
+                </p>
+              </FadeIn>
+              <FadeIn delay={0.24}>
+                <div className="mt-9 flex flex-wrap gap-3">
+                  <Button
+                    asChild
+                    size="lg"
+                    className="h-12 rounded-full bg-gradient-brand px-7 text-sm font-semibold text-primary-foreground shadow-glow transition-transform hover:-translate-y-0.5 active:scale-[0.99]"
+                  >
+                    <a href={safePath(s["hero_cta1_link"], "/products")}>
+                      {s["hero_cta1_text"] || "Explore laptops"}
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </a>
+                  </Button>
+                  <Button
+                    asChild
+                    size="lg"
+                    variant="outline"
+                    className="h-12 rounded-full border-border bg-card px-7 text-sm font-semibold transition-colors hover:border-primary/40 hover:bg-primary/5"
+                  >
+                    <a href={safePath(s["hero_cta2_link"], "/bulk-orders")}>
+                      {s["hero_cta2_text"] || "Get a quote"}
+                    </a>
+                  </Button>
+                </div>
+              </FadeIn>
+            </div>
+
+            <FadeIn delay={0.2} y={28} className="relative">
+              <div className="relative overflow-hidden rounded-3xl border border-border bg-card shadow-lift">
+                <HeroSlider
+                  slides={heroSlides}
+                  interval={heroInterval}
+                  showCaption={false}
+                  showDots
+                  overlay={false}
+                  className="aspect-4/3 w-full"
+                />
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,transparent_55%,oklch(0.19_0.035_255/0.55))]"
+                />
+              </div>
+              <div className="pointer-events-none absolute -bottom-6 left-4 hidden w-56 rounded-2xl border border-border bg-card/95 p-4 shadow-lift backdrop-blur sm:block">
+                <p className="text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-primary">
+                  Bench tested
+                </p>
+                <p className="mt-1.5 font-display text-card-title text-foreground">Quality checked</p>
+                <p className="mt-1 text-xs text-muted-foreground">
+                  Each unit is inspected and tested before dispatch.
+                </p>
               </div>
             </FadeIn>
           </div>
@@ -202,25 +229,30 @@ function HomeSections() {
         </div>
       ) : null}
 
-      {/* Trust chips */}
+      {/* Trust bar */}
       <div className="border-b border-border bg-background">
-        <div className="container-page flex flex-wrap items-center justify-center gap-3 py-5">
+        <Stagger className="container-page grid gap-px py-10 sm:grid-cols-2 lg:grid-cols-4">
           {[
-            "Quality tested before dispatch",
-            "Warranty as per listing",
-            "Bulk supply pan-India",
-            "GST invoicing",
+            { icon: ClipboardCheck, title: "Quality tested", copy: "Professionally inspected hardware" },
+            { icon: ShieldCheck, title: "Warranty support", copy: "Product-specific warranty" },
+            { icon: Boxes, title: "Bulk orders", copy: "Corporate & wholesale supply" },
+            { icon: Truck, title: "Pan-India delivery", copy: "Reliable delivery support" },
           ].map((t) => (
-            <span
-              key={t}
-              className="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 text-[0.7rem] font-medium uppercase tracking-[0.12em] text-muted-foreground"
-            >
-              <BadgeCheck className="h-3.5 w-3.5 text-success" />
-              {t}
-            </span>
+            <StaggerItem key={t.title} className="flex items-start gap-3.5 px-1 py-3 lg:px-5">
+              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-primary/20 bg-primary/8 text-primary">
+                <t.icon className="h-5 w-5" />
+              </span>
+              <span className="min-w-0">
+                <span className="block text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-foreground">
+                  {t.title}
+                </span>
+                <span className="mt-1 block text-sm text-muted-foreground">{t.copy}</span>
+              </span>
+            </StaggerItem>
           ))}
-        </div>
+        </Stagger>
       </div>
+
 
       {/* Category showcase */}
       {showShowcase && showcaseItems.length > 0 ? (
