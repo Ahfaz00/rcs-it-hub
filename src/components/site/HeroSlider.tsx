@@ -66,6 +66,7 @@ export function HeroSlider({
             src={slide.src}
             alt={slide.alt}
             loading={i === 0 ? "eager" : "lazy"}
+            fetchPriority={i === 0 ? "high" : "low"}
             decoding={i === 0 ? "sync" : "async"}
             className={cn("h-full w-full object-cover", i === index && motion.kenburns && "animate-kenburns")}
           />
