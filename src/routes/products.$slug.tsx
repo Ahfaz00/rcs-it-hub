@@ -426,15 +426,19 @@ function ProductDetail() {
 
 
       {related.length > 0 ? (
-        <section className="container-page py-14">
-          <h2 className="font-display text-xl font-bold">Related products</h2>
-          <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <section className="container-page section-y-sm">
+          <p className="text-eyebrow text-primary">More options</p>
+          <h2 className="mt-4 font-display text-[clamp(1.6rem,3vw,2.4rem)] font-bold tracking-tight">
+            Related products
+          </h2>
+          <div className="mt-10 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-4">
             {related.map((p) => (
               <ProductCard key={p.id} product={p} />
             ))}
           </div>
         </section>
       ) : null}
+
       </MotionProvider>
     </SiteShell>
   );
