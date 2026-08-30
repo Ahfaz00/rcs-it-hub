@@ -217,7 +217,7 @@ export function Header() {
                       <Link
                         to={item.to}
                         onClick={() => setOpen(false)}
-                        className="block rounded-lg px-3 py-3 text-sm font-medium text-foreground transition-colors hover:bg-muted hover:text-primary"
+                        className="block px-4 py-4 font-display text-lg font-semibold tracking-tight text-foreground transition-colors hover:bg-muted hover:text-primary"
                       >
                         {item.label}
                       </Link>
@@ -225,9 +225,7 @@ export function Header() {
                   ))}
                 </nav>
                 <div className="border-t border-border p-4">
-                  <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                    Categories
-                  </p>
+                  <p className="mb-3 text-eyebrow text-muted-foreground">Categories</p>
                   <div className="flex flex-col">
                     {site.categories.map((c) => (
                       <Link
@@ -235,7 +233,7 @@ export function Header() {
                         to="/products"
                         search={{ category: c.slug }}
                         onClick={() => setOpen(false)}
-                        className="rounded-lg px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                        className="px-4 py-3 text-[0.95rem] text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
                       >
                         {c.name}
                       </Link>
@@ -244,13 +242,17 @@ export function Header() {
                 </div>
                 {s["phone"] ? (
                   <div className="border-t border-border p-4">
-                    <Button asChild className="h-11 w-full rounded-full bg-gradient-brand text-primary-foreground">
+                    <Button
+                      asChild
+                      className="h-14 w-full rounded-none bg-navy text-[0.8rem] font-bold uppercase tracking-[0.14em] text-navy-foreground hover:bg-primary"
+                    >
                       <a href={`tel:${s["phone"].replace(/\s/g, "")}`}>
-                        <Phone className="mr-1.5 h-4 w-4" /> Call {s["phone"]}
+                        <Phone className="mr-2 h-4 w-4" /> Call {s["phone"]}
                       </a>
                     </Button>
                   </div>
                 ) : null}
+
               </SheetContent>
             </Sheet>
           </div>
