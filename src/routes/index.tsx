@@ -251,96 +251,96 @@ function HomeSections() {
         </section>
       ) : null}
 
-      {/* ============ WHY US — editorial, image + list ============ */}
-      <section className="container-page section-y">
-        <div className="grid gap-12 lg:grid-cols-[1fr_1fr] lg:items-center lg:gap-20">
-          <FadeIn y={20}>
-            <figure className="relative overflow-hidden">
-              <img
-                src={heroSlides[1]!.src}
-                alt="Refurbished laptops being graded at our facility"
-                loading="lazy"
-                decoding="async"
-                className="aspect-4/5 w-full object-cover"
-              />
-              <div aria-hidden="true" className="absolute inset-0 bg-navy/10" />
-            </figure>
-          </FadeIn>
+      {/* ============ WHY US + PROCESS — dark editorial band ============ */}
+      <div className="bg-ink-ambient text-white">
+        <section className="container-page section-y">
+          <div className="grid gap-12 lg:grid-cols-[1fr_1fr] lg:items-center lg:gap-20">
+            <FadeIn y={20}>
+              <figure className="relative overflow-hidden">
+                <img
+                  src={heroSlides[1]!.src}
+                  alt="Refurbished laptops being graded at our facility"
+                  loading="lazy"
+                  decoding="async"
+                  className="aspect-4/5 w-full object-cover"
+                />
+              </figure>
+            </FadeIn>
 
-          <div>
+            <div>
+              <FadeIn>
+                <p className="text-eyebrow text-cyan">Why buy from us</p>
+                <h2 className="mt-6 font-display text-section font-bold uppercase text-white">
+                  Built on testing.
+                  <br />
+                  Backed by experience.
+                </h2>
+              </FadeIn>
+              <Stagger className="mt-10 divide-y divide-white/12 border-y border-white/12" stagger={0.06}>
+                {[
+                  { title: "Quality testing", text: "Display, battery, ports, storage, memory and thermals checked on every unit." },
+                  { title: "Honest grading", text: "Devices are described exactly as they are, with condition notes on every listing." },
+                  { title: "Business-ready hardware", text: "Configurations matched to real office, design and development workloads." },
+                  { title: "Bulk supply", text: "Volume availability for corporates, startups, institutions and resellers." },
+                  { title: "After-sales support", text: "Repair, upgrades and AMC handled in-house by our own team." },
+                ].map((row) => (
+                  <StaggerItem key={row.title}>
+                    <div className="grid gap-1.5 py-6 sm:grid-cols-[13rem_1fr] sm:gap-6">
+                      <p className="font-display text-[0.95rem] font-bold uppercase tracking-[0.12em] text-white">
+                        {row.title}
+                      </p>
+                      <p className="text-body text-white/65">{row.text}</p>
+                    </div>
+                  </StaggerItem>
+                ))}
+              </Stagger>
+              <FadeIn delay={0.1}>
+                <Link
+                  to="/about"
+                  className="group mt-9 inline-flex items-center gap-2 text-[0.82rem] font-bold uppercase tracking-[0.14em] text-white hover:text-cyan"
+                >
+                  About our process
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </Link>
+              </FadeIn>
+            </div>
+          </div>
+        </section>
+
+        {/* ============ PROCESS ============ */}
+        <section className="border-t border-white/10 section-y">
+          <div className="container-page">
             <FadeIn>
-              <p className="text-eyebrow text-primary">Why buy from us</p>
-              <h2 className="mt-5 font-display text-[clamp(2rem,4.4vw,3.4rem)] font-bold uppercase leading-[0.98] tracking-[-0.03em]">
-                Built on testing.
-                <br />
-                Backed by experience.
+              <p className="text-eyebrow text-cyan">Our process</p>
+              <h2 className="mt-6 max-w-2xl font-display text-section font-bold uppercase text-white">
+                How every unit reaches your desk
               </h2>
             </FadeIn>
-            <Stagger className="mt-10 divide-y divide-border border-y border-border" stagger={0.06}>
+
+            <Stagger className="mt-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-12 lg:gap-y-14" stagger={0.09}>
               {[
-                { title: "Quality testing", text: "Display, battery, ports, storage, memory and thermals checked on every unit." },
-                { title: "Honest grading", text: "Devices are described exactly as they are, with condition notes on every listing." },
-                { title: "Business-ready hardware", text: "Configurations matched to real office, design and development workloads." },
-                { title: "Bulk supply", text: "Volume availability for corporates, startups, institutions and resellers." },
-                { title: "After-sales support", text: "Repair, upgrades and AMC handled in-house by our own team." },
-              ].map((row) => (
-                <StaggerItem key={row.title}>
-                  <div className="grid gap-1 py-5 sm:grid-cols-[13rem_1fr] sm:gap-6">
-                    <p className="font-display text-sm font-bold uppercase tracking-[0.12em]">{row.title}</p>
-                    <p className="text-body text-muted-foreground">{row.text}</p>
+                { n: "01", title: "Source", text: "Corporate buy-backs and trade partners." },
+                { n: "02", title: "Inspect", text: "Cosmetic and functional inspection." },
+                { n: "03", title: "Refurbish", text: "Cleaning, part replacement, upgrades." },
+                { n: "04", title: "Test", text: "Bench testing across all components." },
+                { n: "05", title: "Quality check", text: "Final grading and condition notes." },
+                { n: "06", title: "Dispatch", text: "Packed and shipped with GST invoice." },
+              ].map((step) => (
+                <StaggerItem key={step.n}>
+                  <div className="border-t border-white/12 pt-6">
+                    <span className="block font-display text-4xl font-bold tracking-tight text-cyan/50 lg:text-5xl">
+                      {step.n}
+                    </span>
+                    <h3 className="mt-5 font-display text-sub font-semibold text-white">{step.title}</h3>
+                    <p className="mt-3 text-body text-white/65">{step.text}</p>
                   </div>
                 </StaggerItem>
               ))}
             </Stagger>
-            <FadeIn delay={0.1}>
-              <Link
-                to="/about"
-                className="group mt-8 inline-flex items-center gap-2 text-[0.78rem] font-bold uppercase tracking-[0.14em] text-foreground hover:text-primary"
-              >
-                About our process
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </Link>
-            </FadeIn>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
 
-      {/* ============ PROCESS — horizontal numbered ============ */}
-      <section className="border-y border-border bg-background section-y">
-        <div className="container-page">
-          <FadeIn>
-            <p className="text-eyebrow text-primary">Our process</p>
-            <h2 className="mt-5 max-w-2xl font-display text-[clamp(1.9rem,4vw,3rem)] font-bold uppercase leading-[1] tracking-[-0.03em]">
-              How every unit reaches your desk
-            </h2>
-          </FadeIn>
-
-          <Stagger className="relative mt-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-6 lg:gap-6" stagger={0.09}>
-            <span
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-x-0 top-6 hidden h-px bg-border lg:block"
-            />
-            {[
-              { n: "01", title: "Source", text: "Corporate buy-backs and trade partners." },
-              { n: "02", title: "Inspect", text: "Cosmetic and functional inspection." },
-              { n: "03", title: "Refurbish", text: "Cleaning, part replacement, upgrades." },
-              { n: "04", title: "Test", text: "Bench testing across all components." },
-              { n: "05", title: "Quality check", text: "Final grading and condition notes." },
-              { n: "06", title: "Dispatch", text: "Packed and shipped with GST invoice." },
-            ].map((step) => (
-              <StaggerItem key={step.n}>
-                <div className="relative">
-                  <span className="relative z-10 block bg-background pr-3 font-display text-4xl font-bold tracking-tight text-primary/25 transition-colors lg:text-5xl">
-                    {step.n}
-                  </span>
-                  <h3 className="mt-4 font-display text-sm font-bold uppercase tracking-[0.14em]">{step.title}</h3>
-                  <p className="mt-2 text-body text-muted-foreground">{step.text}</p>
-                </div>
-              </StaggerItem>
-            ))}
-          </Stagger>
-        </div>
-      </section>
 
       {/* ============ WORKSTATION — dark dramatic ============ */}
       <section className="relative isolate overflow-hidden bg-navy text-navy-foreground">
