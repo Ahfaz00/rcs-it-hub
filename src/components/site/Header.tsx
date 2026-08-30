@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { ChevronDown, Menu, Phone, Search, MessageCircle, ShieldCheck, RotateCcw, Truck } from "lucide-react";
+import { motion } from "motion/react";
 
 import { Logo } from "./Logo";
 import { Button } from "@/components/ui/button";
@@ -31,6 +32,14 @@ export function Header() {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [term, setTerm] = useState("");
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   const s = site.settings;
   const announcement = s["announcement_enabled"] === "true" ? s["announcement_text"] : "";
@@ -44,27 +53,30 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 w-full">
       {/* Trust / announcement strip */}
-      <div className="bg-sidebar text-sidebar-foreground">
+      <div
+        className={cn(
+          "bg-gradient-navy text-sidebar-foreground transition-all duration-500",
+          scrolled ? "max-h-0 overflow-hidden opacity-0" : "max-h-12 opacity-100",
+        )}
+      >
         <div className="container-page flex h-9 items-center gap-6 overflow-hidden text-[0.72rem]">
-          {announcement ? (
-            <p className="truncate font-medium">{announcement}</p>
-          ) : null}
+          {announcement ? <p className="truncate font-medium">{announcement}</p> : null}
           <div className="hidden flex-1 items-center justify-center gap-8 xl:flex">
             {TRUST.map(({ Icon, text }) => (
               <span key={text} className="flex items-center gap-1.5 whitespace-nowrap text-sidebar-foreground/80">
-                <Icon className="h-3.5 w-3.5 text-sidebar-primary" />
+                <Icon className="h-3.5 w-3.5 text-cyan" />
                 {text}
               </span>
             ))}
           </div>
           <div className="ml-auto hidden items-center gap-4 whitespace-nowrap sm:flex">
             {s["phone"] ? (
-              <a href={`tel:${s["phone"].replace(/\s/g, "")}`} className="hover:text-sidebar-primary">
+              <a href={`tel:${s["phone"].replace(/\s/g, "")}`} className="hover:text-cyan">
                 {s["phone"]}
               </a>
             ) : null}
             {s["email"] ? (
-              <a href={`mailto:${s["email"]}`} className="hover:text-sidebar-primary">
+              <a href={`mailto:${s["email"]}`} className="hover:text-cyan">
                 {s["email"]}
               </a>
             ) : null}
@@ -73,8 +85,18 @@ export function Header() {
       </div>
 
       {/* Main bar */}
-      <div className="border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/85">
-        <div className="container-page flex h-[4.5rem] items-center gap-4">
+      <div
+        className={cn(
+          "border-b bg-background/85 backdrop-blur-xl transition-all duration-300",
+          scrolled ? "border-border shadow-card" : "border-border/60",
+        )}
+      >
+        <div
+          className={cn(
+            "container-page flex items-center gap-4 transition-all duration-300",
+            scrolled ? "h-[3.75rem]" : "h-[4.5rem]",
+          )}
+        >
           <Logo />
 
           <nav className="ml-6 hidden shrink-0 items-center gap-0.5 whitespace-nowrap xl:flex">
@@ -83,10 +105,11 @@ export function Header() {
                 key={item.to}
                 to={item.to}
                 activeOptions={{ exact: item.to === "/" }}
-                className="rounded-full px-3 py-2 text-sm font-medium text-foreground/70 transition-colors hover:text-foreground"
-                activeProps={{ className: "text-foreground" }}
+                className="group relative rounded-full px-3 py-2 text-sm font-medium text-foreground/70 transition-colors hover:text-primary"
+                activeProps={{ className: "text-primary" }}
               >
                 {item.label}
+                <span className="pointer-events-none absolute inset-x-3 -bottom-0.5 h-0.5 origin-left scale-x-0 rounded-full bg-gradient-brand transition-transform duration-300 group-hover:scale-x-100" />
               </Link>
             ))}
           </nav>
@@ -99,19 +122,14 @@ export function Header() {
                 onChange={(e) => setTerm(e.target.value)}
                 placeholder="Search products"
                 aria-label="Search products"
-                className="h-11 rounded-full border-border bg-muted/60 pl-11 text-sm"
+                className="h-11 rounded-full border-border bg-muted/60 pl-11 text-sm transition-shadow focus-visible:bg-card focus-visible:shadow-card"
               />
             </div>
           </form>
 
           <div className="ml-auto flex items-center gap-2 lg:ml-4">
             {s["whatsapp"] ? (
-              <Button
-                asChild
-                size="sm"
-                variant="outline"
-                className="hidden h-11 rounded-full px-4 sm:inline-flex"
-              >
+              <Button asChild size="sm" variant="outline" className="hidden h-11 rounded-full px-4 sm:inline-flex">
                 <a
                   href={whatsappLink(s["whatsapp"], enquiryMessage(s["default_enquiry_message"]))}
                   target="_blank"
@@ -125,7 +143,7 @@ export function Header() {
               <Button
                 asChild
                 size="sm"
-                className="hidden h-11 rounded-full bg-sidebar px-5 text-sidebar-foreground hover:bg-sidebar/90 sm:inline-flex"
+                className="hidden h-11 rounded-full bg-gradient-brand px-5 text-primary-foreground shadow-glow transition-transform hover:scale-[1.03] sm:inline-flex"
               >
                 <a href={`tel:${s["phone"].replace(/\s/g, "")}`}>
                   <Phone className="mr-1.5 h-4 w-4" /> Call now
@@ -141,7 +159,7 @@ export function Header() {
               </SheetTrigger>
               <SheetContent side="right" className="w-[88vw] max-w-sm overflow-y-auto p-0">
                 <SheetTitle className="sr-only">Menu</SheetTitle>
-                <div className="flex items-center border-b border-border p-4 pr-14">
+                <div className="flex items-center border-b border-border bg-gradient-soft p-4 pr-14">
                   <Logo compact />
                 </div>
 
@@ -158,15 +176,21 @@ export function Header() {
                   </div>
                 </form>
                 <nav className="flex flex-col p-2">
-                  {NAV.map((item) => (
-                    <Link
+                  {NAV.map((item, i) => (
+                    <motion.div
                       key={item.to}
-                      to={item.to}
-                      onClick={() => setOpen(false)}
-                      className="rounded-md px-3 py-3 text-sm font-medium text-foreground hover:bg-muted"
+                      initial={{ opacity: 0, x: 16 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.04 * i, duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
                     >
-                      {item.label}
-                    </Link>
+                      <Link
+                        to={item.to}
+                        onClick={() => setOpen(false)}
+                        className="block rounded-lg px-3 py-3 text-sm font-medium text-foreground transition-colors hover:bg-muted hover:text-primary"
+                      >
+                        {item.label}
+                      </Link>
+                    </motion.div>
                   ))}
                 </nav>
                 <div className="border-t border-border p-4">
@@ -180,13 +204,22 @@ export function Header() {
                         to="/products"
                         search={{ category: c.slug }}
                         onClick={() => setOpen(false)}
-                        className="rounded-md px-3 py-2 text-sm text-muted-foreground hover:bg-muted hover:text-foreground"
+                        className="rounded-lg px-3 py-2 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
                       >
                         {c.name}
                       </Link>
                     ))}
                   </div>
                 </div>
+                {s["phone"] ? (
+                  <div className="border-t border-border p-4">
+                    <Button asChild className="h-11 w-full rounded-full bg-gradient-brand text-primary-foreground">
+                      <a href={`tel:${s["phone"].replace(/\s/g, "")}`}>
+                        <Phone className="mr-1.5 h-4 w-4" /> Call {s["phone"]}
+                      </a>
+                    </Button>
+                  </div>
+                ) : null}
               </SheetContent>
             </Sheet>
           </div>
@@ -194,7 +227,12 @@ export function Header() {
       </div>
 
       {/* Category rail */}
-      <div className="hidden border-b border-border bg-background lg:block">
+      <div
+        className={cn(
+          "hidden border-b border-border bg-background/90 backdrop-blur transition-all duration-500 lg:block",
+          scrolled ? "max-h-0 overflow-hidden border-transparent opacity-0" : "max-h-16 opacity-100",
+        )}
+      >
         <div className="container-page flex items-center gap-2 overflow-x-auto py-2">
           <span className="mr-1 flex items-center gap-1 whitespace-nowrap text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
             Shop <ChevronDown className="h-3 w-3" />
@@ -206,7 +244,7 @@ export function Header() {
               search={{ category: c.slug }}
               className={cn(
                 "whitespace-nowrap rounded-full border border-border px-3.5 py-1.5 text-xs font-medium text-muted-foreground",
-                "transition-colors hover:border-accent hover:bg-accent/10 hover:text-foreground",
+                "transition-all hover:border-primary/50 hover:bg-primary/5 hover:text-primary",
               )}
             >
               {c.name}
