@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 import { getProductBySlug } from "@/lib/public.functions";
 import { siteQueryOptions, whatsappLink, enquiryMessage } from "@/lib/site-query";
 import { mediaUrl } from "@/lib/media";
-import { formatPrice } from "@/lib/format";
+import { configChips, discountPercent, formatINR, formatPrice } from "@/lib/format";
 
 const productQueryOptions = (slug: string) =>
   queryOptions({
