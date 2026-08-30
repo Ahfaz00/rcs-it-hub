@@ -3,12 +3,19 @@ import { useSuspenseQuery, queryOptions } from "@tanstack/react-query";
 import {
   ArrowRight,
   BadgeCheck,
+  Boxes,
   ClipboardCheck,
   Headphones,
   PackageCheck,
   Quote,
+  ScanSearch,
+  ShieldCheck,
+  Sparkles,
   Star,
+  Truck,
+  Wrench,
 } from "lucide-react";
+
 
 import { SiteShell } from "@/components/site/SiteShell";
 import { ProductCard } from "@/components/site/ProductCard";
