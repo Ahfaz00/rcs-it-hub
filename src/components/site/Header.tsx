@@ -49,7 +49,7 @@ export function Header() {
           {announcement ? (
             <p className="truncate font-medium">{announcement}</p>
           ) : null}
-          <div className="hidden flex-1 items-center justify-center gap-8 md:flex">
+          <div className="hidden flex-1 items-center justify-center gap-8 xl:flex">
             {TRUST.map(({ Icon, text }) => (
               <span key={text} className="flex items-center gap-1.5 whitespace-nowrap text-sidebar-foreground/80">
                 <Icon className="h-3.5 w-3.5 text-sidebar-primary" />
@@ -57,7 +57,7 @@ export function Header() {
               </span>
             ))}
           </div>
-          <div className="ml-auto hidden items-center gap-4 sm:flex">
+          <div className="ml-auto hidden items-center gap-4 whitespace-nowrap sm:flex">
             {s["phone"] ? (
               <a href={`tel:${s["phone"].replace(/\s/g, "")}`} className="hover:text-sidebar-primary">
                 {s["phone"]}
@@ -91,7 +91,7 @@ export function Header() {
             ))}
           </nav>
 
-          <form onSubmit={search} className="ml-auto hidden max-w-md flex-1 items-center lg:flex">
+          <form onSubmit={search} className="ml-auto hidden w-full max-w-xs shrink items-center lg:flex">
             <div className="relative w-full">
               <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <Input
