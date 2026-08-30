@@ -355,7 +355,16 @@
   box-shadow: var(--shadow-glow);
 }
 
+/* Premium dark section: deep navy with subtle blue/cyan ambient light. */
+@utility bg-ink-ambient {
+  background-color: var(--ink);
+  background-image:
+    radial-gradient(70% 55% at 15% 0%, oklch(0.53 0.24 265 / 0.22), transparent 65%),
+    radial-gradient(55% 50% at 92% 100%, oklch(0.78 0.14 217 / 0.16), transparent 65%);
+}
+
 @utility grid-blueprint {
+
   background-image:
     linear-gradient(to right, oklch(0.53 0.24 265 / 0.07) 1px, transparent 1px),
     linear-gradient(to bottom, oklch(0.53 0.24 265 / 0.07) 1px, transparent 1px);
