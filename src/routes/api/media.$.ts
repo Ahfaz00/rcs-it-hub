@@ -10,6 +10,20 @@ export const Route = createFileRoute("/api/media/$")({
         }
 
         const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+
+        // Prefer redirecting to a signed storage URL: the file is then served by
+        // storage/CDN directly instead of streaming through this worker.
+        const signed = await supabaseAdmin.storage.from("media").createSignedUrl(path, 60 * 60 * 24);
+        if (signed.data?.signedUrl) {
+          return new Response(null, {
+            status: 302,
+            headers: {
+              location: signed.data.signedUrl,
+              "cache-control": "public, max-age=43200",
+            },
+          });
+        }
+
         const { data, error } = await supabaseAdmin.storage.from("media").download(path);
 
         if (error || !data) return new Response("Not found", { status: 404 });
