@@ -304,17 +304,15 @@ function HomeSections() {
 
       {/* Brands */}
       {home.brands.length > 0 ? (
-        <section className="container-page py-14">
-          <p className="text-center text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-            Brands we supply
-          </p>
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+        <section className="container-page py-16">
+          <SectionHeading eyebrow="Shop by brand" title="Brands we supply" />
+          <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
             {home.brands.map((b, i) => (
               <Reveal key={b.slug} direction="scale" delay={i * Math.round(motion.stagger * 0.75)}>
                 <Link
                   to="/products"
                   search={{ brand: b.slug }}
-                  className="block rounded-md border border-border px-4 py-2 font-display text-sm font-semibold text-muted-foreground transition-all duration-300 hover:-translate-y-0.5 hover:border-accent hover:text-foreground"
+                  className="flex h-20 items-center justify-center rounded-xl border border-border bg-card text-sm font-semibold text-muted-foreground shadow-card transition-all duration-300 hover:-translate-y-0.5 hover:border-accent hover:text-foreground"
                 >
                   {b.name}
                 </Link>
