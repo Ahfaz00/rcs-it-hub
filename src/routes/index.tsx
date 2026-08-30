@@ -243,13 +243,14 @@ function HomeSections() {
               title={s["featured_title"] || "Featured refurbished systems"}
               action={{ to: "/products", label: "See all" }}
             />
-            <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-              {products.slice(0, 8).map((p, i) => (
-                <Reveal key={p.id} delay={(i % 4) * motion.stagger} className="h-full [&>*]:h-full">
+            <Stagger className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4" stagger={0.08}>
+              {products.slice(0, 8).map((p) => (
+                <StaggerItem key={p.id} className="h-full [&>*]:h-full">
                   <ProductCard product={p} />
-                </Reveal>
+                </StaggerItem>
               ))}
-            </div>
+            </Stagger>
+
           </div>
         </section>
       ) : null}
