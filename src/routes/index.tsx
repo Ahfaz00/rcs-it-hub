@@ -108,48 +108,42 @@ function HomeSections() {
     <>
       {/* ============ HERO — editorial split, product-led ============ */}
       {showHero ? (
-        <section className="relative isolate overflow-hidden bg-background">
-          <div aria-hidden="true" className="absolute inset-0 grid-blueprint opacity-40" />
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute -right-40 -top-56 h-[46rem] w-[46rem] radial-glow"
-          />
-          <div className="container-page relative z-10 grid items-center gap-14 pb-16 pt-14 md:pb-24 md:pt-20 lg:grid-cols-[1fr_1.05fr] lg:gap-16">
+        <section className="relative isolate overflow-hidden bg-ink-ambient text-white">
+          <div aria-hidden="true" className="absolute inset-0 grid-blueprint opacity-[0.12]" />
+          <div className="container-page relative z-10 grid items-center gap-12 pb-16 pt-14 md:pb-24 md:pt-20 lg:grid-cols-[1fr_1.05fr] lg:gap-16">
             <div>
               <FadeIn y={14}>
-                <p className="text-[0.7rem] font-bold uppercase tracking-[0.28em] text-primary">
-                  R Computer Solutions <span className="text-muted-foreground/60">•</span> The IT Hub
+                <p className="text-eyebrow text-cyan">
+                  R Computer Solutions <span className="text-white/40">•</span> The IT Hub
                 </p>
               </FadeIn>
               <FadeIn delay={0.08} y={20}>
-                <h1 className="mt-6 font-display text-[clamp(2.75rem,7vw,5.25rem)] font-bold uppercase leading-[0.94] tracking-[-0.035em] text-foreground">
+                <h1 className="mt-7 font-display text-hero font-bold uppercase text-white">
                   {s["hero_title"] ? (
                     s["hero_title"]
                   ) : (
                     <>
                       Refurbished
                       <br />
-                      <span className="text-gradient-brand">Technology.</span>
+                      <span className="text-cyan">Technology.</span>
                       <br />
-                      Without
-                      <br />
-                      Compromise.
+                      Built to perform.
                     </>
                   )}
                 </h1>
               </FadeIn>
               <FadeIn delay={0.16}>
-                <p className="mt-7 max-w-md text-base leading-relaxed text-muted-foreground md:text-lg">
+                <p className="mt-7 max-w-md text-body-lg text-white/70">
                   {s["hero_subtitle"] ||
-                    "Business-grade laptops, desktops and workstations — inspected, graded and bench-tested before they leave our Navi Mumbai facility."}
+                    "Business-grade laptops, desktops and workstations — inspected, graded and bench-tested before dispatch."}
                 </p>
               </FadeIn>
               <FadeIn delay={0.24}>
-                <div className="mt-10 flex flex-wrap items-center gap-3">
+                <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
                   <Button
                     asChild
                     size="lg"
-                    className="group h-14 rounded-none bg-navy px-8 text-[0.78rem] font-bold uppercase tracking-[0.14em] text-navy-foreground transition-colors hover:bg-primary"
+                    className="group h-16 rounded-none bg-cyan px-9 text-[0.85rem] font-bold uppercase tracking-[0.14em] text-cyan-foreground transition-transform hover:bg-white active:scale-[0.98] sm:h-15"
                   >
                     <a href={safePath(s["hero_cta1_link"], "/products")}>
                       {s["hero_cta1_text"] || "Explore laptops"}
@@ -160,7 +154,7 @@ function HomeSections() {
                     asChild
                     size="lg"
                     variant="ghost"
-                    className="h-14 rounded-none border-b-2 border-foreground/20 px-2 text-[0.78rem] font-bold uppercase tracking-[0.14em] transition-colors hover:border-primary hover:bg-transparent hover:text-primary"
+                    className="h-16 rounded-none border border-white/25 px-9 text-[0.85rem] font-bold uppercase tracking-[0.14em] text-white transition-colors hover:border-cyan hover:bg-white/5 hover:text-cyan active:scale-[0.98] sm:h-15"
                   >
                     <a href={safePath(s["hero_cta2_link"], "/bulk-orders")}>
                       {s["hero_cta2_text"] || "Get a quote"}
@@ -180,21 +174,12 @@ function HomeSections() {
                   overlay={false}
                   className="aspect-4/3 w-full"
                 />
-                <div
-                  aria-hidden="true"
-                  className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,transparent_60%,oklch(0.19_0.035_255/0.5))]"
-                />
-              </div>
-              <div className="pointer-events-none absolute -bottom-7 -left-3 hidden w-60 bg-card/95 p-5 shadow-lift backdrop-blur sm:block">
-                <p className="font-display text-3xl font-bold tracking-tight text-primary">100%</p>
-                <p className="mt-1 text-[0.72rem] leading-relaxed text-muted-foreground">
-                  of units bench-tested and graded before dispatch.
-                </p>
               </div>
             </FadeIn>
           </div>
         </section>
       ) : null}
+
 
       {/* ============ BRAND MARQUEE ============ */}
       {home.brands.length > 0 ? (
@@ -236,7 +221,7 @@ function HomeSections() {
 
       {/* ============ CATEGORIES — asymmetric editorial ============ */}
       {showShowcase && showcaseItems.length > 0 ? (
-        <section className="container-page py-20 md:py-28">
+        <section className="container-page section-y">
           <SectionHeading
             eyebrow={s["showcase_eyebrow"] || "Shop by category"}
             title={s["showcase_title"] || "Hardware for every requirement"}
@@ -248,7 +233,7 @@ function HomeSections() {
 
       {/* ============ THE CURRENT STOCK ============ */}
       {products.length > 0 ? (
-        <section className="border-y border-border bg-surface py-20 md:py-28">
+        <section className="border-y border-border bg-surface section-y">
           <div className="container-page">
             <SectionHeading
               eyebrow={s["featured_eyebrow"] || "In stock now"}
@@ -266,96 +251,96 @@ function HomeSections() {
         </section>
       ) : null}
 
-      {/* ============ WHY US — editorial, image + list ============ */}
-      <section className="container-page py-20 md:py-28">
-        <div className="grid gap-12 lg:grid-cols-[1fr_1fr] lg:items-center lg:gap-20">
-          <FadeIn y={20}>
-            <figure className="relative overflow-hidden">
-              <img
-                src={heroSlides[1]!.src}
-                alt="Refurbished laptops being graded at our facility"
-                loading="lazy"
-                decoding="async"
-                className="aspect-4/5 w-full object-cover"
-              />
-              <div aria-hidden="true" className="absolute inset-0 bg-navy/10" />
-            </figure>
-          </FadeIn>
+      {/* ============ WHY US + PROCESS — dark editorial band ============ */}
+      <div className="bg-ink-ambient text-white">
+        <section className="container-page section-y">
+          <div className="grid gap-12 lg:grid-cols-[1fr_1fr] lg:items-center lg:gap-20">
+            <FadeIn y={20}>
+              <figure className="relative overflow-hidden">
+                <img
+                  src={heroSlides[1]!.src}
+                  alt="Refurbished laptops being graded at our facility"
+                  loading="lazy"
+                  decoding="async"
+                  className="aspect-4/5 w-full object-cover"
+                />
+              </figure>
+            </FadeIn>
 
-          <div>
+            <div>
+              <FadeIn>
+                <p className="text-eyebrow text-cyan">Why buy from us</p>
+                <h2 className="mt-6 font-display text-section font-bold uppercase text-white">
+                  Built on testing.
+                  <br />
+                  Backed by experience.
+                </h2>
+              </FadeIn>
+              <Stagger className="mt-10 divide-y divide-white/12 border-y border-white/12" stagger={0.06}>
+                {[
+                  { title: "Quality testing", text: "Display, battery, ports, storage, memory and thermals checked on every unit." },
+                  { title: "Honest grading", text: "Devices are described exactly as they are, with condition notes on every listing." },
+                  { title: "Business-ready hardware", text: "Configurations matched to real office, design and development workloads." },
+                  { title: "Bulk supply", text: "Volume availability for corporates, startups, institutions and resellers." },
+                  { title: "After-sales support", text: "Repair, upgrades and AMC handled in-house by our own team." },
+                ].map((row) => (
+                  <StaggerItem key={row.title}>
+                    <div className="grid gap-1.5 py-6 sm:grid-cols-[13rem_1fr] sm:gap-6">
+                      <p className="font-display text-[0.95rem] font-bold uppercase tracking-[0.12em] text-white">
+                        {row.title}
+                      </p>
+                      <p className="text-body text-white/65">{row.text}</p>
+                    </div>
+                  </StaggerItem>
+                ))}
+              </Stagger>
+              <FadeIn delay={0.1}>
+                <Link
+                  to="/about"
+                  className="group mt-9 inline-flex items-center gap-2 text-[0.82rem] font-bold uppercase tracking-[0.14em] text-white hover:text-cyan"
+                >
+                  About our process
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </Link>
+              </FadeIn>
+            </div>
+          </div>
+        </section>
+
+        {/* ============ PROCESS ============ */}
+        <section className="border-t border-white/10 section-y">
+          <div className="container-page">
             <FadeIn>
-              <p className="text-[0.7rem] font-bold uppercase tracking-[0.26em] text-primary">Why buy from us</p>
-              <h2 className="mt-5 font-display text-[clamp(2rem,4.4vw,3.4rem)] font-bold uppercase leading-[0.98] tracking-[-0.03em]">
-                Built on testing.
-                <br />
-                Backed by experience.
+              <p className="text-eyebrow text-cyan">Our process</p>
+              <h2 className="mt-6 max-w-2xl font-display text-section font-bold uppercase text-white">
+                How every unit reaches your desk
               </h2>
             </FadeIn>
-            <Stagger className="mt-10 divide-y divide-border border-y border-border" stagger={0.06}>
+
+            <Stagger className="mt-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-12 lg:gap-y-14" stagger={0.09}>
               {[
-                { title: "Quality testing", text: "Display, battery, ports, storage, memory and thermals checked on every unit." },
-                { title: "Honest grading", text: "Devices are described exactly as they are, with condition notes on every listing." },
-                { title: "Business-ready hardware", text: "Configurations matched to real office, design and development workloads." },
-                { title: "Bulk supply", text: "Volume availability for corporates, startups, institutions and resellers." },
-                { title: "After-sales support", text: "Repair, upgrades and AMC handled in-house by our own team." },
-              ].map((row) => (
-                <StaggerItem key={row.title}>
-                  <div className="grid gap-1 py-5 sm:grid-cols-[13rem_1fr] sm:gap-6">
-                    <p className="font-display text-sm font-bold uppercase tracking-[0.12em]">{row.title}</p>
-                    <p className="text-sm leading-relaxed text-muted-foreground">{row.text}</p>
+                { n: "01", title: "Source", text: "Corporate buy-backs and trade partners." },
+                { n: "02", title: "Inspect", text: "Cosmetic and functional inspection." },
+                { n: "03", title: "Refurbish", text: "Cleaning, part replacement, upgrades." },
+                { n: "04", title: "Test", text: "Bench testing across all components." },
+                { n: "05", title: "Quality check", text: "Final grading and condition notes." },
+                { n: "06", title: "Dispatch", text: "Packed and shipped with GST invoice." },
+              ].map((step) => (
+                <StaggerItem key={step.n}>
+                  <div className="border-t border-white/12 pt-6">
+                    <span className="block font-display text-4xl font-bold tracking-tight text-cyan/50 lg:text-5xl">
+                      {step.n}
+                    </span>
+                    <h3 className="mt-5 font-display text-sub font-semibold text-white">{step.title}</h3>
+                    <p className="mt-3 text-body text-white/65">{step.text}</p>
                   </div>
                 </StaggerItem>
               ))}
             </Stagger>
-            <FadeIn delay={0.1}>
-              <Link
-                to="/about"
-                className="group mt-8 inline-flex items-center gap-2 text-[0.78rem] font-bold uppercase tracking-[0.14em] text-foreground hover:text-primary"
-              >
-                About our process
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </Link>
-            </FadeIn>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
 
-      {/* ============ PROCESS — horizontal numbered ============ */}
-      <section className="border-y border-border bg-background py-20 md:py-24">
-        <div className="container-page">
-          <FadeIn>
-            <p className="text-[0.7rem] font-bold uppercase tracking-[0.26em] text-primary">Our process</p>
-            <h2 className="mt-5 max-w-2xl font-display text-[clamp(1.9rem,4vw,3rem)] font-bold uppercase leading-[1] tracking-[-0.03em]">
-              How every unit reaches your desk
-            </h2>
-          </FadeIn>
-
-          <Stagger className="relative mt-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-6 lg:gap-6" stagger={0.09}>
-            <span
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-x-0 top-6 hidden h-px bg-border lg:block"
-            />
-            {[
-              { n: "01", title: "Source", text: "Corporate buy-backs and trade partners." },
-              { n: "02", title: "Inspect", text: "Cosmetic and functional inspection." },
-              { n: "03", title: "Refurbish", text: "Cleaning, part replacement, upgrades." },
-              { n: "04", title: "Test", text: "Bench testing across all components." },
-              { n: "05", title: "Quality check", text: "Final grading and condition notes." },
-              { n: "06", title: "Dispatch", text: "Packed and shipped with GST invoice." },
-            ].map((step) => (
-              <StaggerItem key={step.n}>
-                <div className="relative">
-                  <span className="relative z-10 block bg-background pr-3 font-display text-4xl font-bold tracking-tight text-primary/25 transition-colors lg:text-5xl">
-                    {step.n}
-                  </span>
-                  <h3 className="mt-4 font-display text-sm font-bold uppercase tracking-[0.14em]">{step.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{step.text}</p>
-                </div>
-              </StaggerItem>
-            ))}
-          </Stagger>
-        </div>
-      </section>
 
       {/* ============ WORKSTATION — dark dramatic ============ */}
       <section className="relative isolate overflow-hidden bg-navy text-navy-foreground">
@@ -372,13 +357,13 @@ function HomeSections() {
           aria-hidden="true"
           className="pointer-events-none absolute -bottom-40 right-0 h-[34rem] w-[34rem] rounded-full bg-[radial-gradient(circle,oklch(0.78_0.14_217/0.28),transparent_65%)]"
         />
-        <div className="container-page relative grid gap-10 py-24 md:py-32 lg:grid-cols-[1.1fr_1fr] lg:items-end">
+        <div className="container-page relative grid gap-10 section-y lg:grid-cols-[1.1fr_1fr] lg:items-end">
           <FadeIn>
-            <p className="text-[0.7rem] font-bold uppercase tracking-[0.26em] text-cyan">Workstations</p>
-            <h2 className="mt-5 max-w-2xl font-display text-[clamp(2.1rem,5vw,4rem)] font-bold uppercase leading-[0.96] tracking-[-0.035em] text-white">
+            <p className="text-eyebrow text-cyan">Workstations</p>
+            <h2 className="mt-5 max-w-2xl font-display text-section font-bold uppercase text-white">
               Power when performance matters.
             </h2>
-            <p className="mt-6 max-w-lg text-base leading-relaxed text-white/70">
+            <p className="mt-6 max-w-lg text-body-lg text-white/70">
               Xeon and Core workstations for design, engineering and development teams — configured,
               tested and supplied in volume.
             </p>
@@ -414,7 +399,7 @@ function HomeSections() {
 
       {/* ============ SERVICES — minimal list ============ */}
       {site.services.length > 0 ? (
-        <section className="container-page py-20 md:py-28">
+        <section className="container-page section-y">
           <SectionHeading eyebrow="What we do" title="Services beyond the sale" action={{ to: "/services", label: "All services" }} />
           <div className="mt-10 grid divide-y divide-border border-y border-border sm:grid-cols-2 sm:divide-y-0 lg:grid-cols-3">
             {site.services.slice(0, 6).map((service, i) => (
@@ -428,7 +413,7 @@ function HomeSections() {
                   <h3 className="mt-5 font-display text-lg font-semibold tracking-tight transition-colors group-hover:text-primary">
                     {service.title}
                   </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{service.short_description}</p>
+                  <p className="mt-2 text-body text-muted-foreground">{service.short_description}</p>
                   <ArrowRight className="mt-5 h-4 w-4 text-primary opacity-0 transition-all duration-300 group-hover:translate-x-1 group-hover:opacity-100" />
                 </Link>
               </Reveal>
@@ -438,14 +423,14 @@ function HomeSections() {
       ) : null}
 
       {/* ============ B2B ============ */}
-      <section className="border-y border-border bg-surface py-20 md:py-28">
+      <section className="border-y border-border bg-surface section-y">
         <div className="container-page grid gap-12 lg:grid-cols-[1fr_1.05fr] lg:items-center lg:gap-20">
           <FadeIn>
-            <p className="text-[0.7rem] font-bold uppercase tracking-[0.26em] text-primary">Bulk &amp; corporate</p>
-            <h2 className="mt-5 font-display text-[clamp(2rem,4.4vw,3.4rem)] font-bold uppercase leading-[0.98] tracking-[-0.03em]">
+            <p className="text-eyebrow text-primary">Bulk &amp; corporate</p>
+            <h2 className="mt-5 font-display text-section font-bold uppercase">
               Your IT procurement partner.
             </h2>
-            <p className="mt-6 max-w-lg text-base leading-relaxed text-muted-foreground">
+            <p className="mt-6 max-w-lg text-body-lg text-muted-foreground">
               Share your requirement — quantity, configuration and budget — and we revert with availability
               and pricing. GST invoicing, bulk dispatch and AMC support available.
             </p>
@@ -492,7 +477,7 @@ function HomeSections() {
 
       {/* ============ BRANDS ============ */}
       {home.brands.length > 0 ? (
-        <section className="container-page py-20 md:py-24">
+        <section className="container-page section-y">
           <SectionHeading eyebrow="Shop by brand" title="Brands we supply" />
           <div className="mt-10 grid grid-cols-2 gap-px border border-border bg-border sm:grid-cols-3 lg:grid-cols-6">
             {home.brands.map((b, i) => (
@@ -512,7 +497,7 @@ function HomeSections() {
 
       {/* ============ TESTIMONIALS ============ */}
       {showTestimonials && home.testimonials.length > 0 ? (
-        <section className="border-y border-border bg-background py-20 md:py-24">
+        <section className="border-y border-border bg-background section-y">
           <div className="container-page">
             <SectionHeading
               eyebrow={s["testimonials_eyebrow"] || "Customer feedback"}
@@ -523,7 +508,7 @@ function HomeSections() {
                 <Reveal key={t.id} delay={i * motion.stagger} className="h-full">
                   <figure className="flex h-full flex-col bg-background p-8">
                     <Quote className="h-6 w-6 text-primary/40" />
-                    <blockquote className="mt-5 flex-1 text-base leading-relaxed text-foreground/85">
+                    <blockquote className="mt-5 flex-1 text-body-lg text-foreground/85">
                       {t.review}
                     </blockquote>
                     <figcaption className="mt-7">
@@ -547,10 +532,10 @@ function HomeSections() {
 
       {/* ============ FAQ ============ */}
       {home.faqs.length > 0 ? (
-        <section className="container-page grid gap-10 py-20 md:py-24 lg:grid-cols-[1fr_1.4fr] lg:gap-20">
+        <section className="container-page grid gap-10 section-y lg:grid-cols-[1fr_1.4fr] lg:gap-20">
           <FadeIn>
-            <p className="text-[0.7rem] font-bold uppercase tracking-[0.26em] text-primary">Questions</p>
-            <h2 className="mt-5 font-display text-[clamp(1.9rem,3.6vw,2.8rem)] font-bold uppercase leading-[1] tracking-[-0.03em]">
+            <p className="text-eyebrow text-primary">Questions</p>
+            <h2 className="mt-5 font-display text-section font-bold uppercase">
               Frequently asked
             </h2>
             <Link
@@ -566,7 +551,7 @@ function HomeSections() {
                 <AccordionTrigger className="py-5 text-left font-display text-base font-semibold tracking-tight">
                   {f.question}
                 </AccordionTrigger>
-                <AccordionContent className="pb-5 text-sm leading-relaxed text-muted-foreground">
+                <AccordionContent className="pb-5 text-body text-muted-foreground">
                   {f.answer}
                 </AccordionContent>
               </AccordionItem>
@@ -579,10 +564,10 @@ function HomeSections() {
       {showFacility ? (
         <section className="overflow-hidden border-y border-border bg-card py-14">
           <div className="container-page">
-            <p className="text-[0.7rem] font-bold uppercase tracking-[0.26em] text-primary">
+            <p className="text-eyebrow text-primary">
               {s["facility_eyebrow"] || "Inside our facility"}
             </p>
-            <h2 className="mt-4 font-display text-[clamp(1.7rem,3.2vw,2.5rem)] font-bold uppercase leading-[1] tracking-[-0.03em]">
+            <h2 className="mt-4 font-display text-section font-bold uppercase">
               {s["facility_title"] || "Stock, testing benches and dispatch"}
             </h2>
           </div>
@@ -610,11 +595,11 @@ function HomeSections() {
       {/* ============ CTA ============ */}
       {showCta ? (
         <section className="bg-navy text-navy-foreground">
-          <Reveal className="container-page flex flex-col items-start gap-6 py-20 md:py-24">
-            <h2 className="max-w-3xl font-display text-[clamp(1.9rem,4.2vw,3.2rem)] font-bold uppercase leading-[1] tracking-[-0.03em] text-white">
+          <Reveal className="container-page flex flex-col items-start gap-6 section-y">
+            <h2 className="max-w-3xl font-display text-section font-bold uppercase text-white">
               {s["cta_title"] || "Need a bulk quote or a specific configuration?"}
             </h2>
-            <p className="max-w-2xl text-base leading-relaxed text-white/70">
+            <p className="max-w-2xl text-body-lg text-white/70">
               {s["cta_text"] ||
                 "Send us your requirement and we will come back with availability, configuration options and pricing."}
             </p>
@@ -658,8 +643,8 @@ function SectionHeading({
     <FadeIn>
       <div className="flex flex-wrap items-end justify-between gap-6 border-b border-border pb-6">
         <div>
-          <p className="text-[0.7rem] font-bold uppercase tracking-[0.26em] text-primary">{eyebrow}</p>
-          <h2 className="mt-4 font-display text-[clamp(1.9rem,4vw,3.1rem)] font-bold uppercase leading-[1] tracking-[-0.03em]">
+          <p className="text-eyebrow text-primary">{eyebrow}</p>
+          <h2 className="mt-4 font-display text-section font-bold uppercase">
             {title}
           </h2>
         </div>

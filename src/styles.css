@@ -48,6 +48,8 @@
   --color-cyan-foreground: var(--cyan-foreground);
   --color-navy: var(--navy);
   --color-navy-foreground: var(--navy-foreground);
+  --color-ink: var(--ink);
+
   --color-surface: var(--surface);
   --color-surface-foreground: var(--surface-foreground);
   --color-border: var(--border);
@@ -93,7 +95,9 @@
   --brand-foreground: oklch(0.99 0 0);
   --cyan: oklch(0.78 0.14 217);
   --cyan-foreground: oklch(0.2 0.05 240);
-  --navy: oklch(0.19 0.035 255);
+  --navy: oklch(0.175 0.03 253);
+  --ink: oklch(0.145 0.028 253);
+
   --navy-foreground: oklch(0.98 0.005 250);
   --surface: oklch(0.972 0.007 250);
   --surface-foreground: oklch(0.22 0.045 258);
@@ -182,8 +186,12 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.65;
     -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
   }
+
 
   h1,
   h2,
@@ -347,7 +355,16 @@
   box-shadow: var(--shadow-glow);
 }
 
+/* Premium dark section: deep navy with subtle blue/cyan ambient light. */
+@utility bg-ink-ambient {
+  background-color: var(--ink);
+  background-image:
+    radial-gradient(70% 55% at 15% 0%, oklch(0.53 0.24 265 / 0.22), transparent 65%),
+    radial-gradient(55% 50% at 92% 100%, oklch(0.78 0.14 217 / 0.16), transparent 65%);
+}
+
 @utility grid-blueprint {
+
   background-image:
     linear-gradient(to right, oklch(0.53 0.24 265 / 0.07) 1px, transparent 1px),
     linear-gradient(to bottom, oklch(0.53 0.24 265 / 0.07) 1px, transparent 1px);
@@ -383,23 +400,56 @@
 
 /* ---- Fluid premium type scale ---- */
 @utility text-hero {
-  font-size: clamp(2.5rem, 6vw, 4.75rem);
-  line-height: 1.03;
+  font-size: clamp(2.5rem, 9vw, 5rem);
+  line-height: 1.02;
   letter-spacing: -0.035em;
 }
 
 @utility text-section {
-  font-size: clamp(1.85rem, 3.6vw, 3.1rem);
-  line-height: 1.1;
+  font-size: clamp(1.95rem, 5.2vw, 3.4rem);
+  line-height: 1.06;
   letter-spacing: -0.03em;
 }
 
-@utility text-card-title {
-  font-size: clamp(1.125rem, 1.4vw, 1.45rem);
-  line-height: 1.25;
+@utility text-sub {
+  font-size: clamp(1.25rem, 2.4vw, 1.75rem);
+  line-height: 1.3;
   letter-spacing: -0.02em;
+}
+
+@utility text-body {
+  font-size: clamp(0.975rem, 1.05vw, 1.125rem);
+  line-height: 1.75;
+}
+
+@utility text-body-lg {
+  font-size: clamp(1.0625rem, 1.35vw, 1.25rem);
+  line-height: 1.7;
+}
+
+@utility text-eyebrow {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+}
+
+@utility text-card-title {
+  font-size: clamp(1.15rem, 1.5vw, 1.4rem);
+  line-height: 1.28;
+  letter-spacing: -0.02em;
+}
+
+/* Consistent vertical rhythm — generous on mobile, larger on desktop. */
+@utility section-y {
+  padding-block: clamp(4.5rem, 11vw, 8rem);
+}
+
+@utility section-y-sm {
+  padding-block: clamp(3.5rem, 8vw, 6rem);
 }
 
 @utility radial-glow {
   background-image: radial-gradient(60% 60% at 50% 40%, oklch(0.53 0.24 265 / 0.18), transparent 70%);
 }
+
