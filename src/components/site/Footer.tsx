@@ -31,7 +31,7 @@ export function Footer() {
       <div className="container-page relative grid gap-10 py-16 md:grid-cols-2 lg:grid-cols-4">
         <div>
           <Logo inverted />
-          <p className="mt-4 text-sm leading-relaxed text-sidebar-foreground/70">{s["footer_text"]}</p>
+          <p className="mt-5 text-[0.95rem] leading-relaxed text-sidebar-foreground/70">{s["footer_text"]}</p>
           {s["gst_number"] ? (
             <p className="mt-4 text-xs text-sidebar-foreground/60">GST: {s["gst_number"]}</p>
           ) : null}
@@ -54,10 +54,10 @@ export function Footer() {
         </div>
 
         <div>
-          <h3 className="font-display text-xs font-semibold uppercase tracking-[0.2em] text-cyan">
+          <h3 className="font-display text-eyebrow text-cyan">
             Products
           </h3>
-          <ul className="mt-4 space-y-2 text-sm">
+          <ul className="mt-5 space-y-3 text-[0.95rem]">
             {site.categories.slice(0, 8).map((c) => (
               <li key={c.id}>
                 <Link
@@ -73,10 +73,10 @@ export function Footer() {
         </div>
 
         <div>
-          <h3 className="font-display text-xs font-semibold uppercase tracking-[0.2em] text-cyan">
+          <h3 className="font-display text-eyebrow text-cyan">
             Company
           </h3>
-          <ul className="mt-4 space-y-2 text-sm">
+          <ul className="mt-5 space-y-3 text-[0.95rem]">
             {[
               { to: "/about", label: "About Us" },
               { to: "/services", label: "Services" },
@@ -95,7 +95,7 @@ export function Footer() {
               </li>
             ))}
           </ul>
-          <ul className="mt-4 space-y-2 text-sm">
+          <ul className="mt-5 space-y-3 text-[0.95rem]">
             {POLICIES.map((p) => (
               <li key={p.slug}>
                 <Link
@@ -111,10 +111,10 @@ export function Footer() {
         </div>
 
         <div>
-          <h3 className="font-display text-xs font-semibold uppercase tracking-[0.2em] text-cyan">
+          <h3 className="font-display text-eyebrow text-cyan">
             Get in touch
           </h3>
-          <ul className="mt-4 space-y-3 text-sm text-sidebar-foreground/75">
+          <ul className="mt-5 space-y-4 text-[0.95rem] text-sidebar-foreground/75">
             {s["address"] ? (
               <li className="flex gap-3">
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-cyan" />
