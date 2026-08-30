@@ -110,193 +110,101 @@ function HomeSections() {
 
   return (
     <>
-      {/* Kinetic matrix hero */}
+      {/* Full-bleed hero banner */}
       {showHero ? (
-        <section className="border-b border-border bg-background">
-          <div className="container-page grid gap-3 py-6 md:grid-cols-12 md:py-8">
-            {/* Hero block */}
-            <div className="group relative col-span-full flex min-h-[26rem] flex-col justify-end overflow-hidden border border-border bg-card p-7 md:col-span-8 md:row-span-4 md:min-h-[32rem] md:p-10">
-              <div className="absolute inset-0 opacity-40 grayscale transition-all duration-1000 group-hover:opacity-55 group-hover:grayscale-0">
-                <HeroSlider
-                  slides={heroSlides}
-                  interval={heroInterval}
-                  showCaption={false}
-                  showDots={false}
-                  overlay={false}
-                  className="h-full w-full"
-                />
-              </div>
-              <div
-                aria-hidden="true"
-                className="absolute inset-0 bg-gradient-to-t from-background via-background/55 to-transparent"
-              />
-              <div className="relative z-10">
-                <div className="animate-fade-in mb-4 flex items-center gap-3">
-                  <span className="h-[2px] w-12 bg-accent" />
-                  <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-accent">
-                    Computer Wholesaler &middot; Navi Mumbai
-                  </span>
-                </div>
-                <h1
-                  className="animate-fade-in font-display text-4xl uppercase leading-[0.92] tracking-tight md:text-6xl"
-                  style={{ animationDelay: "120ms" }}
+        <section className="relative isolate overflow-hidden bg-sidebar">
+          <div className="absolute inset-0">
+            <HeroSlider
+              slides={heroSlides}
+              interval={heroInterval}
+              showCaption={false}
+              showDots={false}
+              overlay={false}
+              className="h-full w-full"
+            />
+          </div>
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/60 to-black/20"
+          />
+          <div className="container-page relative z-10 flex min-h-[26rem] flex-col justify-center py-16 md:min-h-[34rem] md:py-24">
+            <div className="max-w-2xl text-white">
+              <p className="animate-fade-in inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-3.5 py-1.5 text-[0.68rem] font-semibold uppercase tracking-[0.18em] backdrop-blur">
+                Computer Wholesaler &middot; Navi Mumbai
+              </p>
+              <h1
+                className="animate-fade-in font-editorial mt-6 text-4xl leading-[1.05] md:text-6xl"
+                style={{ animationDelay: "120ms" }}
+              >
+                {s["hero_title"] || "Refurbished IT hardware, built for performance"}
+              </h1>
+              <p
+                className="animate-fade-in mt-5 max-w-xl text-sm leading-relaxed text-white/80 md:text-base"
+                style={{ animationDelay: "220ms" }}
+              >
+                {s["hero_subtitle"]}
+              </p>
+              <div className="animate-fade-in mt-8 flex flex-wrap gap-3" style={{ animationDelay: "320ms" }}>
+                <Button asChild size="lg" className="sheen h-12 rounded-full px-7 text-sm font-semibold">
+                  <a href={safePath(s["hero_cta1_link"], "/products")}>
+                    {s["hero_cta1_text"] || "Browse stock"}
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </a>
+                </Button>
+                <Button
+                  asChild
+                  size="lg"
+                  variant="outline"
+                  className="h-12 rounded-full border-white/40 bg-white/10 px-7 text-sm font-semibold text-white backdrop-blur hover:bg-white/20 hover:text-white"
                 >
-                  {s["hero_title"] || "Refurbished IT hardware, built for performance"}
-                </h1>
-                <div
-                  className="animate-fade-in mt-6 flex flex-col gap-6 md:flex-row md:items-center md:gap-8"
-                  style={{ animationDelay: "240ms" }}
-                >
-                  <p className="max-w-md text-sm leading-relaxed text-muted-foreground">{s["hero_subtitle"]}</p>
-                  <div className="flex flex-wrap gap-3">
-                    <Button asChild size="lg" className="sheen rounded-none uppercase tracking-widest">
-                      <a href={safePath(s["hero_cta1_link"], "/products")}>
-                        {s["hero_cta1_text"] || "Browse stock"}
-                        <ArrowRight className="ml-2 h-4 w-4" />
-                      </a>
-                    </Button>
-                    <Button
-                      asChild
-                      size="lg"
-                      variant="outline"
-                      className="rounded-none border-foreground/25 bg-transparent uppercase tracking-widest hover:bg-foreground/10"
-                    >
-                      <a href={safePath(s["hero_cta2_link"], "/bulk-orders")}>
-                        {s["hero_cta2_text"] || "Get a quote"}
-                      </a>
-                    </Button>
-                  </div>
-                </div>
+                  <a href={safePath(s["hero_cta2_link"], "/bulk-orders")}>
+                    {s["hero_cta2_text"] || "Get a quote"}
+                  </a>
+                </Button>
               </div>
             </div>
-
-            {/* Category tile A */}
-            {site.categories[0] ? (
-              <Reveal
-                direction="right"
-                delay={motion.stagger}
-                className="col-span-full md:col-span-4 md:row-span-2"
-              >
-                <Link
-                  to="/products"
-                  search={{ category: site.categories[0].slug }}
-                  className="group relative flex h-full flex-col justify-between overflow-hidden border border-border bg-card p-7"
-                >
-                  <span className="absolute right-4 top-4 font-mono text-[10px] text-muted-foreground">CAT_01</span>
-                  <div>
-                    <h2 className="font-display text-2xl uppercase transition-colors group-hover:text-accent">
-                      {site.categories[0].name}
-                    </h2>
-                    <div className="my-4 h-px w-full bg-border transition-colors group-hover:bg-accent/40" />
-                    <ul className="space-y-2 text-xs uppercase tracking-tight text-muted-foreground">
-                      {site.categories.slice(1, 4).map((c) => (
-                        <li key={c.id}>{c.name}</li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div className="mt-6 flex items-center justify-end">
-                    <span className="flex h-10 w-10 items-center justify-center border border-border transition-colors group-hover:border-accent">
-                      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-                    </span>
-                  </div>
-                </Link>
-              </Reveal>
-            ) : null}
-
-            {/* Services tile */}
-            <Reveal
-              direction="right"
-              delay={motion.stagger * 2}
-              className="col-span-full md:col-span-4 md:row-span-2"
-            >
-              <Link
-                to="/services"
-                className="group flex h-full flex-col justify-between border border-border bg-secondary p-7"
-              >
-                <div>
-                  <h2 className="font-display text-2xl uppercase">Services</h2>
-                  <p className="mt-2 text-xs uppercase tracking-[0.18em] text-muted-foreground">
-                    Repair &middot; AMC &middot; Rental
-                  </p>
-                </div>
-                <span className="mt-6 block w-full border border-foreground/20 py-3 text-center text-[10px] font-semibold uppercase tracking-[0.2em] transition-colors group-hover:bg-accent group-hover:border-accent group-hover:text-accent-foreground">
-                  View services
-                </span>
-              </Link>
-            </Reveal>
-
-            {/* Status / testing tile */}
-            <Reveal delay={motion.stagger * 3} className="col-span-full md:col-span-3 md:row-span-2">
-              <div className="flex h-full flex-col border border-border bg-background p-6">
-                <div className="mb-4 flex items-center gap-2 font-mono text-[10px] text-accent">
-                  <span className="relative flex h-2 w-2">
-                    <span className="absolute inline-flex h-full w-full animate-ping bg-accent opacity-75" />
-                    <span className="relative inline-flex h-2 w-2 bg-accent" />
-                  </span>
-                  [ BENCH TESTING ACTIVE ]
-                </div>
-                <h3 className="font-display text-lg uppercase leading-tight">Tested before dispatch</h3>
-                <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
-                  Display, battery, ports, storage, memory and thermals are checked on every unit before it leaves the
-                  facility.
-                </p>
-              </div>
-            </Reveal>
-
-            {/* Logistics tile */}
-            <Reveal delay={motion.stagger * 4} className="col-span-full md:col-span-5 md:row-span-2">
-              <div className="group relative flex h-full items-center gap-6 overflow-hidden border border-border bg-card p-7">
-                <div className="relative z-10 flex-1">
-                  <h3 className="font-display text-2xl uppercase">Bulk &amp; dispatch</h3>
-                  <div className="mt-4 grid grid-cols-2 gap-4">
-                    <div>
-                      <div className="mb-1 text-[10px] font-semibold uppercase tracking-widest text-accent">
-                        Delivery
-                      </div>
-                      <div className="text-xs text-muted-foreground">Pan-India from Navi Mumbai</div>
-                    </div>
-                    <div>
-                      <div className="mb-1 text-[10px] font-semibold uppercase tracking-widest text-accent">
-                        Invoicing
-                      </div>
-                      <div className="text-xs text-muted-foreground">
-                        {s["gst_number"] ? `GST ${s["gst_number"]}` : "GST registered business"}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <img
-                  src={slider4.url}
-                  alt=""
-                  aria-hidden="true"
-                  loading="lazy"
-                  decoding="async"
-                  className="pointer-events-none absolute inset-y-0 right-0 h-full w-1/3 object-cover opacity-20 transition-opacity duration-500 group-hover:opacity-40"
-                />
-              </div>
-            </Reveal>
-
-            {/* CTA tile */}
-            <Reveal
-              direction="scale"
-              delay={motion.stagger * 5}
-              className="col-span-full md:col-span-4 md:row-span-2"
-            >
-              <Link
-                to="/bulk-orders"
-                className="group flex h-full flex-col items-center justify-center border-2 border-accent bg-accent p-7 text-center text-accent-foreground transition-colors hover:bg-transparent hover:text-accent"
-              >
-                <h3 className="font-display text-3xl uppercase leading-none">Bulk orders</h3>
-                <p className="mt-2 text-[10px] font-semibold uppercase tracking-[0.2em]">
-                  Volume supply for business &amp; institutions
-                </p>
-                <span className="mt-6 block h-[2px] w-0 bg-accent transition-all duration-500 group-hover:w-full" />
-              </Link>
-            </Reveal>
           </div>
         </section>
       ) : null}
 
+      {/* Brand marquee strip */}
+      {home.brands.length > 0 ? (
+        <div className="overflow-hidden border-b border-border bg-card py-3.5">
+          <div className="group flex [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
+            <div className="animate-marquee flex w-max items-center gap-10 pr-10 group-hover:[animation-play-state:paused]">
+              {[...home.brands, ...home.brands, ...home.brands].map((b, i) => (
+                <span
+                  key={`${b.slug}-${i}`}
+                  className="flex items-center gap-10 whitespace-nowrap text-xs font-semibold uppercase tracking-[0.28em] text-muted-foreground"
+                >
+                  {b.name}
+                  <span className="h-1 w-1 rounded-full bg-border" />
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      ) : null}
+
+      {/* Trust chips */}
+      <div className="border-b border-border bg-background">
+        <div className="container-page flex flex-wrap items-center justify-center gap-3 py-5">
+          {[
+            "Quality tested before dispatch",
+            "Warranty as per listing",
+            "Bulk supply pan-India",
+            "GST invoicing",
+          ].map((t) => (
+            <span
+              key={t}
+              className="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 text-[0.7rem] font-medium uppercase tracking-[0.12em] text-muted-foreground"
+            >
+              <BadgeCheck className="h-3.5 w-3.5 text-success" />
+              {t}
+            </span>
+          ))}
+        </div>
+      </div>
 
       {/* Category showcase */}
       {showShowcase && showcaseItems.length > 0 ? (
