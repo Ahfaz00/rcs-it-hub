@@ -1,10 +1,44 @@
-export function formatPrice(price?: number | null, showPrice?: boolean | null) {
-  if (!showPrice || price == null) return "Contact for Price";
+export function formatINR(value: number) {
   return new Intl.NumberFormat("en-IN", {
     style: "currency",
     currency: "INR",
     maximumFractionDigits: 0,
-  }).format(Number(price));
+  }).format(Number(value));
+}
+
+export function formatPrice(price?: number | null, showPrice?: boolean | null) {
+  if (!showPrice || price == null) return "Contact for Price";
+  return formatINR(Number(price));
+}
+
+/** Percentage saved vs MRP, or null when it cannot be computed. */
+export function discountPercent(
+  price?: number | null,
+  mrp?: number | null,
+  discount?: number | null,
+) {
+  if (discount != null && Number(discount) > 0) return Math.round(Number(discount));
+  if (price == null || mrp == null) return null;
+  const p = Number(price);
+  const m = Number(mrp);
+  if (!(m > p) || p <= 0) return null;
+  return Math.round(((m - p) / m) * 100);
+}
+
+export type ConfigSpecs = {
+  processor_model?: string | null;
+  ram?: string | null;
+  storage_capacity?: string | null;
+  operating_system?: string | null;
+  display_size?: string | null;
+};
+
+/** Short configuration chips (CPU / RAM / storage / OS / display). */
+export function configChips(p: ConfigSpecs, limit = 5) {
+  return [p.processor_model, p.ram, p.storage_capacity, p.display_size, p.operating_system]
+    .map((v) => (v ?? "").trim())
+    .filter((v) => v !== "")
+    .slice(0, limit);
 }
 
 export function formatDate(value?: string | null) {
