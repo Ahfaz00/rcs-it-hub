@@ -55,7 +55,7 @@ export const listProducts = createServerFn({ method: "GET" })
     let query = supabase
       .from("products")
       .select(
-        "id, name, slug, sku, short_description, condition, grade, processor_model, ram, storage_capacity, display_size, price, show_price, availability, is_featured, main_image_url, main_image_alt, created_at, warranty, brands(name, slug), categories(name, slug)",
+        "id, name, slug, sku, short_description, condition, grade, processor_model, ram, storage_capacity, operating_system, display_size, price, mrp, discount, show_price, availability, is_featured, main_image_url, main_image_alt, created_at, warranty, brands(name, slug), categories(name, slug)",
         { count: "exact" },
       )
       .eq("is_active", true);
@@ -133,7 +133,7 @@ export const getProductBySlug = createServerFn({ method: "GET" })
       supabase
         .from("products")
         .select(
-          "id, name, slug, short_description, condition, price, show_price, main_image_url, availability",
+          "id, name, slug, short_description, condition, price, mrp, discount, show_price, main_image_url, main_image_alt, availability, warranty, processor_model, ram, storage_capacity, operating_system",
         )
         .eq("is_active", true)
         .eq("category_id", product.category_id ?? "")
@@ -172,7 +172,7 @@ export const getHomeData = createServerFn({ method: "GET" }).handler(async () =>
     supabase
       .from("products")
       .select(
-        "id, name, slug, short_description, condition, price, show_price, main_image_url, availability, warranty, brands(name)",
+        "id, name, slug, short_description, condition, price, mrp, discount, show_price, main_image_url, main_image_alt, availability, warranty, processor_model, ram, storage_capacity, operating_system, display_size, brands(name)",
       )
       .eq("is_active", true)
       .eq("is_featured", true)
@@ -181,7 +181,7 @@ export const getHomeData = createServerFn({ method: "GET" }).handler(async () =>
     supabase
       .from("products")
       .select(
-        "id, name, slug, short_description, condition, price, show_price, main_image_url, availability, warranty, brands(name)",
+        "id, name, slug, short_description, condition, price, mrp, discount, show_price, main_image_url, main_image_alt, availability, warranty, processor_model, ram, storage_capacity, operating_system, display_size, brands(name)",
       )
       .eq("is_active", true)
       .order("created_at", { ascending: false })
