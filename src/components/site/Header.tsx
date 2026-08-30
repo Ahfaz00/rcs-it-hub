@@ -87,45 +87,48 @@ export function Header() {
       {/* Main bar */}
       <div
         className={cn(
-          "border-b bg-background/85 backdrop-blur-xl transition-all duration-300",
-          scrolled ? "border-border shadow-card" : "border-border/60",
+          "border-b transition-all duration-300",
+          scrolled
+            ? "border-border bg-background/80 shadow-card backdrop-blur-xl"
+            : "border-border/50 bg-background",
         )}
       >
         <div
           className={cn(
             "container-page flex items-center gap-4 transition-all duration-300",
-            scrolled ? "h-[3.75rem]" : "h-[4.5rem]",
+            scrolled ? "h-[3.5rem]" : "h-[4.25rem]",
           )}
         >
           <Logo />
 
-          <nav className="ml-6 hidden shrink-0 items-center gap-0.5 whitespace-nowrap xl:flex">
+          <nav className="mx-auto hidden shrink-0 items-center gap-1 whitespace-nowrap xl:flex">
             {NAV.map((item) => (
               <Link
                 key={item.to}
                 to={item.to}
                 activeOptions={{ exact: item.to === "/" }}
-                className="group relative rounded-full px-3 py-2 text-sm font-medium text-foreground/70 transition-colors hover:text-primary"
+                className="group relative px-3 py-2 text-[0.74rem] font-bold uppercase tracking-[0.12em] text-foreground/65 transition-colors hover:text-primary"
                 activeProps={{ className: "text-primary" }}
               >
                 {item.label}
-                <span className="pointer-events-none absolute inset-x-3 -bottom-0.5 h-0.5 origin-left scale-x-0 rounded-full bg-gradient-brand transition-transform duration-300 group-hover:scale-x-100" />
+                <span className="pointer-events-none absolute inset-x-3 bottom-0.5 h-0.5 origin-left scale-x-0 bg-primary transition-transform duration-300 group-hover:scale-x-100" />
               </Link>
             ))}
           </nav>
 
-          <form onSubmit={search} className="ml-auto hidden min-w-0 flex-1 max-w-[15rem] items-center xl:flex">
+          <form onSubmit={search} className="hidden min-w-0 max-w-[13rem] flex-1 items-center xl:flex">
             <div className="relative w-full min-w-0">
-              <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+              <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <Input
                 value={term}
                 onChange={(e) => setTerm(e.target.value)}
-                placeholder="Search products"
+                placeholder="Search"
                 aria-label="Search products"
-                className="h-11 rounded-full border-border bg-muted/60 pl-11 text-sm transition-shadow focus-visible:bg-card focus-visible:shadow-card"
+                className="h-10 rounded-none border-0 border-b border-border bg-transparent pl-10 text-sm shadow-none focus-visible:border-primary focus-visible:ring-0"
               />
             </div>
           </form>
+
 
           <div className="ml-auto flex shrink-0 items-center gap-2 xl:ml-3">
 
