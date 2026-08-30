@@ -182,6 +182,12 @@
   }
 }
 
+@utility font-editorial {
+  font-family: var(--font-editorial);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
 @utility container-page {
   margin-inline: auto;
   width: 100%;
