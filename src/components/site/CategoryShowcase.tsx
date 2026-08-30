@@ -45,8 +45,8 @@ export function CategoryShowcase({ items }: { items: ShowcaseItem[] }) {
                 decoding="async"
                 className="absolute inset-0 h-full w-full object-cover transition-transform duration-[900ms] ease-out will-change-transform group-hover:scale-110 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-background/10 transition-opacity duration-500 group-hover:via-background/80" />
-              <div className="absolute inset-x-0 bottom-0 p-5 text-foreground">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent transition-opacity duration-500 group-hover:via-black/35" />
+              <div className="absolute inset-x-0 bottom-0 p-5 text-white">
                 <span className="inline-flex h-9 w-9 items-center justify-center rounded-md bg-accent/20 text-accent backdrop-blur transition-transform duration-500 group-hover:-translate-y-1 group-hover:rotate-3">
                   <Icon name={item.icon ?? null} className="h-4.5 w-4.5" />
                 </span>
