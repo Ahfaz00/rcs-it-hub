@@ -21,6 +21,8 @@ import { SiteShell } from "@/components/site/SiteShell";
 import { ProductCard } from "@/components/site/ProductCard";
 import { Icon } from "@/components/site/Icon";
 import { Reveal } from "@/components/site/Reveal";
+import { FadeIn, Stagger, StaggerItem } from "@/components/site/Motion";
+
 import { HeroSlider, type HeroSlide } from "@/components/site/HeroSlider";
 import { CategoryShowcase, type ShowcaseItem } from "@/components/site/CategoryShowcase";
 import { MotionProvider, readBool, readNum, useMotion } from "@/components/site/MotionProvider";
