@@ -272,7 +272,7 @@ function HomeSections() {
         <div className="container-page grid gap-10 lg:grid-cols-2">
           <Reveal direction="left">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">Why buy from us</p>
-            <h2 className="mt-3 font-display text-3xl font-bold">
+            <h2 className="font-editorial mt-3 text-3xl md:text-4xl">
               Honest grading, real testing, practical pricing
             </h2>
             <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{s["footer_text"]}</p>
@@ -379,7 +379,7 @@ function HomeSections() {
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">
               {s["facility_eyebrow"] || "Inside our facility"}
             </p>
-            <h2 className="mt-2 font-display text-2xl font-bold md:text-3xl">
+            <h2 className="font-editorial mt-2 text-2xl md:text-3xl">
               {s["facility_title"] || "Stock, testing benches and dispatch"}
             </h2>
           </div>
@@ -408,7 +408,7 @@ function HomeSections() {
       {showCta ? (
         <section className="border-y border-border bg-accent/10">
           <Reveal className="container-page flex flex-col items-center gap-5 py-12 text-center">
-            <h2 className="font-display text-2xl font-bold md:text-3xl">
+            <h2 className="font-editorial text-2xl md:text-3xl">
               {s["cta_title"] || "Need a bulk quote or a specific configuration?"}
             </h2>
             <p className="max-w-2xl text-sm text-muted-foreground">
