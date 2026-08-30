@@ -1,21 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useSuspenseQuery, queryOptions } from "@tanstack/react-query";
-import {
-  ArrowRight,
-  BadgeCheck,
-  Boxes,
-  ClipboardCheck,
-  Headphones,
-  PackageCheck,
-  Quote,
-  ScanSearch,
-  ShieldCheck,
-  Sparkles,
-  Star,
-  Truck,
-  Wrench,
-} from "lucide-react";
-
+import { ArrowRight, ArrowUpRight, Boxes, ClipboardCheck, Quote, ShieldCheck, Star, Truck } from "lucide-react";
 
 import { SiteShell } from "@/components/site/SiteShell";
 import { ProductCard } from "@/components/site/ProductCard";
@@ -45,10 +30,10 @@ import slider5 from "@/assets/slider5_1.jpg.asset.json";
 import slider6 from "@/assets/slider6.jpg.asset.json";
 
 const heroSlides: HeroSlide[] = [
-  { src: slider1.url, alt: "Palletised IT hardware stock in the warehouse", caption: "Warehouse stock, ready for bulk dispatch" },
   { src: slider6.url, alt: "Rows of refurbished laptops under testing", caption: "Every unit bench-tested before dispatch" },
-  { src: slider4.url, alt: "Stacks of refurbished desktop CPUs", caption: "Desktops and workstations in volume" },
   { src: slider5.url, alt: "Refurbished business laptops stacked for grading", caption: "Graded, cleaned and inspected" },
+  { src: slider4.url, alt: "Stacks of refurbished desktop CPUs", caption: "Desktops and workstations in volume" },
+  { src: slider1.url, alt: "Palletised IT hardware stock in the warehouse", caption: "Warehouse stock, ready for bulk dispatch" },
   { src: slider2.url, alt: "Spare parts and accessories racking", caption: "Spares, parts and accessories in stock" },
   { src: slider3.url, alt: "Accessories and peripherals storage room", caption: "Peripherals and add-ons for every build" },
 ];
@@ -77,6 +62,8 @@ export const Route = createFileRoute("/")({
         content:
           "Quality tested refurbished IT hardware from Navi Mumbai. Bulk orders, repair, AMC and rental services.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   loader: ({ context }) => context.queryClient.ensureQueryData(homeQueryOptions),
@@ -119,58 +106,61 @@ function HomeSections() {
 
   return (
     <>
-      {/* Premium split hero */}
+      {/* ============ HERO — editorial split, product-led ============ */}
       {showHero ? (
-        <section className="relative isolate overflow-hidden border-b border-border bg-gradient-soft">
-          <div aria-hidden="true" className="absolute inset-0 grid-blueprint opacity-70" />
+        <section className="relative isolate overflow-hidden bg-background">
+          <div aria-hidden="true" className="absolute inset-0 grid-blueprint opacity-40" />
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute -right-32 -top-40 h-[38rem] w-[38rem] radial-glow"
+            className="pointer-events-none absolute -right-40 -top-56 h-[46rem] w-[46rem] radial-glow"
           />
-          <div className="container-page relative z-10 grid items-center gap-12 py-16 md:py-24 lg:grid-cols-[1.05fr_1fr] lg:gap-16">
+          <div className="container-page relative z-10 grid items-center gap-14 pb-16 pt-14 md:pb-24 md:pt-20 lg:grid-cols-[1fr_1.05fr] lg:gap-16">
             <div>
-              <FadeIn y={18}>
-                <p className="inline-flex items-center gap-2 rounded-full border border-primary/25 bg-primary/8 px-3.5 py-1.5 text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-primary">
-                  <Sparkles className="h-3.5 w-3.5" />
-                  Trusted refurbished IT hardware
+              <FadeIn y={14}>
+                <p className="text-[0.7rem] font-bold uppercase tracking-[0.28em] text-primary">
+                  R Computer Solutions <span className="text-muted-foreground/60">•</span> The IT Hub
                 </p>
               </FadeIn>
-              <FadeIn delay={0.08} y={22}>
-                <h1 className="mt-6 font-display text-hero text-foreground">
+              <FadeIn delay={0.08} y={20}>
+                <h1 className="mt-6 font-display text-[clamp(2.75rem,7vw,5.25rem)] font-bold uppercase leading-[0.94] tracking-[-0.035em] text-foreground">
                   {s["hero_title"] ? (
                     s["hero_title"]
                   ) : (
                     <>
-                      Premium <span className="text-gradient-brand">Refurbished Technology.</span>
+                      Refurbished
                       <br />
-                      Built for Business.
+                      <span className="text-gradient-brand">Technology.</span>
+                      <br />
+                      Without
+                      <br />
+                      Compromise.
                     </>
                   )}
                 </h1>
               </FadeIn>
               <FadeIn delay={0.16}>
-                <p className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg">
+                <p className="mt-7 max-w-md text-base leading-relaxed text-muted-foreground md:text-lg">
                   {s["hero_subtitle"] ||
-                    "Professionally tested laptops, desktops and workstations from trusted brands — ready for business and backed by reliable support."}
+                    "Business-grade laptops, desktops and workstations — inspected, graded and bench-tested before they leave our Navi Mumbai facility."}
                 </p>
               </FadeIn>
               <FadeIn delay={0.24}>
-                <div className="mt-9 flex flex-wrap gap-3">
+                <div className="mt-10 flex flex-wrap items-center gap-3">
                   <Button
                     asChild
                     size="lg"
-                    className="h-12 rounded-full bg-gradient-brand px-7 text-sm font-semibold text-primary-foreground shadow-glow transition-transform hover:-translate-y-0.5 active:scale-[0.99]"
+                    className="group h-14 rounded-none bg-navy px-8 text-[0.78rem] font-bold uppercase tracking-[0.14em] text-navy-foreground transition-colors hover:bg-primary"
                   >
                     <a href={safePath(s["hero_cta1_link"], "/products")}>
                       {s["hero_cta1_text"] || "Explore laptops"}
-                      <ArrowRight className="ml-2 h-4 w-4" />
+                      <ArrowRight className="ml-3 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
                     </a>
                   </Button>
                   <Button
                     asChild
                     size="lg"
-                    variant="outline"
-                    className="h-12 rounded-full border-border bg-card px-7 text-sm font-semibold transition-colors hover:border-primary/40 hover:bg-primary/5"
+                    variant="ghost"
+                    className="h-14 rounded-none border-b-2 border-foreground/20 px-2 text-[0.78rem] font-bold uppercase tracking-[0.14em] transition-colors hover:border-primary hover:bg-transparent hover:text-primary"
                   >
                     <a href={safePath(s["hero_cta2_link"], "/bulk-orders")}>
                       {s["hero_cta2_text"] || "Get a quote"}
@@ -180,8 +170,8 @@ function HomeSections() {
               </FadeIn>
             </div>
 
-            <FadeIn delay={0.2} y={28} className="relative">
-              <div className="relative overflow-hidden rounded-3xl border border-border bg-card shadow-lift">
+            <FadeIn delay={0.18} y={26} className="relative">
+              <div className="relative overflow-hidden shadow-lift">
                 <HeroSlider
                   slides={heroSlides}
                   interval={heroInterval}
@@ -192,16 +182,13 @@ function HomeSections() {
                 />
                 <div
                   aria-hidden="true"
-                  className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,transparent_55%,oklch(0.19_0.035_255/0.55))]"
+                  className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,transparent_60%,oklch(0.19_0.035_255/0.5))]"
                 />
               </div>
-              <div className="pointer-events-none absolute -bottom-6 left-4 hidden w-56 rounded-2xl border border-border bg-card/95 p-4 shadow-lift backdrop-blur sm:block">
-                <p className="text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-primary">
-                  Bench tested
-                </p>
-                <p className="mt-1.5 font-display text-card-title text-foreground">Quality checked</p>
-                <p className="mt-1 text-xs text-muted-foreground">
-                  Each unit is inspected and tested before dispatch.
+              <div className="pointer-events-none absolute -bottom-7 -left-3 hidden w-60 bg-card/95 p-5 shadow-lift backdrop-blur sm:block">
+                <p className="font-display text-3xl font-bold tracking-tight text-primary">100%</p>
+                <p className="mt-1 text-[0.72rem] leading-relaxed text-muted-foreground">
+                  of units bench-tested and graded before dispatch.
                 </p>
               </div>
             </FadeIn>
@@ -209,19 +196,18 @@ function HomeSections() {
         </section>
       ) : null}
 
-
-      {/* Brand marquee strip */}
+      {/* ============ BRAND MARQUEE ============ */}
       {home.brands.length > 0 ? (
-        <div className="overflow-hidden border-b border-border bg-card py-3.5">
-          <div className="group flex [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
-            <div className="animate-marquee flex w-max items-center gap-10 pr-10 group-hover:[animation-play-state:paused]">
+        <div className="overflow-hidden border-y border-border bg-card py-5">
+          <div className="group flex [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
+            <div className="animate-marquee flex w-max items-center gap-14 pr-14 group-hover:[animation-play-state:paused]">
               {[...home.brands, ...home.brands, ...home.brands].map((b, i) => (
                 <span
                   key={`${b.slug}-${i}`}
-                  className="flex items-center gap-10 whitespace-nowrap text-xs font-semibold uppercase tracking-[0.28em] text-muted-foreground"
+                  className="flex items-center gap-14 whitespace-nowrap font-display text-lg font-bold uppercase tracking-[0.1em] text-muted-foreground/70 md:text-xl"
                 >
                   {b.name}
-                  <span className="h-1 w-1 rounded-full bg-border" />
+                  <span className="h-1.5 w-1.5 rounded-full bg-primary/40" />
                 </span>
               ))}
             </div>
@@ -229,34 +215,28 @@ function HomeSections() {
         </div>
       ) : null}
 
-      {/* Trust bar */}
+      {/* ============ TRUST STRIP — thin, no cards ============ */}
       <div className="border-b border-border bg-background">
-        <Stagger className="container-page grid gap-px py-10 sm:grid-cols-2 lg:grid-cols-4">
+        <Stagger className="container-page grid divide-y divide-border py-2 sm:grid-cols-2 sm:divide-y-0 lg:grid-cols-4 lg:divide-x">
           {[
-            { icon: ClipboardCheck, title: "Quality tested", copy: "Professionally inspected hardware" },
-            { icon: ShieldCheck, title: "Warranty support", copy: "Product-specific warranty" },
-            { icon: Boxes, title: "Bulk orders", copy: "Corporate & wholesale supply" },
-            { icon: Truck, title: "Pan-India delivery", copy: "Reliable delivery support" },
+            { icon: ClipboardCheck, title: "Quality tested" },
+            { icon: ShieldCheck, title: "Warranty support" },
+            { icon: Boxes, title: "Bulk orders" },
+            { icon: Truck, title: "Pan-India delivery" },
           ].map((t) => (
-            <StaggerItem key={t.title} className="flex items-start gap-3.5 px-1 py-3 lg:px-5">
-              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-primary/20 bg-primary/8 text-primary">
-                <t.icon className="h-5 w-5" />
-              </span>
-              <span className="min-w-0">
-                <span className="block text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-foreground">
-                  {t.title}
-                </span>
-                <span className="mt-1 block text-sm text-muted-foreground">{t.copy}</span>
+            <StaggerItem key={t.title} className="flex items-center gap-3 py-5 lg:justify-center lg:px-4">
+              <t.icon className="h-4.5 w-4.5 shrink-0 text-primary" />
+              <span className="text-[0.75rem] font-bold uppercase tracking-[0.14em] text-foreground">
+                {t.title}
               </span>
             </StaggerItem>
           ))}
         </Stagger>
       </div>
 
-
-      {/* Category showcase */}
+      {/* ============ CATEGORIES — asymmetric editorial ============ */}
       {showShowcase && showcaseItems.length > 0 ? (
-        <section className="container-page py-16">
+        <section className="container-page py-20 md:py-28">
           <SectionHeading
             eyebrow={s["showcase_eyebrow"] || "Shop by category"}
             title={s["showcase_title"] || "Hardware for every requirement"}
@@ -266,90 +246,110 @@ function HomeSections() {
         </section>
       ) : null}
 
-      {/* Products */}
+      {/* ============ THE CURRENT STOCK ============ */}
       {products.length > 0 ? (
-        <section className="bg-surface py-16">
+        <section className="border-y border-border bg-surface py-20 md:py-28">
           <div className="container-page">
             <SectionHeading
-              eyebrow={s["featured_eyebrow"] || "Current stock"}
-              title={s["featured_title"] || "Featured refurbished systems"}
+              eyebrow={s["featured_eyebrow"] || "In stock now"}
+              title={s["featured_title"] || "The current stock"}
               action={{ to: "/products", label: "See all" }}
             />
-            <Stagger className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4" stagger={0.08}>
+            <Stagger className="mt-12 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-4" stagger={0.08}>
               {products.slice(0, 8).map((p) => (
                 <StaggerItem key={p.id} className="h-full [&>*]:h-full">
                   <ProductCard product={p} />
                 </StaggerItem>
               ))}
             </Stagger>
-
           </div>
         </section>
       ) : null}
 
-      {/* Services */}
-      <section className="container-page py-16">
-        <SectionHeading
-          eyebrow="What we do"
-          title="Services beyond the sale"
-          action={{ to: "/services", label: "All services" }}
-        />
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {site.services.slice(0, 6).map((service, i) => (
-            <Reveal key={service.id} delay={(i % 3) * motion.stagger}>
+      {/* ============ WHY US — editorial, image + list ============ */}
+      <section className="container-page py-20 md:py-28">
+        <div className="grid gap-12 lg:grid-cols-[1fr_1fr] lg:items-center lg:gap-20">
+          <FadeIn y={20}>
+            <figure className="relative overflow-hidden">
+              <img
+                src={heroSlides[1]!.src}
+                alt="Refurbished laptops being graded at our facility"
+                loading="lazy"
+                decoding="async"
+                className="aspect-4/5 w-full object-cover"
+              />
+              <div aria-hidden="true" className="absolute inset-0 bg-navy/10" />
+            </figure>
+          </FadeIn>
+
+          <div>
+            <FadeIn>
+              <p className="text-[0.7rem] font-bold uppercase tracking-[0.26em] text-primary">Why buy from us</p>
+              <h2 className="mt-5 font-display text-[clamp(2rem,4.4vw,3.4rem)] font-bold uppercase leading-[0.98] tracking-[-0.03em]">
+                Built on testing.
+                <br />
+                Backed by experience.
+              </h2>
+            </FadeIn>
+            <Stagger className="mt-10 divide-y divide-border border-y border-border" stagger={0.06}>
+              {[
+                { title: "Quality testing", text: "Display, battery, ports, storage, memory and thermals checked on every unit." },
+                { title: "Honest grading", text: "Devices are described exactly as they are, with condition notes on every listing." },
+                { title: "Business-ready hardware", text: "Configurations matched to real office, design and development workloads." },
+                { title: "Bulk supply", text: "Volume availability for corporates, startups, institutions and resellers." },
+                { title: "After-sales support", text: "Repair, upgrades and AMC handled in-house by our own team." },
+              ].map((row) => (
+                <StaggerItem key={row.title}>
+                  <div className="grid gap-1 py-5 sm:grid-cols-[13rem_1fr] sm:gap-6">
+                    <p className="font-display text-sm font-bold uppercase tracking-[0.12em]">{row.title}</p>
+                    <p className="text-sm leading-relaxed text-muted-foreground">{row.text}</p>
+                  </div>
+                </StaggerItem>
+              ))}
+            </Stagger>
+            <FadeIn delay={0.1}>
               <Link
-                to="/services/$slug"
-                params={{ slug: service.slug }}
-                className="hover-lift group block h-full rounded-lg border border-border bg-card p-6 shadow-card"
+                to="/about"
+                className="group mt-8 inline-flex items-center gap-2 text-[0.78rem] font-bold uppercase tracking-[0.14em] text-foreground hover:text-primary"
               >
-                <Icon
-                  name={service.icon}
-                  className="h-6 w-6 text-accent transition-transform duration-300 group-hover:scale-110"
-                />
-                <h3 className="mt-4 font-display text-base font-semibold transition-colors group-hover:text-accent">
-                  {service.title}
-                </h3>
-                <p className="mt-2 text-sm text-muted-foreground">{service.short_description}</p>
+                About our process
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </Link>
-            </Reveal>
-          ))}
+            </FadeIn>
+          </div>
         </div>
       </section>
 
-      {/* Refurbishment process timeline */}
-      <section className="relative overflow-hidden bg-gradient-navy py-16 text-navy-foreground md:py-20">
-        <div aria-hidden="true" className="absolute inset-0 grid-blueprint opacity-10" />
-        <div className="container-page relative">
+      {/* ============ PROCESS — horizontal numbered ============ */}
+      <section className="border-y border-border bg-background py-20 md:py-24">
+        <div className="container-page">
           <FadeIn>
-            <p className="flex items-center gap-3 text-[0.7rem] font-semibold uppercase tracking-[0.24em] text-cyan">
-              <span className="h-px w-8 bg-cyan/50" />
-              Our process
-            </p>
-            <h2 className="font-editorial mt-3 max-w-2xl text-3xl text-white md:text-4xl">
+            <p className="text-[0.7rem] font-bold uppercase tracking-[0.26em] text-primary">Our process</p>
+            <h2 className="mt-5 max-w-2xl font-display text-[clamp(1.9rem,4vw,3rem)] font-bold uppercase leading-[1] tracking-[-0.03em]">
               How every unit reaches your desk
             </h2>
           </FadeIn>
-          <Stagger className="relative mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-4" stagger={0.1}>
+
+          <Stagger className="relative mt-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-6 lg:gap-6" stagger={0.09}>
             <span
               aria-hidden="true"
-              className="pointer-events-none absolute left-0 right-0 top-6 hidden h-px bg-white/15 lg:block"
+              className="pointer-events-none absolute inset-x-0 top-6 hidden h-px bg-border lg:block"
             />
             {[
-              { Icon: Boxes, title: "Sourcing", text: "Stock sourced from corporate buy-backs and trade partners." },
-              { Icon: ScanSearch, title: "Inspection & grading", text: "Cosmetic grading with honest condition notes." },
-              { Icon: Wrench, title: "Refurbishment", text: "Cleaning, part replacement and upgrades in-house." },
-              { Icon: ShieldCheck, title: "Testing & dispatch", text: "Bench-tested, packed and dispatched with invoice." },
-            ].map((step, i) => (
-              <StaggerItem key={step.title}>
-                <div className="relative h-full rounded-2xl border border-white/12 bg-white/[0.06] p-6 backdrop-blur transition-colors hover:border-cyan/40">
-                  <span className="relative z-10 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-brand text-primary-foreground shadow-glow">
-                    <step.Icon className="h-5 w-5" />
+              { n: "01", title: "Source", text: "Corporate buy-backs and trade partners." },
+              { n: "02", title: "Inspect", text: "Cosmetic and functional inspection." },
+              { n: "03", title: "Refurbish", text: "Cleaning, part replacement, upgrades." },
+              { n: "04", title: "Test", text: "Bench testing across all components." },
+              { n: "05", title: "Quality check", text: "Final grading and condition notes." },
+              { n: "06", title: "Dispatch", text: "Packed and shipped with GST invoice." },
+            ].map((step) => (
+              <StaggerItem key={step.n}>
+                <div className="relative">
+                  <span className="relative z-10 block bg-background pr-3 font-display text-4xl font-bold tracking-tight text-primary/25 transition-colors lg:text-5xl">
+                    {step.n}
                   </span>
-                  <p className="mt-4 font-mono text-[0.68rem] uppercase tracking-[0.2em] text-cyan">
-                    Step {i + 1}
-                  </p>
-                  <h3 className="mt-1.5 font-display text-base font-semibold text-white">{step.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-white/70">{step.text}</p>
+                  <h3 className="mt-4 font-display text-sm font-bold uppercase tracking-[0.14em]">{step.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{step.text}</p>
                 </div>
               </StaggerItem>
             ))}
@@ -357,110 +357,150 @@ function HomeSections() {
         </div>
       </section>
 
-      {/* Why us - bento grid */}
-      <section className="bg-background py-16 md:py-20">
-        <div className="container-page">
+      {/* ============ WORKSTATION — dark dramatic ============ */}
+      <section className="relative isolate overflow-hidden bg-navy text-navy-foreground">
+        <img
+          src={heroSlides[2]!.src}
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+          decoding="async"
+          className="absolute inset-0 h-full w-full object-cover opacity-25"
+        />
+        <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-r from-navy via-navy/90 to-navy/40" />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -bottom-40 right-0 h-[34rem] w-[34rem] rounded-full bg-[radial-gradient(circle,oklch(0.78_0.14_217/0.28),transparent_65%)]"
+        />
+        <div className="container-page relative grid gap-10 py-24 md:py-32 lg:grid-cols-[1.1fr_1fr] lg:items-end">
           <FadeIn>
-            <SectionHeading
-              eyebrow="Why buy from us"
-              title="Honest grading, real testing, practical pricing"
-              action={{ to: "/about", label: "About our process" }}
+            <p className="text-[0.7rem] font-bold uppercase tracking-[0.26em] text-cyan">Workstations</p>
+            <h2 className="mt-5 max-w-2xl font-display text-[clamp(2.1rem,5vw,4rem)] font-bold uppercase leading-[0.96] tracking-[-0.035em] text-white">
+              Power when performance matters.
+            </h2>
+            <p className="mt-6 max-w-lg text-base leading-relaxed text-white/70">
+              Xeon and Core workstations for design, engineering and development teams — configured,
+              tested and supplied in volume.
+            </p>
+            <Button
+              asChild
+              size="lg"
+              className="group mt-9 h-14 rounded-none bg-cyan px-8 text-[0.78rem] font-bold uppercase tracking-[0.14em] text-cyan-foreground hover:bg-white"
+            >
+              <Link to="/products">
+                Browse workstations
+                <ArrowUpRight className="ml-3 h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </Link>
+            </Button>
+          </FadeIn>
+
+          <Stagger className="grid gap-px bg-white/12 sm:grid-cols-2" stagger={0.07}>
+            {[
+              { k: "Workstations", v: "Tower & mobile" },
+              { k: "Desktops", v: "Business grade" },
+              { k: "Laptops", v: "Enterprise series" },
+              { k: "Support", v: "Repair · AMC · Rental" },
+            ].map((c) => (
+              <StaggerItem key={c.k}>
+                <div className="h-full bg-navy p-6">
+                  <p className="text-[0.66rem] font-bold uppercase tracking-[0.18em] text-cyan">{c.k}</p>
+                  <p className="mt-2 font-display text-lg font-semibold text-white">{c.v}</p>
+                </div>
+              </StaggerItem>
+            ))}
+          </Stagger>
+        </div>
+      </section>
+
+      {/* ============ SERVICES — minimal list ============ */}
+      {site.services.length > 0 ? (
+        <section className="container-page py-20 md:py-28">
+          <SectionHeading eyebrow="What we do" title="Services beyond the sale" action={{ to: "/services", label: "All services" }} />
+          <div className="mt-10 grid divide-y divide-border border-y border-border sm:grid-cols-2 sm:divide-y-0 lg:grid-cols-3">
+            {site.services.slice(0, 6).map((service, i) => (
+              <Reveal key={service.id} delay={(i % 3) * motion.stagger}>
+                <Link
+                  to="/services/$slug"
+                  params={{ slug: service.slug }}
+                  className="group flex h-full flex-col border-border p-7 transition-colors hover:bg-surface sm:border-b lg:border-r"
+                >
+                  <Icon name={service.icon} className="h-6 w-6 text-primary" />
+                  <h3 className="mt-5 font-display text-lg font-semibold tracking-tight transition-colors group-hover:text-primary">
+                    {service.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{service.short_description}</p>
+                  <ArrowRight className="mt-5 h-4 w-4 text-primary opacity-0 transition-all duration-300 group-hover:translate-x-1 group-hover:opacity-100" />
+                </Link>
+              </Reveal>
+            ))}
+          </div>
+        </section>
+      ) : null}
+
+      {/* ============ B2B ============ */}
+      <section className="border-y border-border bg-surface py-20 md:py-28">
+        <div className="container-page grid gap-12 lg:grid-cols-[1fr_1.05fr] lg:items-center lg:gap-20">
+          <FadeIn>
+            <p className="text-[0.7rem] font-bold uppercase tracking-[0.26em] text-primary">Bulk &amp; corporate</p>
+            <h2 className="mt-5 font-display text-[clamp(2rem,4.4vw,3.4rem)] font-bold uppercase leading-[0.98] tracking-[-0.03em]">
+              Your IT procurement partner.
+            </h2>
+            <p className="mt-6 max-w-lg text-base leading-relaxed text-muted-foreground">
+              Share your requirement — quantity, configuration and budget — and we revert with availability
+              and pricing. GST invoicing, bulk dispatch and AMC support available.
+            </p>
+            <ul className="mt-8 flex flex-wrap gap-x-8 gap-y-3">
+              {["Corporate", "Startups", "Institutions", "Resellers", "Bulk orders"].map((t) => (
+                <li key={t} className="text-[0.74rem] font-bold uppercase tracking-[0.14em] text-foreground">
+                  {t}
+                </li>
+              ))}
+            </ul>
+            <div className="mt-10 flex flex-wrap gap-3">
+              <Button
+                asChild
+                size="lg"
+                className="group h-14 rounded-none bg-navy px-8 text-[0.78rem] font-bold uppercase tracking-[0.14em] text-navy-foreground hover:bg-primary"
+              >
+                <Link to="/bulk-orders">
+                  Request bulk quote
+                  <ArrowRight className="ml-3 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </Link>
+              </Button>
+              <Button
+                asChild
+                size="lg"
+                variant="ghost"
+                className="h-14 rounded-none border-b-2 border-foreground/20 px-2 text-[0.78rem] font-bold uppercase tracking-[0.14em] hover:border-primary hover:bg-transparent hover:text-primary"
+              >
+                <Link to="/contact">Talk to our team</Link>
+              </Button>
+            </div>
+          </FadeIn>
+
+          <FadeIn delay={0.1} y={22}>
+            <img
+              src={heroSlides[3]!.src}
+              alt="Bulk IT hardware stock ready for corporate dispatch"
+              loading="lazy"
+              decoding="async"
+              className="aspect-4/3 w-full object-cover shadow-lift"
             />
           </FadeIn>
-          <Stagger className="mt-8 grid gap-4 md:grid-cols-3 lg:grid-cols-4" stagger={0.07}>
-            <StaggerItem className="md:col-span-2 md:row-span-2">
-              <div className="flex h-full flex-col justify-between overflow-hidden rounded-3xl border border-primary/20 bg-gradient-soft p-7 shadow-card">
-                <div>
-                  <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-brand text-primary-foreground shadow-glow">
-                    <BadgeCheck className="h-5 w-5" />
-                  </span>
-                  <h3 className="mt-5 font-display text-2xl font-semibold">Honest grading</h3>
-                  <p className="mt-3 max-w-md text-sm leading-relaxed text-muted-foreground">
-                    {s["footer_text"] ||
-                      "Devices are described exactly as they are, with condition notes on every listing."}
-                  </p>
-                </div>
-                <Button asChild className="mt-7 h-11 w-fit rounded-full bg-gradient-brand px-6 text-primary-foreground">
-                  <Link to="/about">About our process</Link>
-                </Button>
-              </div>
-            </StaggerItem>
-            {[
-              { Icon: ClipboardCheck, title: "Structured testing", text: "Display, battery, ports, storage, memory and thermals." },
-              { Icon: Headphones, title: "In-house support", text: "Repair, upgrades and AMC handled by our own team." },
-              { Icon: PackageCheck, title: "GST invoicing", text: `Registered business${s["gst_number"] ? ` (GST ${s["gst_number"]})` : ""}.` },
-              { Icon: Truck, title: "Pan-India dispatch", text: "Packed and shipped from our Navi Mumbai facility." },
-            ].map((item) => (
-              <StaggerItem key={item.title} className="h-full">
-                <div className="h-full rounded-2xl border border-border bg-card p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-primary/35 hover:shadow-lift">
-                  <item.Icon className="h-5 w-5 text-primary" />
-                  <p className="mt-4 font-display text-sm font-semibold">{item.title}</p>
-                  <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">{item.text}</p>
-                </div>
-              </StaggerItem>
-            ))}
-          </Stagger>
         </div>
       </section>
 
-      {/* Bulk / corporate B2B band */}
-      <section className="container-page py-4 md:py-8">
-        <FadeIn>
-          <div className="relative overflow-hidden rounded-3xl border border-border bg-card p-7 shadow-card md:p-10">
-            <span aria-hidden="true" className="absolute inset-0 grid-blueprint opacity-50" />
-            <div className="relative grid gap-8 lg:grid-cols-[1.2fr_1fr] lg:items-center">
-              <div>
-                <p className="text-[0.7rem] font-semibold uppercase tracking-[0.24em] text-primary">
-                  Bulk &amp; corporate
-                </p>
-                <h2 className="font-editorial mt-3 text-3xl md:text-4xl">
-                  IT procurement partner for offices, startups and institutions
-                </h2>
-                <p className="mt-4 max-w-xl text-sm leading-relaxed text-muted-foreground">
-                  Share your requirement — quantity, configuration and budget — and we will revert with
-                  availability and pricing. GST invoicing, bulk dispatch and AMC support available.
-                </p>
-                <div className="mt-6 flex flex-wrap gap-3">
-                  <Button asChild size="lg" className="h-12 rounded-full bg-gradient-brand px-7 text-primary-foreground shadow-glow">
-                    <Link to="/bulk-orders">Request bulk quote</Link>
-                  </Button>
-                  <Button asChild size="lg" variant="outline" className="h-12 rounded-full px-7">
-                    <Link to="/contact">Talk to our team</Link>
-                  </Button>
-                </div>
-              </div>
-              <Stagger className="grid gap-3 sm:grid-cols-2" stagger={0.06}>
-                {[
-                  "Corporate bulk supply",
-                  "Configuration matching",
-                  "AMC & on-site support",
-                  "Rental options",
-                ].map((t) => (
-                  <StaggerItem key={t}>
-                    <div className="flex items-start gap-2.5 rounded-xl border border-border bg-background/70 p-4 text-sm font-medium backdrop-blur">
-                      <BadgeCheck className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-                      {t}
-                    </div>
-                  </StaggerItem>
-                ))}
-              </Stagger>
-            </div>
-          </div>
-        </FadeIn>
-      </section>
-
-
-      {/* Brands */}
+      {/* ============ BRANDS ============ */}
       {home.brands.length > 0 ? (
-        <section className="container-page py-16">
+        <section className="container-page py-20 md:py-24">
           <SectionHeading eyebrow="Shop by brand" title="Brands we supply" />
-          <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+          <div className="mt-10 grid grid-cols-2 gap-px border border-border bg-border sm:grid-cols-3 lg:grid-cols-6">
             {home.brands.map((b, i) => (
               <Reveal key={b.slug} direction="scale" delay={i * Math.round(motion.stagger * 0.75)}>
                 <Link
                   to="/products"
                   search={{ brand: b.slug }}
-                  className="flex h-20 items-center justify-center rounded-xl border border-border bg-card text-sm font-semibold text-muted-foreground shadow-card transition-all duration-300 hover:-translate-y-0.5 hover:border-accent hover:text-foreground"
+                  className="flex h-24 items-center justify-center bg-background font-display text-sm font-bold uppercase tracking-[0.12em] text-muted-foreground transition-colors hover:bg-navy hover:text-navy-foreground"
                 >
                   {b.name}
                 </Link>
@@ -470,29 +510,29 @@ function HomeSections() {
         </section>
       ) : null}
 
-      {/* Testimonials */}
+      {/* ============ TESTIMONIALS ============ */}
       {showTestimonials && home.testimonials.length > 0 ? (
-        <section className="bg-surface py-16">
+        <section className="border-y border-border bg-background py-20 md:py-24">
           <div className="container-page">
             <SectionHeading
               eyebrow={s["testimonials_eyebrow"] || "Customer feedback"}
               title={s["testimonials_title"] || "What buyers say"}
             />
-            <div className="mt-8 grid gap-5 md:grid-cols-3">
+            <div className="mt-12 grid gap-px border border-border bg-border md:grid-cols-3">
               {home.testimonials.slice(0, 3).map((t, i) => (
                 <Reveal key={t.id} delay={i * motion.stagger} className="h-full">
-                  <figure className="hover-lift h-full rounded-lg border border-border bg-card p-6 shadow-card">
-                    <Quote className="h-6 w-6 text-accent" />
-                    <blockquote className="mt-4 text-sm leading-relaxed text-muted-foreground">
+                  <figure className="flex h-full flex-col bg-background p-8">
+                    <Quote className="h-6 w-6 text-primary/40" />
+                    <blockquote className="mt-5 flex-1 text-base leading-relaxed text-foreground/85">
                       {t.review}
                     </blockquote>
-                    <figcaption className="mt-5 border-t border-border pt-4">
-                      <p className="font-display text-sm font-semibold">{t.customer_name}</p>
-                      {t.company ? <p className="text-xs text-muted-foreground">{t.company}</p> : null}
+                    <figcaption className="mt-7">
+                      <p className="font-display text-sm font-bold uppercase tracking-[0.12em]">{t.customer_name}</p>
+                      {t.company ? <p className="mt-1 text-xs text-muted-foreground">{t.company}</p> : null}
                       {t.rating ? (
                         <div className="mt-2 flex gap-0.5" aria-label={`${t.rating} out of 5`}>
                           {Array.from({ length: t.rating }).map((_, si) => (
-                            <Star key={si} className="h-3.5 w-3.5 fill-accent text-accent" />
+                            <Star key={si} className="h-3.5 w-3.5 fill-primary text-primary" />
                           ))}
                         </div>
                       ) : null}
@@ -505,45 +545,60 @@ function HomeSections() {
         </section>
       ) : null}
 
-      {/* FAQ */}
+      {/* ============ FAQ ============ */}
       {home.faqs.length > 0 ? (
-        <section className="container-page py-16">
-          <SectionHeading eyebrow="Questions" title="Frequently asked" action={{ to: "/faq", label: "All FAQs" }} />
-          <Accordion type="single" collapsible className="mt-8 max-w-3xl">
+        <section className="container-page grid gap-10 py-20 md:py-24 lg:grid-cols-[1fr_1.4fr] lg:gap-20">
+          <FadeIn>
+            <p className="text-[0.7rem] font-bold uppercase tracking-[0.26em] text-primary">Questions</p>
+            <h2 className="mt-5 font-display text-[clamp(1.9rem,3.6vw,2.8rem)] font-bold uppercase leading-[1] tracking-[-0.03em]">
+              Frequently asked
+            </h2>
+            <Link
+              to="/faq"
+              className="group mt-6 inline-flex items-center gap-2 text-[0.78rem] font-bold uppercase tracking-[0.14em] hover:text-primary"
+            >
+              All FAQs <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </Link>
+          </FadeIn>
+          <Accordion type="single" collapsible className="w-full">
             {home.faqs.map((f) => (
               <AccordionItem key={f.id} value={f.id}>
-                <AccordionTrigger className="text-left text-sm font-medium">{f.question}</AccordionTrigger>
-                <AccordionContent className="text-sm text-muted-foreground">{f.answer}</AccordionContent>
+                <AccordionTrigger className="py-5 text-left font-display text-base font-semibold tracking-tight">
+                  {f.question}
+                </AccordionTrigger>
+                <AccordionContent className="pb-5 text-sm leading-relaxed text-muted-foreground">
+                  {f.answer}
+                </AccordionContent>
               </AccordionItem>
             ))}
           </Accordion>
         </section>
       ) : null}
 
-      {/* Facility marquee */}
+      {/* ============ FACILITY MARQUEE ============ */}
       {showFacility ? (
-        <section className="overflow-hidden border-y border-border bg-card py-10 text-card-foreground">
+        <section className="overflow-hidden border-y border-border bg-card py-14">
           <div className="container-page">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">
+            <p className="text-[0.7rem] font-bold uppercase tracking-[0.26em] text-primary">
               {s["facility_eyebrow"] || "Inside our facility"}
             </p>
-            <h2 className="font-editorial mt-2 text-2xl md:text-3xl">
+            <h2 className="mt-4 font-display text-[clamp(1.7rem,3.2vw,2.5rem)] font-bold uppercase leading-[1] tracking-[-0.03em]">
               {s["facility_title"] || "Stock, testing benches and dispatch"}
             </h2>
           </div>
-          <div className="group relative mt-7 flex overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)]">
-            <div className="animate-marquee flex w-max gap-4 pr-4 group-hover:[animation-play-state:paused]">
+          <div className="group relative mt-10 flex overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)]">
+            <div className="animate-marquee flex w-max gap-3 pr-3 group-hover:[animation-play-state:paused]">
               {[...heroSlides, ...heroSlides].map((slide, i) => (
                 <figure
                   key={`${slide.src}-${i}`}
-                  className="relative h-40 w-64 shrink-0 overflow-hidden rounded-lg border border-border md:h-48 md:w-80"
+                  className="relative h-52 w-72 shrink-0 overflow-hidden md:h-64 md:w-96"
                 >
                   <img
                     src={slide.src}
                     alt={slide.alt}
                     loading="lazy"
                     decoding="async"
-                    className="h-full w-full object-cover transition-transform duration-700 hover:scale-110 motion-reduce:transition-none"
+                    className="h-full w-full object-cover transition-transform duration-700 hover:scale-105 motion-reduce:transition-none"
                   />
                 </figure>
               ))}
@@ -552,27 +607,35 @@ function HomeSections() {
         </section>
       ) : null}
 
-      {/* CTA */}
+      {/* ============ CTA ============ */}
       {showCta ? (
-        <section className="border-y border-border bg-accent/10">
-          <Reveal className="container-page flex flex-col items-center gap-5 py-12 text-center">
-            <h2 className="font-editorial text-2xl md:text-3xl">
+        <section className="bg-navy text-navy-foreground">
+          <Reveal className="container-page flex flex-col items-start gap-6 py-20 md:py-24">
+            <h2 className="max-w-3xl font-display text-[clamp(1.9rem,4.2vw,3.2rem)] font-bold uppercase leading-[1] tracking-[-0.03em] text-white">
               {s["cta_title"] || "Need a bulk quote or a specific configuration?"}
             </h2>
-            <p className="max-w-2xl text-sm text-muted-foreground">
+            <p className="max-w-2xl text-base leading-relaxed text-white/70">
               {s["cta_text"] ||
                 "Send us your requirement and we will come back with availability, configuration options and pricing."}
             </p>
-            <div className="flex flex-wrap justify-center gap-3">
-              <Button asChild size="lg">
+            <div className="mt-2 flex flex-wrap gap-3">
+              <Button
+                asChild
+                size="lg"
+                className="group h-14 rounded-none bg-cyan px-8 text-[0.78rem] font-bold uppercase tracking-[0.14em] text-cyan-foreground hover:bg-white"
+              >
                 <a href={safePath(s["cta_button1_link"], "/bulk-orders")}>
                   {s["cta_button1_text"] || "Request a quote"}
+                  <ArrowRight className="ml-3 h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </a>
               </Button>
-              <Button asChild size="lg" variant="outline">
-                <a href={safePath(s["cta_button2_link"], "/contact")}>
-                  {s["cta_button2_text"] || "Contact us"}
-                </a>
+              <Button
+                asChild
+                size="lg"
+                variant="ghost"
+                className="h-14 rounded-none border-b-2 border-white/25 px-2 text-[0.78rem] font-bold uppercase tracking-[0.14em] text-white hover:border-cyan hover:bg-transparent hover:text-cyan"
+              >
+                <a href={safePath(s["cta_button2_link"], "/contact")}>{s["cta_button2_text"] || "Contact us"}</a>
               </Button>
             </div>
           </Reveal>
@@ -592,22 +655,24 @@ function SectionHeading({
   action?: { to: string; label: string };
 }) {
   return (
-    <div className="flex flex-wrap items-end justify-between gap-4">
-      <div>
-        <p className="flex items-center gap-3 text-[0.7rem] font-semibold uppercase tracking-[0.24em] text-accent">
-          <span className="h-px w-8 bg-accent/50" />
-          {eyebrow}
-        </p>
-        <h2 className="font-editorial mt-3 text-3xl md:text-4xl">{title}</h2>
+    <FadeIn>
+      <div className="flex flex-wrap items-end justify-between gap-6 border-b border-border pb-6">
+        <div>
+          <p className="text-[0.7rem] font-bold uppercase tracking-[0.26em] text-primary">{eyebrow}</p>
+          <h2 className="mt-4 font-display text-[clamp(1.9rem,4vw,3.1rem)] font-bold uppercase leading-[1] tracking-[-0.03em]">
+            {title}
+          </h2>
+        </div>
+        {action ? (
+          <Link
+            to={action.to}
+            className="group inline-flex items-center gap-2 text-[0.75rem] font-bold uppercase tracking-[0.14em] text-muted-foreground transition-colors hover:text-primary"
+          >
+            {action.label}
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+          </Link>
+        ) : null}
       </div>
-      {action ? (
-        <Link
-          to={action.to}
-          className="inline-flex items-center rounded-full border border-border px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:border-accent hover:text-foreground"
-        >
-          {action.label} <ArrowRight className="ml-1.5 h-4 w-4" />
-        </Link>
-      ) : null}
-    </div>
+    </FadeIn>
   );
 }
