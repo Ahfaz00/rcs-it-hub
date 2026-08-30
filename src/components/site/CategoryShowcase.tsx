@@ -59,7 +59,7 @@ export function CategoryShowcase({ items }: { items: ShowcaseItem[] }) {
                   {item.name}
                 </h3>
                 {item.description ? (
-                  <p className="mt-1 max-w-md text-xs leading-relaxed text-foreground/75 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100 motion-reduce:opacity-100 sm:translate-y-2">
+                  <p className="mt-1 max-w-md text-xs leading-relaxed text-white/80 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100 motion-reduce:opacity-100 sm:translate-y-2">
                     {item.description}
                   </p>
                 ) : null}
@@ -68,7 +68,7 @@ export function CategoryShowcase({ items }: { items: ShowcaseItem[] }) {
                   <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </span>
               </div>
-              <span className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-foreground/10 transition-colors duration-500 group-hover:ring-accent/50" />
+              <span className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-white/15 transition-colors duration-500 group-hover:ring-accent/60" />
             </Link>
           </Reveal>
         );
