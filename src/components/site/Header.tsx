@@ -133,7 +133,12 @@ export function Header() {
           <div className="ml-auto flex shrink-0 items-center gap-2 xl:ml-3">
 
             {s["whatsapp"] ? (
-              <Button asChild size="sm" variant="outline" className="hidden h-11 rounded-full px-4 sm:inline-flex">
+              <Button
+                asChild
+                size="sm"
+                variant="ghost"
+                className="hidden h-10 rounded-none px-3 text-[0.72rem] font-bold uppercase tracking-[0.12em] hover:bg-success/10 hover:text-success sm:inline-flex"
+              >
                 <a
                   href={whatsappLink(s["whatsapp"], enquiryMessage(s["default_enquiry_message"]))}
                   target="_blank"
@@ -147,12 +152,13 @@ export function Header() {
               <Button
                 asChild
                 size="sm"
-                className="hidden h-11 rounded-full bg-gradient-brand px-5 text-primary-foreground shadow-glow transition-transform hover:scale-[1.03] sm:inline-flex"
+                className="hidden h-10 rounded-none bg-navy px-5 text-[0.72rem] font-bold uppercase tracking-[0.12em] text-navy-foreground transition-colors hover:bg-primary sm:inline-flex"
               >
                 <a href={`tel:${s["phone"].replace(/\s/g, "")}`}>
                   <Phone className="mr-1.5 h-4 w-4" /> Call now
                 </a>
               </Button>
+
             ) : null}
 
             <Sheet open={open} onOpenChange={setOpen}>
