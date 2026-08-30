@@ -265,69 +265,59 @@ function ProductDetail() {
         </div>
 
         <div>
-          <div className="flex flex-wrap items-center gap-2">
-            {product.brands?.name ? <Badge variant="secondary">{product.brands.name}</Badge> : null}
+          {product.brands?.name ? (
+            <p className="text-eyebrow text-primary">{product.brands.name}</p>
+          ) : null}
+
+          <h1 className="mt-3 font-display text-[clamp(1.9rem,4.4vw,3rem)] font-bold leading-[1.05] tracking-[-0.03em]">
+            {product.name}
+          </h1>
+
+          {configChips(product, 4).length > 0 ? (
+            <p className="mt-4 text-body-lg text-muted-foreground">{configChips(product, 4).join("  ·  ")}</p>
+          ) : product.short_description ? (
+            <p className="mt-4 text-body-lg text-muted-foreground">{product.short_description}</p>
+          ) : null}
+
+          <div className="mt-6 flex flex-wrap items-center gap-3">
             {product.condition ? (
-              <Badge className="bg-accent text-accent-foreground">{product.condition}</Badge>
+              <Badge className="rounded-none bg-navy px-3 py-1.5 text-[0.7rem] uppercase tracking-[0.12em] text-navy-foreground">
+                {product.condition}
+              </Badge>
             ) : null}
-            {product.sku ? <span className="text-xs text-muted-foreground">SKU {product.sku}</span> : null}
+            {product.warranty ? (
+              <span className="text-[0.95rem] text-muted-foreground">{product.warranty}</span>
+            ) : null}
+            {product.availability ? (
+              <span className="text-[0.95rem] text-muted-foreground">· {product.availability}</span>
+            ) : null}
           </div>
 
-          <h1 className="mt-3 font-display text-3xl font-bold leading-tight md:text-4xl">{product.name}</h1>
-          {product.short_description ? (
-            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{product.short_description}</p>
-          ) : null}
-
-          {configChips(product, 6).length > 0 ? (
-            <div className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-card">
-              <p className="font-display text-sm font-semibold">Configuration</p>
-              <ul className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3">
-                {configChips(product, 6).map((c) => (
-                  <li
-                    key={c}
-                    className="rounded-md bg-muted px-2.5 py-1.5 font-mono text-xs text-muted-foreground"
-                  >
-                    {c}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ) : null}
-
-          <div className="mt-6 rounded-2xl border border-primary/20 bg-card p-5 shadow-card">
+          <div className="mt-8 border-y border-border py-7">
             <div className="flex flex-wrap items-baseline gap-3">
-              <p className="font-display text-3xl font-bold">
+              <p className="font-display text-[clamp(1.75rem,3.2vw,2.5rem)] font-bold tracking-tight">
                 {formatPrice(product.price, product.show_price)}
               </p>
               {product.show_price && product.mrp != null && Number(product.mrp) > Number(product.price ?? 0) ? (
                 <>
-                  <span className="text-base text-muted-foreground line-through">
+                  <span className="text-lg text-muted-foreground line-through">
                     {formatINR(Number(product.mrp))}
                   </span>
                   {discountPercent(product.price, product.mrp, product.discount) ? (
-                    <span className="rounded-full bg-success px-2 py-0.5 text-xs font-semibold text-success-foreground">
+                    <span className="bg-success px-2.5 py-1 text-sm font-semibold text-success-foreground">
                       {discountPercent(product.price, product.mrp, product.discount)}% off
                     </span>
                   ) : null}
                 </>
               ) : null}
             </div>
-            <p className="mt-1 text-xs text-muted-foreground">
-              {product.availability}
-              {product.warranty ? ` · ${product.warranty}` : ""}
-            </p>
 
-            <div className="mt-5 flex flex-wrap gap-3">
-              <EnquiryDialog
-                productId={product.id}
-                productName={product.name}
-                trigger={<Button size="lg" className="h-12 rounded-full bg-gradient-brand px-7 text-primary-foreground shadow-glow">Enquire about this product</Button>}
-              />
+            <div className="mt-7 grid gap-3 sm:grid-cols-2">
               {wa ? (
                 <Button
                   asChild
                   size="lg"
-                  className="h-12 rounded-full bg-success px-6 text-success-foreground hover:bg-success/90"
+                  className="h-15 rounded-none bg-success text-[0.8rem] font-bold uppercase tracking-[0.14em] text-success-foreground transition-transform hover:bg-success/90 active:scale-[0.98]"
                 >
                   <a
                     href={whatsappLink(
@@ -337,31 +327,53 @@ function ProductDetail() {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <MessageCircle className="mr-2 h-4 w-4" /> WhatsApp
+                    <MessageCircle className="mr-2 h-5 w-5" /> WhatsApp
                   </a>
                 </Button>
               ) : null}
+              <EnquiryDialog
+                productId={product.id}
+                productName={product.name}
+                trigger={
+                  <Button
+                    size="lg"
+                    className="h-15 w-full rounded-none bg-navy text-[0.8rem] font-bold uppercase tracking-[0.14em] text-navy-foreground transition-transform hover:bg-primary active:scale-[0.98]"
+                  >
+                    Request quote
+                  </Button>
+                }
+              />
               {phone ? (
-                <Button asChild size="lg" variant="outline" className="h-12 rounded-full px-6">
+                <Button
+                  asChild
+                  size="lg"
+                  variant="outline"
+                  className="h-15 rounded-none text-[0.8rem] font-bold uppercase tracking-[0.14em] sm:col-span-2"
+                >
                   <a href={`tel:${phone.replace(/\s/g, "")}`}>
-                    <Phone className="mr-2 h-4 w-4" /> Call
+                    <Phone className="mr-2 h-5 w-5" /> Call {phone}
                   </a>
                 </Button>
               ) : null}
             </div>
+            {product.sku ? (
+              <p className="mt-5 text-sm text-muted-foreground">SKU {product.sku}</p>
+            ) : null}
           </div>
 
           {product.condition_notes ? (
-            <div className="mt-6 rounded-lg border border-warning/40 bg-warning/10 p-4 text-sm">
-              <p className="font-semibold">Condition notes</p>
-              <p className="mt-1 text-muted-foreground">{product.condition_notes}</p>
+            <div className="mt-7 border-l-2 border-warning bg-warning/10 p-5">
+              <p className="font-display text-[0.95rem] font-semibold uppercase tracking-[0.1em]">
+                Condition notes
+              </p>
+              <p className="mt-2 text-body text-muted-foreground">{product.condition_notes}</p>
             </div>
           ) : null}
 
           {product.description ? (
-            <div className="mt-6">
-              <h2 className="font-display text-lg font-semibold">Description</h2>
-              <p className="mt-2 whitespace-pre-line text-sm leading-relaxed text-muted-foreground">
+            <div className="mt-8">
+              <h2 className="font-display text-sub font-semibold">Description</h2>
+              <p className="mt-3 whitespace-pre-line text-body text-muted-foreground">
                 {product.description}
               </p>
             </div>
@@ -370,29 +382,41 @@ function ProductDetail() {
       </div>
 
       {specGroups.length > 0 ? (
-        <section className="border-t border-border bg-surface py-12">
+        <section className="border-t border-border bg-surface section-y-sm">
           <div className="container-page">
-            <h2 className="font-display text-xl font-bold">Full specifications</h2>
-            <div className="mt-6 grid gap-6 md:grid-cols-2">
+            <p className="text-eyebrow text-primary">Specifications</p>
+            <h2 className="mt-4 font-display text-[clamp(1.6rem,3vw,2.4rem)] font-bold tracking-tight">
+              Full technical detail
+            </h2>
+            <Accordion
+              type="multiple"
+              defaultValue={[specGroups[0]!.title]}
+              className="mt-8 border-t border-border"
+            >
               {specGroups.map((group) => (
-                <div key={group.title} className="overflow-hidden rounded-2xl border border-border bg-card shadow-card">
-                  <h3 className="border-b border-border bg-muted px-4 py-2.5 font-display text-sm font-semibold">
+                <AccordionItem key={group.title} value={group.title} className="border-border">
+                  <AccordionTrigger className="py-6 text-left font-display text-[1.05rem] font-semibold tracking-tight hover:no-underline">
                     {group.title}
-                  </h3>
-                  <dl className="divide-y divide-border">
-                    {group.rows.map(([label, value]) => (
-                      <div key={label} className="grid grid-cols-2 gap-4 px-4 py-2.5 text-sm">
-                        <dt className="text-muted-foreground">{label}</dt>
-                        <dd className="font-medium">{String(value)}</dd>
-                      </div>
-                    ))}
-                  </dl>
-                </div>
+                  </AccordionTrigger>
+                  <AccordionContent className="pb-8">
+                    <dl className="grid gap-x-12 gap-y-6 sm:grid-cols-2 lg:grid-cols-3">
+                      {group.rows.map(([label, value]) => (
+                        <div key={label}>
+                          <dt className="text-[0.72rem] font-bold uppercase tracking-[0.16em] text-muted-foreground">
+                            {label}
+                          </dt>
+                          <dd className="mt-1.5 text-[1.05rem] font-medium leading-snug">{String(value)}</dd>
+                        </div>
+                      ))}
+                    </dl>
+                  </AccordionContent>
+                </AccordionItem>
               ))}
-            </div>
+            </Accordion>
           </div>
         </section>
       ) : null}
+
 
       {related.length > 0 ? (
         <section className="container-page py-14">
