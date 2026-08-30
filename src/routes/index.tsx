@@ -284,40 +284,139 @@ function HomeSections() {
         </div>
       </section>
 
-      {/* Why us */}
-      <section className="bg-card py-16 text-card-foreground">
-        <div className="container-page grid gap-10 lg:grid-cols-2">
-          <Reveal direction="left">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">Why buy from us</p>
-            <h2 className="font-editorial mt-3 text-3xl md:text-4xl">
-              Honest grading, real testing, practical pricing
+      {/* Refurbishment process timeline */}
+      <section className="relative overflow-hidden bg-gradient-navy py-16 text-navy-foreground md:py-20">
+        <div aria-hidden="true" className="absolute inset-0 grid-blueprint opacity-10" />
+        <div className="container-page relative">
+          <FadeIn>
+            <p className="flex items-center gap-3 text-[0.7rem] font-semibold uppercase tracking-[0.24em] text-cyan">
+              <span className="h-px w-8 bg-cyan/50" />
+              Our process
+            </p>
+            <h2 className="font-editorial mt-3 max-w-2xl text-3xl text-white md:text-4xl">
+              How every unit reaches your desk
             </h2>
-            <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{s["footer_text"]}</p>
-            <Button asChild className="sheen mt-6 bg-accent text-accent-foreground hover:bg-accent/90">
-              <Link to="/about">About our process</Link>
-            </Button>
-          </Reveal>
-          <div className="grid gap-4 sm:grid-cols-2">
+          </FadeIn>
+          <Stagger className="relative mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-4" stagger={0.1}>
+            <span
+              aria-hidden="true"
+              className="pointer-events-none absolute left-0 right-0 top-6 hidden h-px bg-white/15 lg:block"
+            />
             {[
-              { Icon: BadgeCheck, title: "Honest grading", text: "Devices described as they are, with condition notes." },
+              { Icon: Boxes, title: "Sourcing", text: "Stock sourced from corporate buy-backs and trade partners." },
+              { Icon: ScanSearch, title: "Inspection & grading", text: "Cosmetic grading with honest condition notes." },
+              { Icon: Wrench, title: "Refurbishment", text: "Cleaning, part replacement and upgrades in-house." },
+              { Icon: ShieldCheck, title: "Testing & dispatch", text: "Bench-tested, packed and dispatched with invoice." },
+            ].map((step, i) => (
+              <StaggerItem key={step.title}>
+                <div className="relative h-full rounded-2xl border border-white/12 bg-white/[0.06] p-6 backdrop-blur transition-colors hover:border-cyan/40">
+                  <span className="relative z-10 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-brand text-primary-foreground shadow-glow">
+                    <step.Icon className="h-5 w-5" />
+                  </span>
+                  <p className="mt-4 font-mono text-[0.68rem] uppercase tracking-[0.2em] text-cyan">
+                    Step {i + 1}
+                  </p>
+                  <h3 className="mt-1.5 font-display text-base font-semibold text-white">{step.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-white/70">{step.text}</p>
+                </div>
+              </StaggerItem>
+            ))}
+          </Stagger>
+        </div>
+      </section>
+
+      {/* Why us - bento grid */}
+      <section className="bg-background py-16 md:py-20">
+        <div className="container-page">
+          <FadeIn>
+            <SectionHeading
+              eyebrow="Why buy from us"
+              title="Honest grading, real testing, practical pricing"
+              action={{ to: "/about", label: "About our process" }}
+            />
+          </FadeIn>
+          <Stagger className="mt-8 grid gap-4 md:grid-cols-3 lg:grid-cols-4" stagger={0.07}>
+            <StaggerItem className="md:col-span-2 md:row-span-2">
+              <div className="flex h-full flex-col justify-between overflow-hidden rounded-3xl border border-primary/20 bg-gradient-soft p-7 shadow-card">
+                <div>
+                  <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-brand text-primary-foreground shadow-glow">
+                    <BadgeCheck className="h-5 w-5" />
+                  </span>
+                  <h3 className="mt-5 font-display text-2xl font-semibold">Honest grading</h3>
+                  <p className="mt-3 max-w-md text-sm leading-relaxed text-muted-foreground">
+                    {s["footer_text"] ||
+                      "Devices are described exactly as they are, with condition notes on every listing."}
+                  </p>
+                </div>
+                <Button asChild className="mt-7 h-11 w-fit rounded-full bg-gradient-brand px-6 text-primary-foreground">
+                  <Link to="/about">About our process</Link>
+                </Button>
+              </div>
+            </StaggerItem>
+            {[
               { Icon: ClipboardCheck, title: "Structured testing", text: "Display, battery, ports, storage, memory and thermals." },
               { Icon: Headphones, title: "In-house support", text: "Repair, upgrades and AMC handled by our own team." },
               { Icon: PackageCheck, title: "GST invoicing", text: `Registered business${s["gst_number"] ? ` (GST ${s["gst_number"]})` : ""}.` },
-            ].map((item, i) => (
-              <Reveal
-                key={item.title}
-                direction="right"
-                delay={i * motion.stagger}
-                className="rounded-lg border border-border p-5 transition-colors hover:border-accent/50 hover:bg-foreground/5"
-              >
-                <item.Icon className="h-5 w-5 text-accent" />
-                <p className="mt-3 font-display text-sm font-semibold">{item.title}</p>
-                <p className="mt-1.5 text-xs text-muted-foreground">{item.text}</p>
-              </Reveal>
+              { Icon: Truck, title: "Pan-India dispatch", text: "Packed and shipped from our Navi Mumbai facility." },
+            ].map((item) => (
+              <StaggerItem key={item.title} className="h-full">
+                <div className="h-full rounded-2xl border border-border bg-card p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-primary/35 hover:shadow-lift">
+                  <item.Icon className="h-5 w-5 text-primary" />
+                  <p className="mt-4 font-display text-sm font-semibold">{item.title}</p>
+                  <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">{item.text}</p>
+                </div>
+              </StaggerItem>
             ))}
-          </div>
+          </Stagger>
         </div>
       </section>
+
+      {/* Bulk / corporate B2B band */}
+      <section className="container-page py-4 md:py-8">
+        <FadeIn>
+          <div className="relative overflow-hidden rounded-3xl border border-border bg-card p-7 shadow-card md:p-10">
+            <span aria-hidden="true" className="absolute inset-0 grid-blueprint opacity-50" />
+            <div className="relative grid gap-8 lg:grid-cols-[1.2fr_1fr] lg:items-center">
+              <div>
+                <p className="text-[0.7rem] font-semibold uppercase tracking-[0.24em] text-primary">
+                  Bulk &amp; corporate
+                </p>
+                <h2 className="font-editorial mt-3 text-3xl md:text-4xl">
+                  IT procurement partner for offices, startups and institutions
+                </h2>
+                <p className="mt-4 max-w-xl text-sm leading-relaxed text-muted-foreground">
+                  Share your requirement — quantity, configuration and budget — and we will revert with
+                  availability and pricing. GST invoicing, bulk dispatch and AMC support available.
+                </p>
+                <div className="mt-6 flex flex-wrap gap-3">
+                  <Button asChild size="lg" className="h-12 rounded-full bg-gradient-brand px-7 text-primary-foreground shadow-glow">
+                    <Link to="/bulk-orders">Request bulk quote</Link>
+                  </Button>
+                  <Button asChild size="lg" variant="outline" className="h-12 rounded-full px-7">
+                    <Link to="/contact">Talk to our team</Link>
+                  </Button>
+                </div>
+              </div>
+              <Stagger className="grid gap-3 sm:grid-cols-2" stagger={0.06}>
+                {[
+                  "Corporate bulk supply",
+                  "Configuration matching",
+                  "AMC & on-site support",
+                  "Rental options",
+                ].map((t) => (
+                  <StaggerItem key={t}>
+                    <div className="flex items-start gap-2.5 rounded-xl border border-border bg-background/70 p-4 text-sm font-medium backdrop-blur">
+                      <BadgeCheck className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                      {t}
+                    </div>
+                  </StaggerItem>
+                ))}
+              </Stagger>
+            </div>
+          </div>
+        </FadeIn>
+      </section>
+
 
       {/* Brands */}
       {home.brands.length > 0 ? (
