@@ -45,14 +45,14 @@ export function CategoryShowcase({ items }: { items: ShowcaseItem[] }) {
                 decoding="async"
                 className="absolute inset-0 h-full w-full object-cover transition-transform duration-[900ms] ease-out will-change-transform group-hover:scale-110 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent transition-opacity duration-500 group-hover:via-black/35" />
+              <div className="absolute inset-0 bg-gradient-to-t from-navy/95 via-navy/55 to-navy/10 transition-opacity duration-500 group-hover:via-navy/65" />
               <div className="absolute inset-x-0 bottom-0 p-5 text-white">
-                <span className="inline-flex h-9 w-9 items-center justify-center rounded-md bg-accent/20 text-accent backdrop-blur transition-transform duration-500 group-hover:-translate-y-1 group-hover:rotate-3">
+                <span className="inline-flex h-9 w-9 items-center justify-center rounded-md bg-gradient-brand text-primary-foreground shadow-glow backdrop-blur transition-transform duration-500 group-hover:-translate-y-1 group-hover:rotate-3">
                   <Icon name={item.icon ?? null} className="h-4.5 w-4.5" />
                 </span>
                 <h3
                   className={cn(
-                    "mt-3 font-display font-semibold transition-colors duration-300 group-hover:text-accent",
+                    "mt-3 font-display font-semibold transition-colors duration-300 group-hover:text-cyan",
                     feature ? "text-xl md:text-2xl" : "text-base",
                   )}
                 >
@@ -63,12 +63,12 @@ export function CategoryShowcase({ items }: { items: ShowcaseItem[] }) {
                     {item.description}
                   </p>
                 ) : null}
-                <span className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-accent">
+                <span className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-cyan">
                   Browse stock
                   <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </span>
               </div>
-              <span className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/15 transition-colors duration-500 group-hover:ring-accent/60" />
+              <span className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/15 transition-colors duration-500 group-hover:ring-cyan/60" />
             </Link>
           </Reveal>
         );

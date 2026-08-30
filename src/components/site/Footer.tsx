@@ -26,8 +26,9 @@ export function Footer() {
   ].filter((x) => x.url);
 
   return (
-    <footer className="mt-20 border-t border-border bg-sidebar text-sidebar-foreground">
-      <div className="container-page grid gap-10 py-14 md:grid-cols-2 lg:grid-cols-4">
+    <footer className="relative mt-20 overflow-hidden border-t border-border bg-gradient-navy text-sidebar-foreground">
+      <span aria-hidden="true" className="pointer-events-none absolute inset-0 grid-blueprint opacity-[0.08]" />
+      <div className="container-page relative grid gap-10 py-16 md:grid-cols-2 lg:grid-cols-4">
         <div>
           <Logo inverted />
           <p className="mt-4 text-sm leading-relaxed text-sidebar-foreground/70">{s["footer_text"]}</p>
@@ -43,7 +44,7 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="rounded-md border border-sidebar-border p-2 text-sidebar-foreground/80 transition-colors hover:bg-sidebar-accent hover:text-sidebar-foreground"
+                  className="rounded-xl border border-sidebar-border p-2.5 text-sidebar-foreground/80 transition-all hover:-translate-y-0.5 hover:border-cyan/50 hover:bg-white/10 hover:text-cyan"
                 >
                   <Icon className="h-4 w-4" />
                 </a>
@@ -53,7 +54,7 @@ export function Footer() {
         </div>
 
         <div>
-          <h3 className="font-display text-sm font-semibold uppercase tracking-wider text-sidebar-foreground">
+          <h3 className="font-display text-xs font-semibold uppercase tracking-[0.2em] text-cyan">
             Products
           </h3>
           <ul className="mt-4 space-y-2 text-sm">
@@ -62,7 +63,7 @@ export function Footer() {
                 <Link
                   to="/products"
                   search={{ category: c.slug }}
-                  className="text-sidebar-foreground/70 transition-colors hover:text-sidebar-primary"
+                  className="text-sidebar-foreground/70 transition-colors hover:text-cyan"
                 >
                   {c.name}
                 </Link>
@@ -72,7 +73,7 @@ export function Footer() {
         </div>
 
         <div>
-          <h3 className="font-display text-sm font-semibold uppercase tracking-wider text-sidebar-foreground">
+          <h3 className="font-display text-xs font-semibold uppercase tracking-[0.2em] text-cyan">
             Company
           </h3>
           <ul className="mt-4 space-y-2 text-sm">
@@ -87,7 +88,7 @@ export function Footer() {
               <li key={l.to}>
                 <Link
                   to={l.to}
-                  className="text-sidebar-foreground/70 transition-colors hover:text-sidebar-primary"
+                  className="text-sidebar-foreground/70 transition-colors hover:text-cyan"
                 >
                   {l.label}
                 </Link>
@@ -100,7 +101,7 @@ export function Footer() {
                 <Link
                   to="/policies/$slug"
                   params={{ slug: p.slug }}
-                  className="text-sidebar-foreground/60 transition-colors hover:text-sidebar-primary"
+                  className="text-sidebar-foreground/60 transition-colors hover:text-cyan"
                 >
                   {p.label}
                 </Link>
@@ -110,27 +111,27 @@ export function Footer() {
         </div>
 
         <div>
-          <h3 className="font-display text-sm font-semibold uppercase tracking-wider text-sidebar-foreground">
+          <h3 className="font-display text-xs font-semibold uppercase tracking-[0.2em] text-cyan">
             Get in touch
           </h3>
           <ul className="mt-4 space-y-3 text-sm text-sidebar-foreground/75">
             {s["address"] ? (
               <li className="flex gap-3">
-                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-sidebar-primary" />
+                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-cyan" />
                 <span>{s["address"]}</span>
               </li>
             ) : null}
             {s["phone"] ? (
               <li className="flex gap-3">
-                <Phone className="mt-0.5 h-4 w-4 shrink-0 text-sidebar-primary" />
+                <Phone className="mt-0.5 h-4 w-4 shrink-0 text-cyan" />
                 <span className="flex flex-col">
-                  <a href={`tel:${s["phone"].replace(/\s/g, "")}`} className="hover:text-sidebar-primary">
+                  <a href={`tel:${s["phone"].replace(/\s/g, "")}`} className="hover:text-cyan">
                     {s["phone"]}
                   </a>
                   {s["phone_alt"] ? (
                     <a
                       href={`tel:${s["phone_alt"].replace(/\s/g, "")}`}
-                      className="hover:text-sidebar-primary"
+                      className="hover:text-cyan"
                     >
                       {s["phone_alt"]}
                     </a>
@@ -140,8 +141,8 @@ export function Footer() {
             ) : null}
             {s["email"] ? (
               <li className="flex gap-3">
-                <Mail className="mt-0.5 h-4 w-4 shrink-0 text-sidebar-primary" />
-                <a href={`mailto:${s["email"]}`} className="break-all hover:text-sidebar-primary">
+                <Mail className="mt-0.5 h-4 w-4 shrink-0 text-cyan" />
+                <a href={`mailto:${s["email"]}`} className="break-all hover:text-cyan">
                   {s["email"]}
                 </a>
               </li>
@@ -151,7 +152,7 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="border-t border-sidebar-border">
+      <div className="relative border-t border-sidebar-border">
         <div className="container-page flex flex-col items-center justify-between gap-2 py-5 text-xs text-sidebar-foreground/60 sm:flex-row">
           <p>
             &copy; {year} {s["copyright_text"]}

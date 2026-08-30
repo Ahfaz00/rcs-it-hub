@@ -101,6 +101,8 @@ export const listProducts = createServerFn({ method: "GET" })
       default:
         query = query.order("is_featured", { ascending: false }).order("created_at", { ascending: false });
     }
+    query = query.order("id", { ascending: true });
+
 
     const from = (page - 1) * perPage;
     const { data: rows, count, error } = await query.range(from, from + perPage - 1);

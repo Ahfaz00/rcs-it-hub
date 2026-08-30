@@ -1,10 +1,14 @@
+import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useSuspenseQuery, queryOptions } from "@tanstack/react-query";
+import { Expand } from "lucide-react";
 
 import { SiteShell, PageHero } from "@/components/site/SiteShell";
 import { Button } from "@/components/ui/button";
 import { listGallery } from "@/lib/public.functions";
 import { mediaUrl } from "@/lib/media";
+import { Lightbox, type LightboxImage } from "@/components/site/Lightbox";
+import { Stagger, StaggerItem } from "@/components/site/Motion";
 
 const galleryQueryOptions = queryOptions({
   queryKey: ["gallery"],
@@ -31,6 +35,15 @@ export const Route = createFileRoute("/gallery")({
 
 function GalleryPage() {
   const { data: items } = useSuspenseQuery(galleryQueryOptions);
+  const [open, setOpen] = useState(false);
+  const [index, setIndex] = useState(0);
+
+  const lightboxImages: LightboxImage[] = items
+    .map((i) => ({
+      src: mediaUrl(i.image_url) ?? "",
+      alt: i.alt_text || i.title || "R Computer Solutions facility",
+    }))
+    .filter((i) => i.src !== "");
 
   return (
     <SiteShell>
@@ -48,29 +61,55 @@ function GalleryPage() {
             </Button>
           </div>
         ) : (
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {items.map((item) => (
-              <figure
-                key={item.id}
-                className="overflow-hidden rounded-lg border border-border bg-card shadow-card"
-              >
-                <img
-                  src={mediaUrl(item.image_url) ?? ""}
-                  alt={item.alt_text || item.title || "R Computer Solutions facility"}
-                  loading="lazy"
-                  className="aspect-4/3 w-full object-cover"
-                />
-                {item.title || item.caption ? (
-                  <figcaption className="p-4">
-                    {item.title ? <p className="font-display text-sm font-semibold">{item.title}</p> : null}
-                    {item.caption ? (
-                      <p className="mt-1 text-xs text-muted-foreground">{item.caption}</p>
+          <>
+            {open && lightboxImages.length > 0 ? (
+              <Lightbox
+                images={lightboxImages}
+                index={Math.min(index, lightboxImages.length - 1)}
+                onIndexChange={setIndex}
+                onClose={() => setOpen(false)}
+              />
+            ) : null}
+            <Stagger className="columns-1 gap-4 sm:columns-2 lg:columns-3 [&>*]:mb-4" stagger={0.06}>
+              {items.map((item, i) => (
+                <StaggerItem key={item.id} className="break-inside-avoid">
+                  <figure className="group overflow-hidden rounded-2xl border border-border bg-card shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-primary/35 hover:shadow-lift">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setIndex(i);
+                        setOpen(true);
+                      }}
+                      aria-label={`Open image ${i + 1}`}
+                      className="relative block w-full cursor-zoom-in overflow-hidden"
+                    >
+                      <img
+                        src={mediaUrl(item.image_url) ?? ""}
+                        alt={item.alt_text || item.title || "R Computer Solutions facility"}
+                        loading="lazy"
+                        decoding="async"
+                        className="w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+                      />
+                      <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-navy/60 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                      <span className="pointer-events-none absolute bottom-3 right-3 inline-flex items-center gap-1.5 rounded-full bg-background/90 px-3 py-1.5 text-xs font-medium opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                        <Expand className="h-3.5 w-3.5" /> View
+                      </span>
+                    </button>
+                    {item.title || item.caption ? (
+                      <figcaption className="p-4">
+                        {item.title ? (
+                          <p className="font-display text-sm font-semibold">{item.title}</p>
+                        ) : null}
+                        {item.caption ? (
+                          <p className="mt-1 text-xs text-muted-foreground">{item.caption}</p>
+                        ) : null}
+                      </figcaption>
                     ) : null}
-                  </figcaption>
-                ) : null}
-              </figure>
-            ))}
-          </div>
+                  </figure>
+                </StaggerItem>
+              ))}
+            </Stagger>
+          </>
         )}
       </div>
     </SiteShell>

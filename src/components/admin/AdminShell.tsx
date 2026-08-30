@@ -100,11 +100,11 @@ export function AdminShell({ children }: { children: ReactNode }) {
       <aside
         className={`${
           open ? "block" : "hidden"
-        } w-full shrink-0 border-r border-border bg-card lg:block lg:w-64`}
+        } w-full shrink-0 border-r border-sidebar-border bg-gradient-navy text-sidebar-foreground lg:block lg:w-64`}
       >
         <div className="sticky top-0 flex h-screen flex-col overflow-y-auto p-4">
           <div className="px-2 py-1">
-            <Logo compact />
+            <Logo compact inverted />
           </div>
           <nav className="mt-6 flex-1 space-y-0.5">
             {nav.map((item) => (
@@ -113,24 +113,24 @@ export function AdminShell({ children }: { children: ReactNode }) {
                 to={item.to}
                 {...(item.params ? { params: item.params } : {})}
                 activeOptions={{ exact: item.to === "/admin" }}
-                activeProps={{ className: "bg-accent/15 text-accent" }}
-                className="flex items-center gap-2.5 rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                activeProps={{ className: "bg-white/10 text-cyan shadow-card" }}
+                className="flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-sm font-medium text-sidebar-foreground/70 transition-colors hover:bg-white/10 hover:text-sidebar-foreground"
               >
                 <item.icon className="h-4 w-4" />
                 {item.label}
               </Link>
             ))}
           </nav>
-          <div className="mt-4 space-y-1 border-t border-border pt-4">
+          <div className="mt-4 space-y-1 border-t border-sidebar-border pt-4">
             <Link
               to="/"
-              className="flex items-center gap-2.5 rounded-md px-3 py-2 text-sm text-muted-foreground hover:bg-muted hover:text-foreground"
+              className="flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-sidebar-foreground/70 transition-colors hover:bg-white/10 hover:text-sidebar-foreground"
             >
               <LayoutDashboard className="h-4 w-4" /> View website
             </Link>
             <button
               onClick={signOut}
-              className="flex w-full items-center gap-2.5 rounded-md px-3 py-2 text-sm text-muted-foreground hover:bg-muted hover:text-foreground"
+              className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-sidebar-foreground/70 transition-colors hover:bg-white/10 hover:text-sidebar-foreground"
             >
               <LogOut className="h-4 w-4" /> Sign out
             </button>
@@ -161,9 +161,9 @@ export function AdminHeader({
   action?: ReactNode;
 }) {
   return (
-    <div className="mb-6 flex flex-wrap items-start justify-between gap-3">
+    <div className="mb-7 flex flex-wrap items-start justify-between gap-3 border-b border-border pb-5">
       <div>
-        <h1 className="font-display text-2xl font-bold">{title}</h1>
+        <h1 className="font-display text-2xl font-bold tracking-tight md:text-3xl">{title}</h1>
         {description ? <p className="mt-1 text-sm text-muted-foreground">{description}</p> : null}
       </div>
       {action}

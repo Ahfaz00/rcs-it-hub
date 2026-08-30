@@ -3,17 +3,26 @@ import { useSuspenseQuery, queryOptions } from "@tanstack/react-query";
 import {
   ArrowRight,
   BadgeCheck,
+  Boxes,
   ClipboardCheck,
   Headphones,
   PackageCheck,
   Quote,
+  ScanSearch,
+  ShieldCheck,
+  Sparkles,
   Star,
+  Truck,
+  Wrench,
 } from "lucide-react";
+
 
 import { SiteShell } from "@/components/site/SiteShell";
 import { ProductCard } from "@/components/site/ProductCard";
 import { Icon } from "@/components/site/Icon";
 import { Reveal } from "@/components/site/Reveal";
+import { FadeIn, Stagger, StaggerItem } from "@/components/site/Motion";
+
 import { HeroSlider, type HeroSlide } from "@/components/site/HeroSlider";
 import { CategoryShowcase, type ShowcaseItem } from "@/components/site/CategoryShowcase";
 import { MotionProvider, readBool, readNum, useMotion } from "@/components/site/MotionProvider";
@@ -112,7 +121,7 @@ function HomeSections() {
     <>
       {/* Full-bleed hero banner */}
       {showHero ? (
-        <section className="relative isolate overflow-hidden bg-sidebar">
+        <section className="relative isolate overflow-hidden bg-navy">
           <div className="absolute inset-0">
             <HeroSlider
               slides={heroSlides}
@@ -125,27 +134,33 @@ function HomeSections() {
           </div>
           <div
             aria-hidden="true"
-            className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/60 to-black/20"
+            className="absolute inset-0 bg-[linear-gradient(100deg,oklch(0.2_0.05_258/0.94),oklch(0.24_0.06_258/0.78)_45%,oklch(0.24_0.06_258/0.25))]"
           />
-          <div className="container-page relative z-10 flex min-h-[26rem] flex-col justify-center py-16 md:min-h-[34rem] md:py-24">
-            <div className="max-w-2xl text-white">
-              <p className="animate-fade-in inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-3.5 py-1.5 text-[0.68rem] font-semibold uppercase tracking-[0.18em] backdrop-blur">
+          <div aria-hidden="true" className="absolute inset-0 grid-blueprint opacity-[0.12]" />
+          <div className="container-page relative z-10 flex min-h-[28rem] flex-col justify-center py-16 md:min-h-[36rem] md:py-24">
+            <FadeIn className="max-w-2xl text-navy-foreground" y={24} duration={0.7}>
+              <p className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3.5 py-1.5 text-[0.68rem] font-semibold uppercase tracking-[0.18em] backdrop-blur">
+                <Sparkles className="h-3.5 w-3.5 text-cyan" />
                 Computer Wholesaler &middot; Navi Mumbai
               </p>
-              <h1
-                className="animate-fade-in font-editorial mt-6 text-4xl leading-[1.05] md:text-6xl"
-                style={{ animationDelay: "120ms" }}
-              >
+            </FadeIn>
+            <FadeIn className="max-w-3xl" delay={0.1} y={26} duration={0.7}>
+              <h1 className="font-editorial mt-6 text-4xl leading-[1.05] text-white md:text-6xl">
                 {s["hero_title"] || "Refurbished IT hardware, built for performance"}
               </h1>
-              <p
-                className="animate-fade-in mt-5 max-w-xl text-sm leading-relaxed text-white/80 md:text-base"
-                style={{ animationDelay: "220ms" }}
-              >
+            </FadeIn>
+            <FadeIn delay={0.2}>
+              <p className="mt-5 max-w-xl text-sm leading-relaxed text-white/75 md:text-base">
                 {s["hero_subtitle"]}
               </p>
-              <div className="animate-fade-in mt-8 flex flex-wrap gap-3" style={{ animationDelay: "320ms" }}>
-                <Button asChild size="lg" className="sheen h-12 rounded-full px-7 text-sm font-semibold">
+            </FadeIn>
+            <FadeIn delay={0.3}>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <Button
+                  asChild
+                  size="lg"
+                  className="h-12 rounded-full bg-gradient-brand px-7 text-sm font-semibold text-primary-foreground shadow-glow transition-transform hover:scale-[1.03] active:scale-[0.99]"
+                >
                   <a href={safePath(s["hero_cta1_link"], "/products")}>
                     {s["hero_cta1_text"] || "Browse stock"}
                     <ArrowRight className="ml-2 h-4 w-4" />
@@ -155,17 +170,18 @@ function HomeSections() {
                   asChild
                   size="lg"
                   variant="outline"
-                  className="h-12 rounded-full border-white/40 bg-white/10 px-7 text-sm font-semibold text-white backdrop-blur hover:bg-white/20 hover:text-white"
+                  className="h-12 rounded-full border-white/35 bg-white/10 px-7 text-sm font-semibold text-white backdrop-blur transition-colors hover:bg-white/20 hover:text-white"
                 >
                   <a href={safePath(s["hero_cta2_link"], "/bulk-orders")}>
                     {s["hero_cta2_text"] || "Get a quote"}
                   </a>
                 </Button>
               </div>
-            </div>
+            </FadeIn>
           </div>
         </section>
       ) : null}
+
 
       {/* Brand marquee strip */}
       {home.brands.length > 0 ? (
@@ -227,13 +243,14 @@ function HomeSections() {
               title={s["featured_title"] || "Featured refurbished systems"}
               action={{ to: "/products", label: "See all" }}
             />
-            <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-              {products.slice(0, 8).map((p, i) => (
-                <Reveal key={p.id} delay={(i % 4) * motion.stagger} className="h-full [&>*]:h-full">
+            <Stagger className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4" stagger={0.08}>
+              {products.slice(0, 8).map((p) => (
+                <StaggerItem key={p.id} className="h-full [&>*]:h-full">
                   <ProductCard product={p} />
-                </Reveal>
+                </StaggerItem>
               ))}
-            </div>
+            </Stagger>
+
           </div>
         </section>
       ) : null}
@@ -267,40 +284,139 @@ function HomeSections() {
         </div>
       </section>
 
-      {/* Why us */}
-      <section className="bg-card py-16 text-card-foreground">
-        <div className="container-page grid gap-10 lg:grid-cols-2">
-          <Reveal direction="left">
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">Why buy from us</p>
-            <h2 className="font-editorial mt-3 text-3xl md:text-4xl">
-              Honest grading, real testing, practical pricing
+      {/* Refurbishment process timeline */}
+      <section className="relative overflow-hidden bg-gradient-navy py-16 text-navy-foreground md:py-20">
+        <div aria-hidden="true" className="absolute inset-0 grid-blueprint opacity-10" />
+        <div className="container-page relative">
+          <FadeIn>
+            <p className="flex items-center gap-3 text-[0.7rem] font-semibold uppercase tracking-[0.24em] text-cyan">
+              <span className="h-px w-8 bg-cyan/50" />
+              Our process
+            </p>
+            <h2 className="font-editorial mt-3 max-w-2xl text-3xl text-white md:text-4xl">
+              How every unit reaches your desk
             </h2>
-            <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{s["footer_text"]}</p>
-            <Button asChild className="sheen mt-6 bg-accent text-accent-foreground hover:bg-accent/90">
-              <Link to="/about">About our process</Link>
-            </Button>
-          </Reveal>
-          <div className="grid gap-4 sm:grid-cols-2">
+          </FadeIn>
+          <Stagger className="relative mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-4" stagger={0.1}>
+            <span
+              aria-hidden="true"
+              className="pointer-events-none absolute left-0 right-0 top-6 hidden h-px bg-white/15 lg:block"
+            />
             {[
-              { Icon: BadgeCheck, title: "Honest grading", text: "Devices described as they are, with condition notes." },
+              { Icon: Boxes, title: "Sourcing", text: "Stock sourced from corporate buy-backs and trade partners." },
+              { Icon: ScanSearch, title: "Inspection & grading", text: "Cosmetic grading with honest condition notes." },
+              { Icon: Wrench, title: "Refurbishment", text: "Cleaning, part replacement and upgrades in-house." },
+              { Icon: ShieldCheck, title: "Testing & dispatch", text: "Bench-tested, packed and dispatched with invoice." },
+            ].map((step, i) => (
+              <StaggerItem key={step.title}>
+                <div className="relative h-full rounded-2xl border border-white/12 bg-white/[0.06] p-6 backdrop-blur transition-colors hover:border-cyan/40">
+                  <span className="relative z-10 flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-brand text-primary-foreground shadow-glow">
+                    <step.Icon className="h-5 w-5" />
+                  </span>
+                  <p className="mt-4 font-mono text-[0.68rem] uppercase tracking-[0.2em] text-cyan">
+                    Step {i + 1}
+                  </p>
+                  <h3 className="mt-1.5 font-display text-base font-semibold text-white">{step.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-white/70">{step.text}</p>
+                </div>
+              </StaggerItem>
+            ))}
+          </Stagger>
+        </div>
+      </section>
+
+      {/* Why us - bento grid */}
+      <section className="bg-background py-16 md:py-20">
+        <div className="container-page">
+          <FadeIn>
+            <SectionHeading
+              eyebrow="Why buy from us"
+              title="Honest grading, real testing, practical pricing"
+              action={{ to: "/about", label: "About our process" }}
+            />
+          </FadeIn>
+          <Stagger className="mt-8 grid gap-4 md:grid-cols-3 lg:grid-cols-4" stagger={0.07}>
+            <StaggerItem className="md:col-span-2 md:row-span-2">
+              <div className="flex h-full flex-col justify-between overflow-hidden rounded-3xl border border-primary/20 bg-gradient-soft p-7 shadow-card">
+                <div>
+                  <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-brand text-primary-foreground shadow-glow">
+                    <BadgeCheck className="h-5 w-5" />
+                  </span>
+                  <h3 className="mt-5 font-display text-2xl font-semibold">Honest grading</h3>
+                  <p className="mt-3 max-w-md text-sm leading-relaxed text-muted-foreground">
+                    {s["footer_text"] ||
+                      "Devices are described exactly as they are, with condition notes on every listing."}
+                  </p>
+                </div>
+                <Button asChild className="mt-7 h-11 w-fit rounded-full bg-gradient-brand px-6 text-primary-foreground">
+                  <Link to="/about">About our process</Link>
+                </Button>
+              </div>
+            </StaggerItem>
+            {[
               { Icon: ClipboardCheck, title: "Structured testing", text: "Display, battery, ports, storage, memory and thermals." },
               { Icon: Headphones, title: "In-house support", text: "Repair, upgrades and AMC handled by our own team." },
               { Icon: PackageCheck, title: "GST invoicing", text: `Registered business${s["gst_number"] ? ` (GST ${s["gst_number"]})` : ""}.` },
-            ].map((item, i) => (
-              <Reveal
-                key={item.title}
-                direction="right"
-                delay={i * motion.stagger}
-                className="rounded-lg border border-border p-5 transition-colors hover:border-accent/50 hover:bg-foreground/5"
-              >
-                <item.Icon className="h-5 w-5 text-accent" />
-                <p className="mt-3 font-display text-sm font-semibold">{item.title}</p>
-                <p className="mt-1.5 text-xs text-muted-foreground">{item.text}</p>
-              </Reveal>
+              { Icon: Truck, title: "Pan-India dispatch", text: "Packed and shipped from our Navi Mumbai facility." },
+            ].map((item) => (
+              <StaggerItem key={item.title} className="h-full">
+                <div className="h-full rounded-2xl border border-border bg-card p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-primary/35 hover:shadow-lift">
+                  <item.Icon className="h-5 w-5 text-primary" />
+                  <p className="mt-4 font-display text-sm font-semibold">{item.title}</p>
+                  <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">{item.text}</p>
+                </div>
+              </StaggerItem>
             ))}
-          </div>
+          </Stagger>
         </div>
       </section>
+
+      {/* Bulk / corporate B2B band */}
+      <section className="container-page py-4 md:py-8">
+        <FadeIn>
+          <div className="relative overflow-hidden rounded-3xl border border-border bg-card p-7 shadow-card md:p-10">
+            <span aria-hidden="true" className="absolute inset-0 grid-blueprint opacity-50" />
+            <div className="relative grid gap-8 lg:grid-cols-[1.2fr_1fr] lg:items-center">
+              <div>
+                <p className="text-[0.7rem] font-semibold uppercase tracking-[0.24em] text-primary">
+                  Bulk &amp; corporate
+                </p>
+                <h2 className="font-editorial mt-3 text-3xl md:text-4xl">
+                  IT procurement partner for offices, startups and institutions
+                </h2>
+                <p className="mt-4 max-w-xl text-sm leading-relaxed text-muted-foreground">
+                  Share your requirement — quantity, configuration and budget — and we will revert with
+                  availability and pricing. GST invoicing, bulk dispatch and AMC support available.
+                </p>
+                <div className="mt-6 flex flex-wrap gap-3">
+                  <Button asChild size="lg" className="h-12 rounded-full bg-gradient-brand px-7 text-primary-foreground shadow-glow">
+                    <Link to="/bulk-orders">Request bulk quote</Link>
+                  </Button>
+                  <Button asChild size="lg" variant="outline" className="h-12 rounded-full px-7">
+                    <Link to="/contact">Talk to our team</Link>
+                  </Button>
+                </div>
+              </div>
+              <Stagger className="grid gap-3 sm:grid-cols-2" stagger={0.06}>
+                {[
+                  "Corporate bulk supply",
+                  "Configuration matching",
+                  "AMC & on-site support",
+                  "Rental options",
+                ].map((t) => (
+                  <StaggerItem key={t}>
+                    <div className="flex items-start gap-2.5 rounded-xl border border-border bg-background/70 p-4 text-sm font-medium backdrop-blur">
+                      <BadgeCheck className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                      {t}
+                    </div>
+                  </StaggerItem>
+                ))}
+              </Stagger>
+            </div>
+          </div>
+        </FadeIn>
+      </section>
+
 
       {/* Brands */}
       {home.brands.length > 0 ? (

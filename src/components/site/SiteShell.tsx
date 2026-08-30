@@ -21,7 +21,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Chat on WhatsApp"
-          className="fixed bottom-5 right-5 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-success text-success-foreground shadow-lift transition-transform hover:scale-105"
+          className="fixed bottom-5 right-5 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-success text-success-foreground shadow-lift transition-transform hover:scale-110 active:scale-95 motion-reduce:transition-none"
         >
           <MessageCircle className="h-6 w-6" />
         </a>
@@ -40,8 +40,9 @@ export function PageHero({
   breadcrumb?: ReactNode;
 }) {
   return (
-    <section className="border-b border-border bg-card text-card-foreground">
-      <div className="container-page py-12 md:py-16">
+    <section className="relative overflow-hidden border-b border-border bg-gradient-soft text-foreground">
+      <span aria-hidden="true" className="pointer-events-none absolute inset-0 grid-blueprint opacity-60" />
+      <div className="container-page relative py-12 md:py-16">
         {breadcrumb ? <div className="mb-3 text-xs text-muted-foreground">{breadcrumb}</div> : null}
         <h1 className="font-editorial text-3xl md:text-5xl">{title}</h1>
         {subtitle ? (
