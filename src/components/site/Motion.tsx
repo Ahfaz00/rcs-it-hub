@@ -94,7 +94,7 @@ export function HoverCard3D({
   return (
     <motion.div
       className={cn("h-full", className)}
-      whileHover={reduced ? undefined : { y: lift }}
+      whileHover={reduced ? {} : { y: lift }}
       transition={{ type: "spring", stiffness: 260, damping: 22 }}
     >
       {children}

@@ -42,7 +42,7 @@ export function ProductCard({ product }: { product: ProductCardData }) {
 
   return (
     <motion.article
-      whileHover={reduced ? undefined : { y: -6 }}
+      whileHover={reduced ? {} : { y: -6 }}
       transition={{ type: "spring", stiffness: 280, damping: 24 }}
       className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-card transition-[box-shadow,border-color] duration-300 hover:border-primary/35 hover:shadow-lift"
     >
