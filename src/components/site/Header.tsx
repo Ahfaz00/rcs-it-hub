@@ -131,13 +131,34 @@ export function Header() {
 
 
           <div className="ml-auto flex shrink-0 items-center gap-2 xl:ml-3">
+            {/* Mobile quick actions */}
+            {s["whatsapp"] ? (
+              <a
+                href={whatsappLink(s["whatsapp"], enquiryMessage(s["default_enquiry_message"]))}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Chat on WhatsApp"
+                className="inline-flex h-11 w-11 items-center justify-center text-success transition-colors hover:bg-success/10 active:scale-95 sm:hidden"
+              >
+                <MessageCircle className="h-5 w-5" />
+              </a>
+            ) : null}
+            {s["phone"] ? (
+              <a
+                href={`tel:${s["phone"].replace(/\s/g, "")}`}
+                aria-label={`Call ${s["phone"]}`}
+                className="inline-flex h-11 w-11 items-center justify-center text-foreground transition-colors hover:bg-muted active:scale-95 sm:hidden"
+              >
+                <Phone className="h-5 w-5" />
+              </a>
+            ) : null}
 
             {s["whatsapp"] ? (
               <Button
                 asChild
                 size="sm"
                 variant="ghost"
-                className="hidden h-10 rounded-none px-3 text-[0.72rem] font-bold uppercase tracking-[0.12em] hover:bg-success/10 hover:text-success sm:inline-flex"
+                className="hidden h-11 rounded-none px-3 text-[0.75rem] font-bold uppercase tracking-[0.12em] hover:bg-success/10 hover:text-success sm:inline-flex"
               >
                 <a
                   href={whatsappLink(s["whatsapp"], enquiryMessage(s["default_enquiry_message"]))}
@@ -152,21 +173,21 @@ export function Header() {
               <Button
                 asChild
                 size="sm"
-                className="hidden h-10 rounded-none bg-navy px-5 text-[0.72rem] font-bold uppercase tracking-[0.12em] text-navy-foreground transition-colors hover:bg-primary sm:inline-flex"
+                className="hidden h-11 rounded-none bg-navy px-5 text-[0.75rem] font-bold uppercase tracking-[0.12em] text-navy-foreground transition-colors hover:bg-primary sm:inline-flex"
               >
                 <a href={`tel:${s["phone"].replace(/\s/g, "")}`}>
                   <Phone className="mr-1.5 h-4 w-4" /> Call now
                 </a>
               </Button>
-
             ) : null}
 
             <Sheet open={open} onOpenChange={setOpen}>
               <SheetTrigger asChild>
-                <Button variant="outline" size="icon" className="rounded-full xl:hidden" aria-label="Open menu">
+                <Button variant="outline" size="icon" className="h-11 w-11 rounded-none xl:hidden" aria-label="Open menu">
                   <Menu className="h-5 w-5" />
                 </Button>
               </SheetTrigger>
+
               <SheetContent side="right" className="w-[88vw] max-w-sm overflow-y-auto p-0">
                 <SheetTitle className="sr-only">Menu</SheetTitle>
                 <div className="flex items-center border-b border-border bg-gradient-soft p-4 pr-14">
