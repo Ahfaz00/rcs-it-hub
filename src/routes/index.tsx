@@ -446,13 +446,16 @@ function SectionHeading({
   return (
     <div className="flex flex-wrap items-end justify-between gap-4">
       <div>
-        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">{eyebrow}</p>
-        <h2 className="mt-2 font-display text-2xl font-bold md:text-3xl">{title}</h2>
+        <p className="flex items-center gap-3 text-[0.7rem] font-semibold uppercase tracking-[0.24em] text-accent">
+          <span className="h-px w-8 bg-accent/50" />
+          {eyebrow}
+        </p>
+        <h2 className="font-editorial mt-3 text-3xl md:text-4xl">{title}</h2>
       </div>
       {action ? (
         <Link
           to={action.to}
-          className="inline-flex items-center text-sm font-medium text-muted-foreground hover:text-foreground"
+          className="inline-flex items-center rounded-full border border-border px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:border-accent hover:text-foreground"
         >
           {action.label} <ArrowRight className="ml-1.5 h-4 w-4" />
         </Link>
