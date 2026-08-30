@@ -209,9 +209,10 @@ function ProductDetail() {
         </nav>
       </div>
 
-      <div className="container-page grid items-start gap-10 py-10 lg:grid-cols-[1.1fr_1fr]">
+      <div className="container-page grid items-start gap-12 py-10 md:py-14 lg:grid-cols-[1.15fr_1fr] lg:gap-16">
         <div className="lg:sticky lg:top-28">
-          <div className="group relative flex aspect-4/3 items-center justify-center overflow-hidden rounded-2xl border border-border bg-gradient-soft shadow-card">
+          <div className="group relative flex aspect-square items-center justify-center overflow-hidden border border-border bg-[oklch(0.975_0.006_250)] sm:aspect-4/3">
+
             <span aria-hidden="true" className="absolute inset-0 grid-blueprint opacity-70" />
             {activeImage ? (
               <>
