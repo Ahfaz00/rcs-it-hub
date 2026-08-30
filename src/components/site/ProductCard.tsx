@@ -35,7 +35,7 @@ export function ProductCard({ product }: { product: ProductCardData }) {
   const off = hasPrice ? discountPercent(product.price, product.mrp, product.discount) : null;
 
   return (
-    <article className="group flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card shadow-card transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lift">
+    <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:shadow-lift">
       <Link
         to="/products/$slug"
         params={{ slug: product.slug }}

@@ -12,7 +12,11 @@ export function Logo({
   compact?: boolean;
 }) {
   return (
-    <Link to="/" className={cn("flex items-center gap-3", className)} aria-label="R Computer Solutions home">
+    <Link
+      to="/"
+      className={cn("flex shrink-0 items-center gap-3 whitespace-nowrap", className)}
+      aria-label="R Computer Solutions home"
+    >
       <img
         src={logoMark.url}
         alt=""

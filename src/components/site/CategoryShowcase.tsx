@@ -35,7 +35,7 @@ export function CategoryShowcase({ items }: { items: ShowcaseItem[] }) {
             <Link
               to="/products"
               search={{ category: item.slug }}
-              className="group relative block h-full overflow-hidden rounded-xl border border-border bg-card shadow-card transition-shadow duration-500 hover:shadow-lift"
+              className="group relative block h-full overflow-hidden rounded-2xl border border-border bg-card shadow-card transition-shadow duration-500 hover:shadow-lift"
             >
               <img
                 src={item.image}
@@ -68,7 +68,7 @@ export function CategoryShowcase({ items }: { items: ShowcaseItem[] }) {
                   <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </span>
               </div>
-              <span className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-inset ring-white/15 transition-colors duration-500 group-hover:ring-accent/60" />
+              <span className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/15 transition-colors duration-500 group-hover:ring-accent/60" />
             </Link>
           </Reveal>
         );
