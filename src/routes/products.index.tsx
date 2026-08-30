@@ -15,6 +15,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { Stagger, StaggerItem } from "@/components/site/Motion";
 import { listProducts, getCatalogFilters } from "@/lib/public.functions";
 
 type ProductSearch = {
