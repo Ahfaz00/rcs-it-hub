@@ -202,9 +202,10 @@ function ProductDetail() {
         </nav>
       </div>
 
-      <div className="container-page grid gap-10 py-10 lg:grid-cols-2">
-        <div>
-          <div className="group relative flex aspect-4/3 items-center justify-center overflow-hidden rounded-lg border border-border bg-card">
+      <div className="container-page grid items-start gap-10 py-10 lg:grid-cols-[1.1fr_1fr]">
+        <div className="lg:sticky lg:top-28">
+          <div className="group relative flex aspect-4/3 items-center justify-center overflow-hidden rounded-2xl border border-border bg-gradient-soft shadow-card">
+            <span aria-hidden="true" className="absolute inset-0 grid-blueprint opacity-70" />
             {activeImage ? (
               <>
                 <button
