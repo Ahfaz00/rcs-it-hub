@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 import { getProductBySlug } from "@/lib/public.functions";
 import { siteQueryOptions, whatsappLink, enquiryMessage } from "@/lib/site-query";
 import { mediaUrl } from "@/lib/media";
-import { formatPrice } from "@/lib/format";
+import { configChips, discountPercent, formatINR, formatPrice } from "@/lib/format";
 
 const productQueryOptions = (slug: string) =>
   queryOptions({
@@ -277,10 +277,40 @@ function ProductDetail() {
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{product.short_description}</p>
           ) : null}
 
+          {configChips(product, 6).length > 0 ? (
+            <div className="mt-6 rounded-lg border border-border bg-card p-4">
+              <p className="font-display text-sm font-semibold">Configuration</p>
+              <ul className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3">
+                {configChips(product, 6).map((c) => (
+                  <li
+                    key={c}
+                    className="rounded-md bg-muted px-2.5 py-1.5 font-mono text-xs text-muted-foreground"
+                  >
+                    {c}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
+
           <div className="mt-6 rounded-lg border border-border bg-card p-5">
-            <p className="font-display text-2xl font-bold">
-              {formatPrice(product.price, product.show_price)}
-            </p>
+            <div className="flex flex-wrap items-baseline gap-3">
+              <p className="font-display text-3xl font-bold">
+                {formatPrice(product.price, product.show_price)}
+              </p>
+              {product.show_price && product.mrp != null && Number(product.mrp) > Number(product.price ?? 0) ? (
+                <>
+                  <span className="text-base text-muted-foreground line-through">
+                    {formatINR(Number(product.mrp))}
+                  </span>
+                  {discountPercent(product.price, product.mrp, product.discount) ? (
+                    <span className="rounded-full bg-success px-2 py-0.5 text-xs font-semibold text-success-foreground">
+                      {discountPercent(product.price, product.mrp, product.discount)}% off
+                    </span>
+                  ) : null}
+                </>
+              ) : null}
+            </div>
             <p className="mt-1 text-xs text-muted-foreground">
               {product.availability}
               {product.warranty ? ` · ${product.warranty}` : ""}
