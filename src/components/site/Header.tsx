@@ -114,8 +114,8 @@ export function Header() {
             ))}
           </nav>
 
-          <form onSubmit={search} className="ml-auto hidden w-full min-w-[13rem] max-w-xs items-center xl:flex">
-            <div className="relative w-full">
+          <form onSubmit={search} className="ml-auto hidden min-w-0 flex-1 max-w-[15rem] items-center xl:flex">
+            <div className="relative w-full min-w-0">
               <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <Input
                 value={term}
@@ -127,7 +127,8 @@ export function Header() {
             </div>
           </form>
 
-          <div className="ml-auto flex items-center gap-2 xl:ml-4">
+          <div className="ml-auto flex shrink-0 items-center gap-2 xl:ml-3">
+
             {s["whatsapp"] ? (
               <Button asChild size="sm" variant="outline" className="hidden h-11 rounded-full px-4 sm:inline-flex">
                 <a
