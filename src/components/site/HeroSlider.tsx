@@ -70,7 +70,7 @@ export function HeroSlider({
             className={cn("h-full w-full object-cover", i === index && motion.kenburns && "animate-kenburns")}
           />
           {overlay ? (
-            <div className="absolute inset-0 bg-gradient-to-t from-background/95 via-background/30 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-background/85 via-background/20 to-transparent" />
           ) : null}
         </div>
       ))}
