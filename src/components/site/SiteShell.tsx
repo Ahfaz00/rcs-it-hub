@@ -43,7 +43,7 @@ export function PageHero({
     <section className="border-b border-border bg-card text-card-foreground">
       <div className="container-page py-12 md:py-16">
         {breadcrumb ? <div className="mb-3 text-xs text-muted-foreground">{breadcrumb}</div> : null}
-        <h1 className="font-display text-3xl font-bold md:text-4xl">{title}</h1>
+        <h1 className="font-editorial text-3xl md:text-5xl">{title}</h1>
         {subtitle ? (
           <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground md:text-base">
             {subtitle}
