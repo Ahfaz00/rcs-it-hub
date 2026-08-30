@@ -1,7 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowUpRight } from "lucide-react";
 
-import { Icon } from "@/components/site/Icon";
 import { Reveal } from "@/components/site/Reveal";
 import { useMotion } from "@/components/site/MotionProvider";
 import { cn } from "@/lib/utils";
@@ -16,63 +15,77 @@ export type ShowcaseItem = {
   count?: number | null;
 };
 
-/** Premium category showcase: image tiles with hover zoom, sliding overlay and scroll reveal. */
+/**
+ * Editorial, asymmetric category layout.
+ * First item is a dominant full-height feature; the rest form a mixed-size grid.
+ */
 export function CategoryShowcase({ items }: { items: ShowcaseItem[] }) {
   const motion = useMotion();
   if (items.length === 0) return null;
 
+  const [feature, ...rest] = items;
+
   return (
-    <div className="mt-8 grid auto-rows-[13rem] gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:auto-rows-[15rem]">
-      {items.map((item, i) => {
-        const feature = i === 0;
-        return (
+    <div className="mt-10 grid gap-3 lg:grid-cols-[1.15fr_1fr]">
+      {feature ? (
+        <Reveal delay={0} direction="scale" className="h-full">
+          <CategoryTile item={feature} size="feature" />
+        </Reveal>
+      ) : null}
+
+      <div className="grid auto-rows-[11rem] gap-3 sm:grid-cols-2 lg:auto-rows-[13.5rem]">
+        {rest.slice(0, 6).map((item, i) => (
           <Reveal
             key={item.id}
-            delay={i * motion.stagger}
-            direction={feature ? "scale" : "up"}
-            className={cn("h-full", feature && "sm:col-span-2 sm:row-span-2")}
+            delay={(i + 1) * motion.stagger}
+            className={cn("h-full", i === 0 && "sm:col-span-2")}
           >
-            <Link
-              to="/products"
-              search={{ category: item.slug }}
-              className="group relative block h-full overflow-hidden rounded-2xl border border-border bg-card shadow-card transition-shadow duration-500 hover:shadow-lift"
-            >
-              <img
-                src={item.image}
-                alt=""
-                aria-hidden="true"
-                loading="lazy"
-                decoding="async"
-                className="absolute inset-0 h-full w-full object-cover transition-transform duration-[900ms] ease-out will-change-transform group-hover:scale-110 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-navy/95 via-navy/55 to-navy/10 transition-opacity duration-500 group-hover:via-navy/65" />
-              <div className="absolute inset-x-0 bottom-0 p-5 text-white">
-                <span className="inline-flex h-9 w-9 items-center justify-center rounded-md bg-gradient-brand text-primary-foreground shadow-glow backdrop-blur transition-transform duration-500 group-hover:-translate-y-1 group-hover:rotate-3">
-                  <Icon name={item.icon ?? null} className="h-4.5 w-4.5" />
-                </span>
-                <h3
-                  className={cn(
-                    "mt-3 font-display font-semibold transition-colors duration-300 group-hover:text-cyan",
-                    feature ? "text-xl md:text-2xl" : "text-base",
-                  )}
-                >
-                  {item.name}
-                </h3>
-                {item.description ? (
-                  <p className="mt-1 max-w-md text-xs leading-relaxed text-white/80 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100 motion-reduce:opacity-100 sm:translate-y-2">
-                    {item.description}
-                  </p>
-                ) : null}
-                <span className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-cyan">
-                  Browse stock
-                  <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                </span>
-              </div>
-              <span className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/15 transition-colors duration-500 group-hover:ring-cyan/60" />
-            </Link>
+            <CategoryTile item={item} size={i === 0 ? "wide" : "small"} />
           </Reveal>
-        );
-      })}
+        ))}
+      </div>
     </div>
+  );
+}
+
+function CategoryTile({ item, size }: { item: ShowcaseItem; size: "feature" | "wide" | "small" }) {
+  return (
+    <Link
+      to="/products"
+      search={{ category: item.slug }}
+      className={cn(
+        "group relative block h-full overflow-hidden bg-navy",
+        size === "feature" && "min-h-[24rem] lg:min-h-[28rem]",
+      )}
+    >
+      <img
+        src={item.image}
+        alt=""
+        aria-hidden="true"
+        loading="lazy"
+        decoding="async"
+        className="absolute inset-0 h-full w-full object-cover opacity-90 transition-transform duration-[1100ms] ease-out will-change-transform group-hover:scale-[1.07] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/55 to-transparent transition-opacity duration-500 group-hover:from-navy/95" />
+
+      <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-6 text-white md:p-7">
+        <div className="min-w-0">
+          <h3
+            className={cn(
+              "font-display font-bold tracking-tight",
+              size === "feature" ? "text-3xl md:text-4xl" : size === "wide" ? "text-2xl" : "text-lg",
+            )}
+          >
+            {item.name}
+          </h3>
+          {item.description && size !== "small" ? (
+            <p className="mt-2 max-w-md text-sm leading-relaxed text-white/75">{item.description}</p>
+          ) : null}
+        </div>
+        <span className="grid h-11 w-11 shrink-0 place-items-center border border-white/25 text-white transition-all duration-300 group-hover:border-cyan group-hover:bg-cyan/15">
+          <ArrowUpRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+        </span>
+      </div>
+    </Link>
   );
 }
