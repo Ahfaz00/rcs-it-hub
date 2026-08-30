@@ -1,10 +1,10 @@
 import { Link } from "@tanstack/react-router";
-import { ImageOff } from "lucide-react";
+import { ImageOff, ShieldCheck } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { mediaUrl } from "@/lib/media";
-import { formatPrice } from "@/lib/format";
+import { configChips, discountPercent, formatINR, formatPrice } from "@/lib/format";
 
 export type ProductCardData = {
   id: string;
@@ -13,19 +13,29 @@ export type ProductCardData = {
   short_description?: string | null;
   condition?: string | null;
   price?: number | null;
+  mrp?: number | null;
+  discount?: number | null;
   show_price?: boolean | null;
   main_image_url?: string | null;
   main_image_alt?: string | null;
   availability?: string | null;
   warranty?: string | null;
+  processor_model?: string | null;
+  ram?: string | null;
+  storage_capacity?: string | null;
+  operating_system?: string | null;
+  display_size?: string | null;
   brands?: { name: string } | null;
 };
 
 export function ProductCard({ product }: { product: ProductCardData }) {
   const img = mediaUrl(product.main_image_url);
+  const chips = configChips(product, 4);
+  const hasPrice = Boolean(product.show_price) && product.price != null;
+  const off = hasPrice ? discountPercent(product.price, product.mrp, product.discount) : null;
 
   return (
-    <article className="group flex h-full flex-col overflow-hidden rounded-lg border border-border bg-card shadow-card transition-shadow hover:shadow-lift">
+    <article className="group flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card shadow-card transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lift">
       <Link
         to="/products/$slug"
         params={{ slug: product.slug }}
@@ -36,7 +46,8 @@ export function ProductCard({ product }: { product: ProductCardData }) {
             src={img}
             alt={product.main_image_alt || product.name}
             loading="lazy"
-            className="h-full w-full object-contain p-4 transition-transform duration-300 group-hover:scale-[1.03]"
+            decoding="async"
+            className="h-full w-full object-contain p-4 transition-transform duration-500 group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
           />
         ) : (
           <div className="flex h-full w-full flex-col items-center justify-center gap-2 text-muted-foreground">
@@ -47,6 +58,11 @@ export function ProductCard({ product }: { product: ProductCardData }) {
         {product.condition ? (
           <Badge className="absolute left-3 top-3 bg-accent text-accent-foreground">{product.condition}</Badge>
         ) : null}
+        {off ? (
+          <span className="absolute right-3 top-3 rounded-full bg-success px-2 py-0.5 text-[0.7rem] font-semibold text-success-foreground">
+            {off}% off
+          </span>
+        ) : null}
       </Link>
 
       <div className="flex flex-1 flex-col p-4">
@@ -55,29 +71,45 @@ export function ProductCard({ product }: { product: ProductCardData }) {
             {product.brands.name}
           </p>
         ) : null}
-        <h3 className="mt-1 font-display text-base font-semibold leading-snug">
+        <h3 className="mt-1 line-clamp-2 font-display text-base font-semibold leading-snug">
           <Link to="/products/$slug" params={{ slug: product.slug }} className="hover:text-accent">
             {product.name}
           </Link>
         </h3>
-        {product.short_description ? (
-          <p className="mt-2 line-clamp-2 text-sm text-muted-foreground">{product.short_description}</p>
+
+        {chips.length > 0 ? (
+          <ul className="mt-3 flex flex-wrap gap-1.5">
+            {chips.map((c) => (
+              <li
+                key={c}
+                className="rounded-md bg-muted px-2 py-0.5 font-mono text-[0.7rem] text-muted-foreground"
+              >
+                {c}
+              </li>
+            ))}
+          </ul>
+        ) : product.short_description ? (
+          <p className="mt-3 line-clamp-2 text-sm text-muted-foreground">{product.short_description}</p>
         ) : null}
 
-        <div className="mt-3 flex flex-wrap gap-1.5 text-[0.7rem] text-muted-foreground">
-          {product.warranty ? (
-            <span className="rounded border border-border px-1.5 py-0.5">{product.warranty}</span>
-          ) : null}
-          {product.availability ? (
-            <span className="rounded border border-border px-1.5 py-0.5">{product.availability}</span>
-          ) : null}
-        </div>
+        {product.warranty ? (
+          <p className="mt-3 inline-flex items-center gap-1.5 text-xs text-muted-foreground">
+            <ShieldCheck className="h-3.5 w-3.5 text-success" /> {product.warranty}
+          </p>
+        ) : null}
 
-        <div className="mt-auto flex items-center justify-between gap-3 pt-4">
-          <span className="font-display text-sm font-semibold">
-            {formatPrice(product.price, product.show_price)}
-          </span>
-          <Button asChild size="sm" variant="outline">
+        <div className="mt-auto pt-4">
+          <div className="flex flex-wrap items-baseline gap-2">
+            <span className="font-display text-lg font-bold">
+              {formatPrice(product.price, product.show_price)}
+            </span>
+            {hasPrice && product.mrp != null && Number(product.mrp) > Number(product.price) ? (
+              <span className="text-sm text-muted-foreground line-through">
+                {formatINR(Number(product.mrp))}
+              </span>
+            ) : null}
+          </div>
+          <Button asChild size="sm" variant="outline" className="mt-3 w-full">
             <Link to="/products/$slug" params={{ slug: product.slug }}>
               View details
             </Link>
