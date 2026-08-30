@@ -248,7 +248,7 @@ function ProductDetail() {
                   aria-label={`View image ${i + 1}`}
                   aria-current={i === active}
                   className={`h-20 w-20 shrink-0 overflow-hidden rounded-md border p-1 transition-all duration-300 hover:-translate-y-0.5 ${
-                    i === active ? "border-accent shadow-card" : "border-border opacity-70 hover:opacity-100"
+                    i === active ? "border-primary ring-2 ring-primary/20 shadow-card" : "border-border opacity-70 hover:opacity-100"
                   }`}
                 >
                   <img
@@ -273,13 +273,13 @@ function ProductDetail() {
             {product.sku ? <span className="text-xs text-muted-foreground">SKU {product.sku}</span> : null}
           </div>
 
-          <h1 className="mt-3 font-display text-3xl font-bold">{product.name}</h1>
+          <h1 className="mt-3 font-display text-3xl font-bold leading-tight md:text-4xl">{product.name}</h1>
           {product.short_description ? (
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{product.short_description}</p>
           ) : null}
 
           {configChips(product, 6).length > 0 ? (
-            <div className="mt-6 rounded-lg border border-border bg-card p-4">
+            <div className="mt-6 rounded-2xl border border-border bg-card p-5 shadow-card">
               <p className="font-display text-sm font-semibold">Configuration</p>
               <ul className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3">
                 {configChips(product, 6).map((c) => (
@@ -321,13 +321,13 @@ function ProductDetail() {
               <EnquiryDialog
                 productId={product.id}
                 productName={product.name}
-                trigger={<Button size="lg">Enquire about this product</Button>}
+                trigger={<Button size="lg" className="h-12 rounded-full bg-gradient-brand px-7 text-primary-foreground shadow-glow">Enquire about this product</Button>}
               />
               {wa ? (
                 <Button
                   asChild
                   size="lg"
-                  className="bg-success text-success-foreground hover:bg-success/90"
+                  className="h-12 rounded-full bg-success px-6 text-success-foreground hover:bg-success/90"
                 >
                   <a
                     href={whatsappLink(
@@ -342,7 +342,7 @@ function ProductDetail() {
                 </Button>
               ) : null}
               {phone ? (
-                <Button asChild size="lg" variant="outline">
+                <Button asChild size="lg" variant="outline" className="h-12 rounded-full px-6">
                   <a href={`tel:${phone.replace(/\s/g, "")}`}>
                     <Phone className="mr-2 h-4 w-4" /> Call
                   </a>
@@ -375,7 +375,7 @@ function ProductDetail() {
             <h2 className="font-display text-xl font-bold">Full specifications</h2>
             <div className="mt-6 grid gap-6 md:grid-cols-2">
               {specGroups.map((group) => (
-                <div key={group.title} className="overflow-hidden rounded-lg border border-border bg-card">
+                <div key={group.title} className="overflow-hidden rounded-2xl border border-border bg-card shadow-card">
                   <h3 className="border-b border-border bg-muted px-4 py-2.5 font-display text-sm font-semibold">
                     {group.title}
                   </h3>
