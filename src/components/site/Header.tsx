@@ -77,7 +77,7 @@ export function Header() {
         <div className="container-page flex h-[4.5rem] items-center gap-4">
           <Logo />
 
-          <nav className="ml-6 hidden items-center gap-0.5 xl:flex">
+          <nav className="ml-6 hidden shrink-0 items-center gap-0.5 whitespace-nowrap xl:flex">
             {NAV.map((item) => (
               <Link
                 key={item.to}
