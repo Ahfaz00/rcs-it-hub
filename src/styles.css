@@ -48,6 +48,8 @@
   --color-cyan-foreground: var(--cyan-foreground);
   --color-navy: var(--navy);
   --color-navy-foreground: var(--navy-foreground);
+  --color-ink: var(--ink);
+
   --color-surface: var(--surface);
   --color-surface-foreground: var(--surface-foreground);
   --color-border: var(--border);
