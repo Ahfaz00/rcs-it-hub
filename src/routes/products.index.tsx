@@ -98,6 +98,80 @@ function ProductsPage() {
     Boolean,
   ).length;
 
+  const filterPanel = (
+    <div className="space-y-5">
+      <div className="flex items-center justify-between">
+        <h2 className="font-display text-sm font-semibold uppercase tracking-wider">Filters</h2>
+        {activeCount > 0 ? (
+          <Button
+            variant="ghost"
+            size="sm"
+            className="h-8 rounded-full text-xs"
+            onClick={() => {
+              setTerm("");
+              navigate({ search: {} });
+            }}
+          >
+            Clear all
+          </Button>
+        ) : null}
+      </div>
+
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          update({ search: term || undefined });
+        }}
+        className="space-y-2"
+      >
+        <Label htmlFor="filter-search">Search</Label>
+        <div className="relative">
+          <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <Input
+            id="filter-search"
+            value={term}
+            onChange={(e) => setTerm(e.target.value)}
+            placeholder="Model, processor, SKU"
+            className="rounded-full pl-9"
+          />
+        </div>
+      </form>
+
+      <FilterSelect
+        label="Category"
+        value={search.category}
+        options={filters.categories.map((c) => ({ value: c.slug, label: c.name }))}
+        onChange={(v) => update({ category: v })}
+      />
+      <FilterSelect
+        label="Brand"
+        value={search.brand}
+        options={filters.brands.map((b) => ({ value: b.slug, label: b.name }))}
+        onChange={(v) => update({ brand: v })}
+      />
+      <FilterSelect
+        label="Condition"
+        value={search.condition}
+        options={filters.conditions.map((c) => ({ value: c, label: c }))}
+        onChange={(v) => update({ condition: v })}
+      />
+      <FilterSelect
+        label="Type"
+        value={search.type}
+        options={filters.types.map((t) => ({ value: t, label: t }))}
+        onChange={(v) => update({ type: v })}
+      />
+    </div>
+  );
+
+  const activeChips = [
+    search.search ? { key: "search" as const, label: `"${search.search}"` } : null,
+    search.category ? { key: "category" as const, label: search.category } : null,
+    search.brand ? { key: "brand" as const, label: search.brand } : null,
+    search.condition ? { key: "condition" as const, label: search.condition } : null,
+    search.type ? { key: "type" as const, label: search.type } : null,
+  ].filter(Boolean) as { key: keyof ProductSearch; label: string }[];
+
   return (
     <SiteShell>
       <PageHero
@@ -105,93 +179,39 @@ function ProductsPage() {
         subtitle="Refurbished laptops, desktops, workstations, monitors, accessories and parts. Every unit is inspected and tested before dispatch."
       />
 
-      <div className="container-page grid gap-8 py-10 lg:grid-cols-[260px_1fr]">
-        <aside className={showFilters ? "block" : "hidden lg:block"}>
-          <div className="sticky top-24 space-y-5 rounded-lg border border-border bg-card p-5">
-            <div className="flex items-center justify-between">
-              <h2 className="font-display text-sm font-semibold uppercase tracking-wider">Filters</h2>
-              {activeCount > 0 ? (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => {
-                    setTerm("");
-                    navigate({ search: {} });
-                  }}
-                >
-                  Clear
-                </Button>
-              ) : null}
-            </div>
-
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                update({ search: term || undefined });
-              }}
-              className="space-y-2"
-            >
-              <Label htmlFor="filter-search">Search</Label>
-              <div className="relative">
-                <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                <Input
-                  id="filter-search"
-                  value={term}
-                  onChange={(e) => setTerm(e.target.value)}
-                  placeholder="Model, processor, SKU"
-                  className="pl-9"
-                />
-              </div>
-            </form>
-
-            <FilterSelect
-              label="Category"
-              value={search.category}
-              options={filters.categories.map((c) => ({ value: c.slug, label: c.name }))}
-              onChange={(v) => update({ category: v })}
-            />
-            <FilterSelect
-              label="Brand"
-              value={search.brand}
-              options={filters.brands.map((b) => ({ value: b.slug, label: b.name }))}
-              onChange={(v) => update({ brand: v })}
-            />
-            <FilterSelect
-              label="Condition"
-              value={search.condition}
-              options={filters.conditions.map((c) => ({ value: c, label: c }))}
-              onChange={(v) => update({ condition: v })}
-            />
-            <FilterSelect
-              label="Type"
-              value={search.type}
-              options={filters.types.map((t) => ({ value: t, label: t }))}
-              onChange={(v) => update({ type: v })}
-            />
-          </div>
+      <div className="container-page grid gap-8 py-10 lg:grid-cols-[270px_1fr]">
+        <aside className="hidden lg:block">
+          <div className="sticky top-28 rounded-2xl border border-border bg-card p-5 shadow-card">{filterPanel}</div>
         </aside>
 
         <div>
           <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
             <p className="text-sm text-muted-foreground">
-              {data.total} {data.total === 1 ? "product" : "products"}
+              <span className="font-semibold text-foreground">{data.total}</span>{" "}
+              {data.total === 1 ? "product" : "products"}
               {search.search ? ` for "${search.search}"` : ""}
             </p>
             <div className="flex items-center gap-2">
-              <Button
-                variant="outline"
-                size="sm"
-                className="lg:hidden"
-                onClick={() => setShowFilters((v) => !v)}
-              >
-                {showFilters ? <X className="mr-1.5 h-4 w-4" /> : <SlidersHorizontal className="mr-1.5 h-4 w-4" />}
-                Filters{activeCount ? ` (${activeCount})` : ""}
-              </Button>
+              <Sheet open={showFilters} onOpenChange={setShowFilters}>
+                <SheetTrigger asChild>
+                  <Button variant="outline" size="sm" className="h-10 rounded-full lg:hidden">
+                    <SlidersHorizontal className="mr-1.5 h-4 w-4" />
+                    Filters{activeCount ? ` (${activeCount})` : ""}
+                  </Button>
+                </SheetTrigger>
+                <SheetContent side="left" className="w-[86vw] max-w-sm overflow-y-auto">
+                  <SheetTitle className="sr-only">Filters</SheetTitle>
+                  <div className="pt-2">{filterPanel}</div>
+                  <Button className="mt-6 h-11 w-full rounded-full" onClick={() => setShowFilters(false)}>
+                    Show {data.total} results
+                  </Button>
+                </SheetContent>
+              </Sheet>
               <Select
                 value={search.sort ?? "newest"}
                 onValueChange={(v) => update({ sort: v === "newest" ? undefined : v })}
               >
-                <SelectTrigger className="w-[170px]" aria-label="Sort products">
+                <SelectTrigger className="h-10 w-[170px] rounded-full" aria-label="Sort products">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -204,28 +224,50 @@ function ProductsPage() {
             </div>
           </div>
 
+          {activeChips.length > 0 ? (
+            <div className="mb-5 flex flex-wrap gap-2">
+              {activeChips.map((chip) => (
+                <button
+                  key={chip.key}
+                  type="button"
+                  onClick={() => {
+                    if (chip.key === "search") setTerm("");
+                    update({ [chip.key]: undefined } as Partial<ProductSearch>);
+                  }}
+                  className="inline-flex items-center gap-1.5 rounded-full border border-primary/30 bg-primary/5 px-3 py-1.5 text-xs font-medium text-primary transition-colors hover:bg-primary/10"
+                >
+                  {chip.label}
+                  <X className="h-3 w-3" />
+                </button>
+              ))}
+            </div>
+          ) : null}
+
           {data.products.length === 0 ? (
-            <div className="rounded-lg border border-dashed border-border p-12 text-center">
+            <div className="rounded-2xl border border-dashed border-border p-12 text-center">
               <h2 className="font-display text-lg font-semibold">No products match your filters</h2>
               <p className="mt-2 text-sm text-muted-foreground">
                 Try clearing filters, or send us your requirement and we will check availability.
               </p>
               <div className="mt-5 flex justify-center gap-3">
-                <Button variant="outline" onClick={() => navigate({ search: {} })}>
+                <Button variant="outline" className="rounded-full" onClick={() => navigate({ search: {} })}>
                   Clear filters
                 </Button>
-                <Button asChild>
+                <Button asChild className="rounded-full">
                   <Link to="/bulk-orders">Send requirement</Link>
                 </Button>
               </div>
             </div>
           ) : (
-            <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+            <Stagger className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3" stagger={0.06}>
               {data.products.map((p) => (
-                <ProductCard key={p.id} product={p} />
+                <StaggerItem key={p.id} className="h-full [&>*]:h-full">
+                  <ProductCard product={p} />
+                </StaggerItem>
               ))}
-            </div>
+            </Stagger>
           )}
+
 
           {totalPages > 1 ? (
             <div className="mt-10 flex items-center justify-center gap-2">
