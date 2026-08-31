@@ -5,6 +5,7 @@ import { Expand, ImageOff, MessageCircle, Phone } from "lucide-react";
 
 import { SiteShell } from "@/components/site/SiteShell";
 import { ProductCard } from "@/components/site/ProductCard";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { EnquiryDialog } from "@/components/site/EnquiryDialog";
 import { Lightbox, type LightboxImage } from "@/components/site/Lightbox";
 import { MotionProvider } from "@/components/site/MotionProvider";
@@ -211,7 +212,7 @@ function ProductDetail() {
 
       <div className="container-page grid items-start gap-12 py-10 md:py-14 lg:grid-cols-[1.15fr_1fr] lg:gap-16">
         <div className="lg:sticky lg:top-28">
-          <div className="group relative flex aspect-square items-center justify-center overflow-hidden border border-border bg-[oklch(0.975_0.006_250)] sm:aspect-4/3">
+          <div className="group relative flex aspect-square items-center justify-center overflow-hidden rounded-2xl border border-border bg-[oklch(0.978_0.005_250)] sm:aspect-4/3">
 
             <span aria-hidden="true" className="absolute inset-0 grid-blueprint opacity-70" />
             {activeImage ? (
@@ -289,7 +290,7 @@ function ProductDetail() {
 
           <div className="mt-6 flex flex-wrap items-center gap-3">
             {product.condition ? (
-              <Badge className="rounded-none bg-navy px-3 py-1.5 text-[0.7rem] uppercase tracking-[0.12em] text-navy-foreground">
+              <Badge className="rounded-full bg-navy px-3 py-1.5 text-[0.7rem] uppercase tracking-[0.12em] text-navy-foreground">
                 {product.condition}
               </Badge>
             ) : null}
@@ -325,7 +326,7 @@ function ProductDetail() {
                 <Button
                   asChild
                   size="lg"
-                  className="h-15 rounded-none bg-success text-[0.8rem] font-bold uppercase tracking-[0.14em] text-success-foreground transition-transform hover:bg-success/90 active:scale-[0.98]"
+                  className="h-14 rounded-full bg-success text-[0.8rem] font-bold uppercase tracking-[0.14em] text-success-foreground transition-transform hover:bg-success/90 active:scale-[0.98]"
                 >
                   <a
                     href={whatsappLink(
@@ -345,7 +346,7 @@ function ProductDetail() {
                 trigger={
                   <Button
                     size="lg"
-                    className="h-15 w-full rounded-none bg-navy text-[0.8rem] font-bold uppercase tracking-[0.14em] text-navy-foreground transition-transform hover:bg-primary active:scale-[0.98]"
+                    className="h-14 w-full rounded-full bg-navy text-[0.8rem] font-bold uppercase tracking-[0.14em] text-navy-foreground transition-transform hover:bg-primary active:scale-[0.98]"
                   >
                     Request quote
                   </Button>
@@ -356,7 +357,7 @@ function ProductDetail() {
                   asChild
                   size="lg"
                   variant="outline"
-                  className="h-15 rounded-none text-[0.8rem] font-bold uppercase tracking-[0.14em] sm:col-span-2"
+                  className="h-14 rounded-full text-[0.8rem] font-bold uppercase tracking-[0.14em] sm:col-span-2"
                 >
                   <a href={`tel:${phone.replace(/\s/g, "")}`}>
                     <Phone className="mr-2 h-5 w-5" /> Call {phone}
