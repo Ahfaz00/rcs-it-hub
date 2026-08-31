@@ -5,17 +5,12 @@ import { Expand, ImageOff, MessageCircle, Phone } from "lucide-react";
 
 import { SiteShell } from "@/components/site/SiteShell";
 import { ProductCard } from "@/components/site/ProductCard";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { EnquiryDialog } from "@/components/site/EnquiryDialog";
 import { Lightbox, type LightboxImage } from "@/components/site/Lightbox";
 import { MotionProvider } from "@/components/site/MotionProvider";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 
 import { getProductBySlug } from "@/lib/public.functions";
 import { siteQueryOptions, whatsappLink, enquiryMessage } from "@/lib/site-query";
@@ -211,7 +206,7 @@ function ProductDetail() {
 
       <div className="container-page grid items-start gap-12 py-10 md:py-14 lg:grid-cols-[1.15fr_1fr] lg:gap-16">
         <div className="lg:sticky lg:top-28">
-          <div className="group relative flex aspect-square items-center justify-center overflow-hidden border border-border bg-[oklch(0.975_0.006_250)] sm:aspect-4/3">
+          <div className="group relative flex aspect-square items-center justify-center overflow-hidden rounded-2xl border border-border bg-[oklch(0.978_0.005_250)] sm:aspect-4/3">
 
             <span aria-hidden="true" className="absolute inset-0 grid-blueprint opacity-70" />
             {activeImage ? (
@@ -289,7 +284,7 @@ function ProductDetail() {
 
           <div className="mt-6 flex flex-wrap items-center gap-3">
             {product.condition ? (
-              <Badge className="rounded-none bg-navy px-3 py-1.5 text-[0.7rem] uppercase tracking-[0.12em] text-navy-foreground">
+              <Badge className="rounded-full bg-navy px-3 py-1.5 text-[0.7rem] uppercase tracking-[0.12em] text-navy-foreground">
                 {product.condition}
               </Badge>
             ) : null}
@@ -325,7 +320,7 @@ function ProductDetail() {
                 <Button
                   asChild
                   size="lg"
-                  className="h-15 rounded-none bg-success text-[0.8rem] font-bold uppercase tracking-[0.14em] text-success-foreground transition-transform hover:bg-success/90 active:scale-[0.98]"
+                  className="h-14 rounded-full bg-success text-[0.8rem] font-bold uppercase tracking-[0.14em] text-success-foreground transition-transform hover:bg-success/90 active:scale-[0.98]"
                 >
                   <a
                     href={whatsappLink(
@@ -345,7 +340,7 @@ function ProductDetail() {
                 trigger={
                   <Button
                     size="lg"
-                    className="h-15 w-full rounded-none bg-navy text-[0.8rem] font-bold uppercase tracking-[0.14em] text-navy-foreground transition-transform hover:bg-primary active:scale-[0.98]"
+                    className="h-14 w-full rounded-full bg-navy text-[0.8rem] font-bold uppercase tracking-[0.14em] text-navy-foreground transition-transform hover:bg-primary active:scale-[0.98]"
                   >
                     Request quote
                   </Button>
@@ -356,7 +351,7 @@ function ProductDetail() {
                   asChild
                   size="lg"
                   variant="outline"
-                  className="h-15 rounded-none text-[0.8rem] font-bold uppercase tracking-[0.14em] sm:col-span-2"
+                  className="h-14 rounded-full text-[0.8rem] font-bold uppercase tracking-[0.14em] sm:col-span-2"
                 >
                   <a href={`tel:${phone.replace(/\s/g, "")}`}>
                     <Phone className="mr-2 h-5 w-5" /> Call {phone}
@@ -396,34 +391,37 @@ function ProductDetail() {
             <h2 className="mt-4 font-display text-[clamp(1.6rem,3vw,2.4rem)] font-bold tracking-tight">
               Full technical detail
             </h2>
-            <Accordion
-              type="multiple"
-              defaultValue={[specGroups[0]!.title]}
-              className="mt-8 border-t border-border"
-            >
-              {specGroups.map((group) => (
-                <AccordionItem key={group.title} value={group.title} className="border-border">
-                  <AccordionTrigger className="py-6 text-left font-display text-[1.05rem] font-semibold tracking-tight hover:no-underline">
+
+            <Tabs defaultValue={specGroups[0]!.title} className="mt-8">
+              <TabsList className="h-auto w-full flex-wrap justify-start gap-2 rounded-xl bg-transparent p-0">
+                {specGroups.map((group) => (
+                  <TabsTrigger
+                    key={group.title}
+                    value={group.title}
+                    className="rounded-full border border-border bg-card px-4 py-2 text-[0.85rem] font-semibold data-[state=active]:border-navy data-[state=active]:bg-navy data-[state=active]:text-navy-foreground"
+                  >
                     {group.title}
-                  </AccordionTrigger>
-                  <AccordionContent className="pb-8">
-                    <dl className="grid gap-x-12 gap-y-6 sm:grid-cols-2 lg:grid-cols-3">
-                      {group.rows.map(([label, value]) => (
-                        <div key={label}>
-                          <dt className="text-[0.72rem] font-bold uppercase tracking-[0.16em] text-muted-foreground">
-                            {label}
-                          </dt>
-                          <dd className="mt-1.5 text-[1.05rem] font-medium leading-snug">{String(value)}</dd>
-                        </div>
-                      ))}
-                    </dl>
-                  </AccordionContent>
-                </AccordionItem>
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+
+              {specGroups.map((group) => (
+                <TabsContent key={group.title} value={group.title} className="mt-6">
+                  <dl className="divide-y divide-border overflow-hidden rounded-xl border border-border bg-card">
+                    {group.rows.map(([label, value]) => (
+                      <div key={label} className="grid gap-1 px-5 py-4 sm:grid-cols-[15rem_1fr] sm:gap-6">
+                        <dt className="text-[0.85rem] font-medium text-muted-foreground">{label}</dt>
+                        <dd className="text-[0.95rem] font-semibold leading-snug">{String(value)}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                </TabsContent>
               ))}
-            </Accordion>
+            </Tabs>
           </div>
         </section>
       ) : null}
+
 
 
       {related.length > 0 ? (
