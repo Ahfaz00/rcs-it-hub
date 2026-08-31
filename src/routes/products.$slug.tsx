@@ -432,7 +432,7 @@ function ProductDetail() {
           <h2 className="mt-4 font-display text-[clamp(1.6rem,3vw,2.4rem)] font-bold tracking-tight">
             Related products
           </h2>
-          <div className="mt-10 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-10 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
             {related.map((p) => (
               <ProductCard key={p.id} product={p} />
             ))}

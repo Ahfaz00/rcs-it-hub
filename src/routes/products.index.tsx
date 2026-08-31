@@ -261,7 +261,7 @@ function ProductsPage() {
               </div>
             </div>
           ) : (
-            <Stagger className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3" stagger={0.06}>
+            <Stagger className="grid grid-cols-2 gap-3 sm:gap-5 xl:grid-cols-3" stagger={0.06}>
               {data.products.map((p) => (
                 <StaggerItem key={p.id} className="h-full [&>*]:h-full">
                   <ProductCard product={p} />

@@ -240,7 +240,7 @@ function HomeSections() {
               title={s["featured_title"] || "The current stock"}
               action={{ to: "/products", label: "See all" }}
             />
-            <Stagger className="mt-12 grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-4" stagger={0.08}>
+            <Stagger className="mt-12 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4" stagger={0.08}>
               {products.slice(0, 8).map((p) => (
                 <StaggerItem key={p.id} className="h-full [&>*]:h-full">
                   <ProductCard product={p} />
