@@ -11,12 +11,6 @@ import { Lightbox, type LightboxImage } from "@/components/site/Lightbox";
 import { MotionProvider } from "@/components/site/MotionProvider";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 
 import { getProductBySlug } from "@/lib/public.functions";
 import { siteQueryOptions, whatsappLink, enquiryMessage } from "@/lib/site-query";
