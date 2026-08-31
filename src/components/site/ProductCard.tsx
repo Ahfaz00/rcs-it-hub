@@ -141,7 +141,7 @@ export function ProductCard({ product }: { product: ProductCardData }) {
             <Link
               to="/products/$slug"
               params={{ slug: product.slug }}
-              className="inline-flex h-10 flex-1 items-center justify-center rounded-lg bg-navy px-3 text-[0.72rem] font-bold uppercase tracking-[0.1em] text-navy-foreground transition-colors hover:bg-primary active:scale-[0.98]"
+              className="inline-flex h-10 flex-1 items-center justify-center whitespace-nowrap rounded-lg bg-navy px-2 text-[0.75rem] font-bold text-navy-foreground transition-colors hover:bg-primary active:scale-[0.98]"
             >
               View details
             </Link>
