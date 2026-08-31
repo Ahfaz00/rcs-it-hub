@@ -396,34 +396,37 @@ function ProductDetail() {
             <h2 className="mt-4 font-display text-[clamp(1.6rem,3vw,2.4rem)] font-bold tracking-tight">
               Full technical detail
             </h2>
-            <Accordion
-              type="multiple"
-              defaultValue={[specGroups[0]!.title]}
-              className="mt-8 border-t border-border"
-            >
-              {specGroups.map((group) => (
-                <AccordionItem key={group.title} value={group.title} className="border-border">
-                  <AccordionTrigger className="py-6 text-left font-display text-[1.05rem] font-semibold tracking-tight hover:no-underline">
+
+            <Tabs defaultValue={specGroups[0]!.title} className="mt-8">
+              <TabsList className="h-auto w-full flex-wrap justify-start gap-2 rounded-xl bg-transparent p-0">
+                {specGroups.map((group) => (
+                  <TabsTrigger
+                    key={group.title}
+                    value={group.title}
+                    className="rounded-full border border-border bg-card px-4 py-2 text-[0.85rem] font-semibold data-[state=active]:border-navy data-[state=active]:bg-navy data-[state=active]:text-navy-foreground"
+                  >
                     {group.title}
-                  </AccordionTrigger>
-                  <AccordionContent className="pb-8">
-                    <dl className="grid gap-x-12 gap-y-6 sm:grid-cols-2 lg:grid-cols-3">
-                      {group.rows.map(([label, value]) => (
-                        <div key={label}>
-                          <dt className="text-[0.72rem] font-bold uppercase tracking-[0.16em] text-muted-foreground">
-                            {label}
-                          </dt>
-                          <dd className="mt-1.5 text-[1.05rem] font-medium leading-snug">{String(value)}</dd>
-                        </div>
-                      ))}
-                    </dl>
-                  </AccordionContent>
-                </AccordionItem>
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+
+              {specGroups.map((group) => (
+                <TabsContent key={group.title} value={group.title} className="mt-6">
+                  <dl className="divide-y divide-border overflow-hidden rounded-xl border border-border bg-card">
+                    {group.rows.map(([label, value]) => (
+                      <div key={label} className="grid gap-1 px-5 py-4 sm:grid-cols-[15rem_1fr] sm:gap-6">
+                        <dt className="text-[0.85rem] font-medium text-muted-foreground">{label}</dt>
+                        <dd className="text-[0.95rem] font-semibold leading-snug">{String(value)}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                </TabsContent>
               ))}
-            </Accordion>
+            </Tabs>
           </div>
         </section>
       ) : null}
+
 
 
       {related.length > 0 ? (
