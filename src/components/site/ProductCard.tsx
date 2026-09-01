@@ -48,6 +48,10 @@ export function ProductCard({ product }: { product: ProductCardData }) {
   const hasPrice = Boolean(product.show_price) && product.price != null;
   const off = hasPrice ? discountPercent(product.price, product.mrp, product.discount) : null;
   const wa = site.settings["whatsapp"];
+  const wishlist = useShortlist("wishlist");
+  const compare = useShortlist("compare");
+  const saved = wishlist.ids.includes(product.id);
+  const comparing = compare.ids.includes(product.id);
 
   return (
     <motion.article
