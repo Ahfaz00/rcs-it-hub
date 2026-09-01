@@ -271,13 +271,32 @@ export function Header() {
         </div>
       </div>
 
+      {/* Primary nav row (desktop) */}
+      <div className="hidden border-b border-border bg-background/95 backdrop-blur lg:block">
+        <nav className="container-page flex items-center justify-center gap-1 overflow-x-auto py-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          {NAV.map((item) => (
+            <Link
+              key={item.to}
+              to={item.to}
+              activeOptions={{ exact: item.to === "/" }}
+              className="group relative shrink-0 whitespace-nowrap px-3 py-2.5 text-[0.72rem] font-bold uppercase tracking-[0.12em] text-foreground/65 transition-colors hover:text-primary"
+              activeProps={{ className: "text-primary" }}
+            >
+              {item.label}
+              <span className="pointer-events-none absolute inset-x-3 bottom-1 h-0.5 origin-left scale-x-0 bg-primary transition-transform duration-300 group-hover:scale-x-100" />
+            </Link>
+          ))}
+        </nav>
+      </div>
+
       {/* Category rail */}
       <div
         className={cn(
-          "hidden border-b border-border bg-background/90 backdrop-blur transition-all duration-500 lg:block",
+          "hidden border-b border-border bg-surface/70 backdrop-blur transition-all duration-500 lg:block",
           scrolled ? "max-h-0 overflow-hidden border-transparent opacity-0" : "max-h-16 opacity-100",
         )}
       >
+
         <div className="container-page flex items-center gap-2 overflow-x-auto py-2">
           <span className="mr-1 flex items-center gap-1 whitespace-nowrap text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
             Shop <ChevronDown className="h-3 w-3" />
