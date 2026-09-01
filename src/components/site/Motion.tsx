@@ -1,7 +1,21 @@
-import type { ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { motion, useReducedMotion, type Variants } from "motion/react";
 
 import { cn } from "@/lib/utils";
+
+/**
+ * Safety net: if the viewport observer never fires (odd zoom levels, browsers
+ * with broken IntersectionObserver rootMargin, restored scroll positions),
+ * reveal the content anyway so pages are never left blank.
+ */
+function useRevealFallback(ms = 700) {
+  const [ready, setReady] = useState(false);
+  useEffect(() => {
+    const t = setTimeout(() => setReady(true), ms);
+    return () => clearTimeout(t);
+  }, [ms]);
+  return ready;
+}
 
 export const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -24,12 +38,14 @@ export function FadeIn({
   duration?: number;
 }) {
   const reduced = useReducedMotion();
+  const fallback = useRevealFallback();
   return (
     <motion.div
       className={className}
       initial={reduced ? { opacity: 0 } : { opacity: 0, y, x }}
       whileInView={{ opacity: 1, y: 0, x: 0 }}
-      viewport={{ once, margin: "0px 0px -12% 0px" }}
+      {...(fallback ? { animate: { opacity: 1, y: 0, x: 0 } } : {})}
+      viewport={{ once, amount: 0, margin: "0px 0px -12% 0px" }}
       transition={{ duration: reduced ? 0.2 : duration, delay, ease: EASE }}
     >
       {children}
@@ -50,6 +66,7 @@ export function Stagger({
   delay?: number;
 }) {
   const reduced = useReducedMotion();
+  const fallback = useRevealFallback();
   const variants: Variants = {
     hidden: {},
     show: { transition: { staggerChildren: reduced ? 0 : stagger, delayChildren: delay } },
@@ -60,7 +77,8 @@ export function Stagger({
       variants={variants}
       initial="hidden"
       whileInView="show"
-      viewport={{ once: true, margin: "0px 0px -10% 0px" }}
+      {...(fallback ? { animate: "show" as const } : {})}
+      viewport={{ once: true, amount: 0, margin: "0px 0px -10% 0px" }}
     >
       {children}
     </motion.div>
