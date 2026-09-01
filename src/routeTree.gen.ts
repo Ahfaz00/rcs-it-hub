@@ -20,6 +20,7 @@ import { Route as FaqRouteImport } from './routes/faq'
 import { Route as GalleryRouteImport } from './routes/gallery'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as VideosRouteImport } from './routes/videos'
 import { Route as WishlistRouteImport } from './routes/wishlist'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
@@ -91,6 +92,11 @@ const SearchRoute = SearchRouteImport.update({
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VideosRoute = VideosRouteImport.update({
+  id: '/videos',
+  path: '/videos',
   getParentRoute: () => rootRouteImport,
 } as any)
 const WishlistRoute = WishlistRouteImport.update({
@@ -198,6 +204,7 @@ export interface FileRoutesByFullPath {
   '/gallery': typeof GalleryRoute
   '/search': typeof SearchRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/videos': typeof VideosRoute
   '/wishlist': typeof WishlistRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/brands/$slug': typeof BrandsSlugRoute
@@ -228,6 +235,7 @@ export interface FileRoutesByTo {
   '/gallery': typeof GalleryRoute
   '/search': typeof SearchRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/videos': typeof VideosRoute
   '/wishlist': typeof WishlistRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/brands/$slug': typeof BrandsSlugRoute
@@ -260,6 +268,7 @@ export interface FileRoutesById {
   '/gallery': typeof GalleryRoute
   '/search': typeof SearchRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/videos': typeof VideosRoute
   '/wishlist': typeof WishlistRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/brands/$slug': typeof BrandsSlugRoute
@@ -292,6 +301,7 @@ export interface FileRouteTypes {
     | '/gallery'
     | '/search'
     | '/sitemap.xml'
+    | '/videos'
     | '/wishlist'
     | '/blog/$slug'
     | '/brands/$slug'
@@ -322,6 +332,7 @@ export interface FileRouteTypes {
     | '/gallery'
     | '/search'
     | '/sitemap.xml'
+    | '/videos'
     | '/wishlist'
     | '/blog/$slug'
     | '/brands/$slug'
@@ -353,6 +364,7 @@ export interface FileRouteTypes {
     | '/gallery'
     | '/search'
     | '/sitemap.xml'
+    | '/videos'
     | '/wishlist'
     | '/blog/$slug'
     | '/brands/$slug'
@@ -385,6 +397,7 @@ export interface RootRouteChildren {
   GalleryRoute: typeof GalleryRoute
   SearchRoute: typeof SearchRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  VideosRoute: typeof VideosRoute
   WishlistRoute: typeof WishlistRoute
   BlogSlugRoute: typeof BlogSlugRoute
   BrandsSlugRoute: typeof BrandsSlugRoute
@@ -477,6 +490,13 @@ declare module '@tanstack/react-router' {
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/videos': {
+      id: '/videos'
+      path: '/videos'
+      fullPath: '/videos'
+      preLoaderRoute: typeof VideosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/wishlist': {
@@ -639,6 +659,7 @@ const rootRouteChildren: RootRouteChildren = {
   GalleryRoute: GalleryRoute,
   SearchRoute: SearchRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  VideosRoute: VideosRoute,
   WishlistRoute: WishlistRoute,
   BlogSlugRoute: BlogSlugRoute,
   BrandsSlugRoute: BrandsSlugRoute,

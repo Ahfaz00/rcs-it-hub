@@ -1,6 +1,17 @@
 import { Link } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { Facebook, Instagram, Linkedin, Mail, MapPin, Phone, Youtube } from "lucide-react";
+import {
+  Facebook,
+  Instagram,
+  Linkedin,
+  Mail,
+  MapPin,
+  MessageCircle,
+  Phone,
+  Send,
+  Twitter,
+  Youtube,
+} from "lucide-react";
 
 import { Logo } from "./Logo";
 import { siteQueryOptions } from "@/lib/site-query";
@@ -21,8 +32,15 @@ export function Footer() {
   const socials = [
     { url: s["social_facebook"], Icon: Facebook, label: "Facebook" },
     { url: s["social_instagram"], Icon: Instagram, label: "Instagram" },
-    { url: s["social_linkedin"], Icon: Linkedin, label: "LinkedIn" },
     { url: s["social_youtube"], Icon: Youtube, label: "YouTube" },
+    { url: s["social_x"], Icon: Twitter, label: "X (Twitter)" },
+    { url: s["social_telegram"], Icon: Send, label: "Telegram" },
+    { url: s["social_linkedin"], Icon: Linkedin, label: "LinkedIn" },
+    {
+      url: s["whatsapp"] ? `https://wa.me/${s["whatsapp"].replace(/\D/g, "")}` : "",
+      Icon: MessageCircle,
+      label: "WhatsApp",
+    },
   ].filter((x) => x.url);
 
   return (
@@ -82,6 +100,7 @@ export function Footer() {
               { to: "/services", label: "Services" },
               { to: "/bulk-orders", label: "Bulk Orders" },
               { to: "/gallery", label: "Gallery" },
+              { to: "/videos", label: "Videos" },
               { to: "/faq", label: "FAQs" },
               { to: "/contact", label: "Contact" },
             ].map((l) => (
