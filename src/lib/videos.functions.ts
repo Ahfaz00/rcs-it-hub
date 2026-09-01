@@ -14,7 +14,7 @@ const CHANNEL_ID = "UCxXvFK0r-dItz1GF2ce1d_Q";
 
 function pick(block: string, tag: string): string {
   const m = block.match(new RegExp(`<${tag}[^>]*>([\\s\\S]*?)</${tag}>`));
-  if (!m) return "";
+  if (!m || !m[1]) return "";
   return m[1]
     .replace(/<!\[CDATA\[|\]\]>/g, "")
     .replace(/&amp;/g, "&")
