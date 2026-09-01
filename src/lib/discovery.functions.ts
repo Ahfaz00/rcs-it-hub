@@ -124,7 +124,7 @@ export const getCollection = createServerFn({ method: "GET" })
           query = query.order("created_at", { ascending: false });
         }
         const { data: rows } = await query.limit(48);
-        products = (rows ?? []) as unknown as Record<string, unknown>[];
+        products = (rows ?? []) as any[];
       }
 
       return { collection, products };
