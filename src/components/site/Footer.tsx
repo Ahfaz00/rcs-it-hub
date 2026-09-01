@@ -102,6 +102,7 @@ export function Footer() {
               { to: "/services", label: "Services" },
               { to: "/bulk-orders", label: "Bulk Orders" },
               { to: "/gallery", label: "Gallery" },
+              { to: "/videos", label: "Videos" },
               { to: "/faq", label: "FAQs" },
               { to: "/contact", label: "Contact" },
             ].map((l) => (
