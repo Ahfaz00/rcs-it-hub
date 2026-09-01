@@ -14,10 +14,19 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as BulkOrdersRouteImport } from './routes/bulk-orders'
+import { Route as CompareRouteImport } from './routes/compare'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as GalleryRouteImport } from './routes/gallery'
+import { Route as SearchRouteImport } from './routes/search'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as WishlistRouteImport } from './routes/wishlist'
+import { Route as BlogIndexRouteImport } from './routes/blog.index'
+import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
+import { Route as BrandsSlugRouteImport } from './routes/brands.$slug'
+import { Route as CollectionsIndexRouteImport } from './routes/collections.index'
+import { Route as CollectionsSlugRouteImport } from './routes/collections.$slug'
+import { Route as LaptopsUsageRouteImport } from './routes/laptops.$usage'
 import { Route as PoliciesSlugRouteImport } from './routes/policies.$slug'
 import { Route as ProductsIndexRouteImport } from './routes/products.index'
 import { Route as ProductsSlugRouteImport } from './routes/products.$slug'
@@ -54,6 +63,11 @@ const BulkOrdersRoute = BulkOrdersRouteImport.update({
   path: '/bulk-orders',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CompareRoute = CompareRouteImport.update({
+  id: '/compare',
+  path: '/compare',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
@@ -69,9 +83,49 @@ const GalleryRoute = GalleryRouteImport.update({
   path: '/gallery',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SearchRoute = SearchRouteImport.update({
+  id: '/search',
+  path: '/search',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WishlistRoute = WishlistRouteImport.update({
+  id: '/wishlist',
+  path: '/wishlist',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogIndexRoute = BlogIndexRouteImport.update({
+  id: '/blog/',
+  path: '/blog/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/blog/$slug',
+  path: '/blog/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BrandsSlugRoute = BrandsSlugRouteImport.update({
+  id: '/brands/$slug',
+  path: '/brands/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CollectionsIndexRoute = CollectionsIndexRouteImport.update({
+  id: '/collections/',
+  path: '/collections/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CollectionsSlugRoute = CollectionsSlugRouteImport.update({
+  id: '/collections/$slug',
+  path: '/collections/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LaptopsUsageRoute = LaptopsUsageRouteImport.update({
+  id: '/laptops/$usage',
+  path: '/laptops/$usage',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PoliciesSlugRoute = PoliciesSlugRouteImport.update({
@@ -138,13 +192,22 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/bulk-orders': typeof BulkOrdersRoute
+  '/compare': typeof CompareRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
   '/gallery': typeof GalleryRoute
+  '/search': typeof SearchRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/wishlist': typeof WishlistRoute
+  '/blog/$slug': typeof BlogSlugRoute
+  '/brands/$slug': typeof BrandsSlugRoute
+  '/collections/$slug': typeof CollectionsSlugRoute
+  '/laptops/$usage': typeof LaptopsUsageRoute
   '/policies/$slug': typeof PoliciesSlugRoute
   '/products/$slug': typeof ProductsSlugRoute
   '/services/$slug': typeof ServicesSlugRoute
+  '/blog/': typeof BlogIndexRoute
+  '/collections/': typeof CollectionsIndexRoute
   '/products/': typeof ProductsIndexRoute
   '/services/': typeof ServicesIndexRoute
   '/admin/logs': typeof AuthenticatedAdminLogsRoute
@@ -159,13 +222,22 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/bulk-orders': typeof BulkOrdersRoute
+  '/compare': typeof CompareRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
   '/gallery': typeof GalleryRoute
+  '/search': typeof SearchRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/wishlist': typeof WishlistRoute
+  '/blog/$slug': typeof BlogSlugRoute
+  '/brands/$slug': typeof BrandsSlugRoute
+  '/collections/$slug': typeof CollectionsSlugRoute
+  '/laptops/$usage': typeof LaptopsUsageRoute
   '/policies/$slug': typeof PoliciesSlugRoute
   '/products/$slug': typeof ProductsSlugRoute
   '/services/$slug': typeof ServicesSlugRoute
+  '/blog': typeof BlogIndexRoute
+  '/collections': typeof CollectionsIndexRoute
   '/products': typeof ProductsIndexRoute
   '/services': typeof ServicesIndexRoute
   '/admin/logs': typeof AuthenticatedAdminLogsRoute
@@ -182,13 +254,22 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/bulk-orders': typeof BulkOrdersRoute
+  '/compare': typeof CompareRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
   '/gallery': typeof GalleryRoute
+  '/search': typeof SearchRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/wishlist': typeof WishlistRoute
+  '/blog/$slug': typeof BlogSlugRoute
+  '/brands/$slug': typeof BrandsSlugRoute
+  '/collections/$slug': typeof CollectionsSlugRoute
+  '/laptops/$usage': typeof LaptopsUsageRoute
   '/policies/$slug': typeof PoliciesSlugRoute
   '/products/$slug': typeof ProductsSlugRoute
   '/services/$slug': typeof ServicesSlugRoute
+  '/blog/': typeof BlogIndexRoute
+  '/collections/': typeof CollectionsIndexRoute
   '/products/': typeof ProductsIndexRoute
   '/services/': typeof ServicesIndexRoute
   '/_authenticated/admin/logs': typeof AuthenticatedAdminLogsRoute
@@ -205,13 +286,22 @@ export interface FileRouteTypes {
     | '/about'
     | '/auth'
     | '/bulk-orders'
+    | '/compare'
     | '/contact'
     | '/faq'
     | '/gallery'
+    | '/search'
     | '/sitemap.xml'
+    | '/wishlist'
+    | '/blog/$slug'
+    | '/brands/$slug'
+    | '/collections/$slug'
+    | '/laptops/$usage'
     | '/policies/$slug'
     | '/products/$slug'
     | '/services/$slug'
+    | '/blog/'
+    | '/collections/'
     | '/products/'
     | '/services/'
     | '/admin/logs'
@@ -226,13 +316,22 @@ export interface FileRouteTypes {
     | '/about'
     | '/auth'
     | '/bulk-orders'
+    | '/compare'
     | '/contact'
     | '/faq'
     | '/gallery'
+    | '/search'
     | '/sitemap.xml'
+    | '/wishlist'
+    | '/blog/$slug'
+    | '/brands/$slug'
+    | '/collections/$slug'
+    | '/laptops/$usage'
     | '/policies/$slug'
     | '/products/$slug'
     | '/services/$slug'
+    | '/blog'
+    | '/collections'
     | '/products'
     | '/services'
     | '/admin/logs'
@@ -248,13 +347,22 @@ export interface FileRouteTypes {
     | '/about'
     | '/auth'
     | '/bulk-orders'
+    | '/compare'
     | '/contact'
     | '/faq'
     | '/gallery'
+    | '/search'
     | '/sitemap.xml'
+    | '/wishlist'
+    | '/blog/$slug'
+    | '/brands/$slug'
+    | '/collections/$slug'
+    | '/laptops/$usage'
     | '/policies/$slug'
     | '/products/$slug'
     | '/services/$slug'
+    | '/blog/'
+    | '/collections/'
     | '/products/'
     | '/services/'
     | '/_authenticated/admin/logs'
@@ -271,13 +379,22 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   AuthRoute: typeof AuthRoute
   BulkOrdersRoute: typeof BulkOrdersRoute
+  CompareRoute: typeof CompareRoute
   ContactRoute: typeof ContactRoute
   FaqRoute: typeof FaqRoute
   GalleryRoute: typeof GalleryRoute
+  SearchRoute: typeof SearchRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  WishlistRoute: typeof WishlistRoute
+  BlogSlugRoute: typeof BlogSlugRoute
+  BrandsSlugRoute: typeof BrandsSlugRoute
+  CollectionsSlugRoute: typeof CollectionsSlugRoute
+  LaptopsUsageRoute: typeof LaptopsUsageRoute
   PoliciesSlugRoute: typeof PoliciesSlugRoute
   ProductsSlugRoute: typeof ProductsSlugRoute
   ServicesSlugRoute: typeof ServicesSlugRoute
+  BlogIndexRoute: typeof BlogIndexRoute
+  CollectionsIndexRoute: typeof CollectionsIndexRoute
   ProductsIndexRoute: typeof ProductsIndexRoute
   ServicesIndexRoute: typeof ServicesIndexRoute
   ApiMediaSplatRoute: typeof ApiMediaSplatRoute
@@ -320,6 +437,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BulkOrdersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/compare': {
+      id: '/compare'
+      path: '/compare'
+      fullPath: '/compare'
+      preLoaderRoute: typeof CompareRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/contact': {
       id: '/contact'
       path: '/contact'
@@ -341,11 +465,67 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GalleryRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/search': {
+      id: '/search'
+      path: '/search'
+      fullPath: '/search'
+      preLoaderRoute: typeof SearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sitemap.xml': {
       id: '/sitemap.xml'
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/wishlist': {
+      id: '/wishlist'
+      path: '/wishlist'
+      fullPath: '/wishlist'
+      preLoaderRoute: typeof WishlistRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog/': {
+      id: '/blog/'
+      path: '/blog'
+      fullPath: '/blog/'
+      preLoaderRoute: typeof BlogIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog/$slug': {
+      id: '/blog/$slug'
+      path: '/blog/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/brands/$slug': {
+      id: '/brands/$slug'
+      path: '/brands/$slug'
+      fullPath: '/brands/$slug'
+      preLoaderRoute: typeof BrandsSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/collections/': {
+      id: '/collections/'
+      path: '/collections'
+      fullPath: '/collections/'
+      preLoaderRoute: typeof CollectionsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/collections/$slug': {
+      id: '/collections/$slug'
+      path: '/collections/$slug'
+      fullPath: '/collections/$slug'
+      preLoaderRoute: typeof CollectionsSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/laptops/$usage': {
+      id: '/laptops/$usage'
+      path: '/laptops/$usage'
+      fullPath: '/laptops/$usage'
+      preLoaderRoute: typeof LaptopsUsageRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/policies/$slug': {
@@ -453,13 +633,22 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   AuthRoute: AuthRoute,
   BulkOrdersRoute: BulkOrdersRoute,
+  CompareRoute: CompareRoute,
   ContactRoute: ContactRoute,
   FaqRoute: FaqRoute,
   GalleryRoute: GalleryRoute,
+  SearchRoute: SearchRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  WishlistRoute: WishlistRoute,
+  BlogSlugRoute: BlogSlugRoute,
+  BrandsSlugRoute: BrandsSlugRoute,
+  CollectionsSlugRoute: CollectionsSlugRoute,
+  LaptopsUsageRoute: LaptopsUsageRoute,
   PoliciesSlugRoute: PoliciesSlugRoute,
   ProductsSlugRoute: ProductsSlugRoute,
   ServicesSlugRoute: ServicesSlugRoute,
+  BlogIndexRoute: BlogIndexRoute,
+  CollectionsIndexRoute: CollectionsIndexRoute,
   ProductsIndexRoute: ProductsIndexRoute,
   ServicesIndexRoute: ServicesIndexRoute,
   ApiMediaSplatRoute: ApiMediaSplatRoute,

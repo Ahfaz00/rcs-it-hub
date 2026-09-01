@@ -474,6 +474,10 @@ export const resources: Record<string, ResourceConfig> = {
   },
 };
 
+import { extraResources } from "./resources.extra";
+
+Object.assign(resources, extraResources);
+
 export const resourceList = Object.values(resources);
 
 export function getResource(key: string): ResourceConfig | undefined {

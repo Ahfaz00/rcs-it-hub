@@ -1,11 +1,14 @@
 import { Link } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { ImageOff, MessageCircle, ShieldCheck } from "lucide-react";
+import { Heart, ImageOff, MessageCircle, Scale, ShieldCheck } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
+import { toast } from "sonner";
 
 import { mediaUrl } from "@/lib/media";
 import { siteQueryOptions, whatsappLink } from "@/lib/site-query";
 import { discountPercent, formatINR, formatPrice } from "@/lib/format";
+import { useShortlist } from "@/lib/shortlist";
+import { cn } from "@/lib/utils";
 
 export type ProductCardData = {
   id: string;
@@ -45,6 +48,10 @@ export function ProductCard({ product }: { product: ProductCardData }) {
   const hasPrice = Boolean(product.show_price) && product.price != null;
   const off = hasPrice ? discountPercent(product.price, product.mrp, product.discount) : null;
   const wa = site.settings["whatsapp"];
+  const wishlist = useShortlist("wishlist");
+  const compare = useShortlist("compare");
+  const saved = wishlist.ids.includes(product.id);
+  const comparing = compare.ids.includes(product.id);
 
   return (
     <motion.article
@@ -86,6 +93,41 @@ export function ProductCard({ product }: { product: ProductCardData }) {
           ) : null}
         </div>
       </Link>
+
+      <div className="absolute right-2.5 top-2.5 flex flex-col gap-1.5">
+        <button
+          type="button"
+          aria-label={saved ? `Remove ${product.name} from wishlist` : `Save ${product.name} to wishlist`}
+          aria-pressed={saved}
+          onClick={() => {
+            const r = wishlist.toggle(product.id);
+            if (r?.limitReached) toast.error(`Wishlist is limited to ${wishlist.limit} products.`);
+            else toast.success(r?.added ? "Saved to wishlist" : "Removed from wishlist");
+          }}
+          className={cn(
+            "inline-flex h-9 w-9 items-center justify-center rounded-full border border-border bg-card/90 backdrop-blur transition-colors hover:border-primary/40",
+            saved ? "text-destructive" : "text-muted-foreground",
+          )}
+        >
+          <Heart className={cn("h-4 w-4", saved && "fill-current")} />
+        </button>
+        <button
+          type="button"
+          aria-label={comparing ? `Remove ${product.name} from comparison` : `Add ${product.name} to comparison`}
+          aria-pressed={comparing}
+          onClick={() => {
+            const r = compare.toggle(product.id);
+            if (r?.limitReached) toast.error(`You can compare up to ${compare.limit} products.`);
+            else toast.success(r?.added ? "Added to compare" : "Removed from compare");
+          }}
+          className={cn(
+            "inline-flex h-9 w-9 items-center justify-center rounded-full border border-border bg-card/90 backdrop-blur transition-colors hover:border-primary/40",
+            comparing ? "text-primary" : "text-muted-foreground",
+          )}
+        >
+          <Scale className="h-4 w-4" />
+        </button>
+      </div>
 
       <div className="flex flex-1 flex-col p-3 sm:p-4">
         {product.brands?.name ? (
