@@ -159,7 +159,7 @@ export function Header() {
                 asChild
                 size="sm"
                 variant="ghost"
-                className="hidden h-11 rounded-none px-3 text-[0.75rem] font-bold uppercase tracking-[0.12em] hover:bg-success/10 hover:text-success sm:inline-flex"
+                className="hidden h-11 rounded-full px-4 text-[0.75rem] font-bold uppercase tracking-[0.12em] hover:bg-success/10 hover:text-success md:inline-flex"
               >
                 <a
                   href={whatsappLink(s["whatsapp"], enquiryMessage(s["default_enquiry_message"]))}
@@ -174,7 +174,7 @@ export function Header() {
               <Button
                 asChild
                 size="sm"
-                className="hidden h-11 rounded-none bg-navy px-5 text-[0.75rem] font-bold uppercase tracking-[0.12em] text-navy-foreground transition-colors hover:bg-primary sm:inline-flex"
+                className="hidden h-11 rounded-full bg-navy px-5 text-[0.75rem] font-bold uppercase tracking-[0.12em] text-navy-foreground transition-colors hover:bg-primary sm:inline-flex"
               >
                 <a href={`tel:${s["phone"].replace(/\s/g, "")}`}>
                   <Phone className="mr-1.5 h-4 w-4" /> Call now
@@ -184,7 +184,7 @@ export function Header() {
 
             <Sheet open={open} onOpenChange={setOpen}>
               <SheetTrigger asChild>
-                <Button variant="outline" size="icon" className="h-11 w-11 rounded-none xl:hidden" aria-label="Open menu">
+                <Button variant="outline" size="icon" className="h-11 w-11 rounded-full lg:hidden" aria-label="Open menu">
                   <Menu className="h-5 w-5" />
                 </Button>
               </SheetTrigger>
@@ -256,7 +256,7 @@ export function Header() {
                   <div className="border-t border-border p-4">
                     <Button
                       asChild
-                      className="h-14 w-full rounded-none bg-navy text-[0.8rem] font-bold uppercase tracking-[0.14em] text-navy-foreground hover:bg-primary"
+                      className="h-14 w-full rounded-full bg-navy text-[0.8rem] font-bold uppercase tracking-[0.14em] text-navy-foreground hover:bg-primary"
                     >
                       <a href={`tel:${s["phone"].replace(/\s/g, "")}`}>
                         <Phone className="mr-2 h-4 w-4" /> Call {s["phone"]}
