@@ -199,15 +199,15 @@
   h4,
   .font-display {
     font-family: var(--font-display);
-    font-weight: 700;
-    letter-spacing: -0.02em;
+    font-weight: 800;
+    letter-spacing: -0.025em;
   }
 }
 
 @utility font-editorial {
   font-family: var(--font-editorial);
-  font-weight: 600;
-  letter-spacing: -0.015em;
+  font-weight: 800;
+  letter-spacing: -0.025em;
 }
 
 @utility container-page {
