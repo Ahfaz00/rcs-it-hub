@@ -5,18 +5,27 @@ import {
   Activity,
   Boxes,
   FileText,
+  GalleryHorizontal,
   HelpCircle,
   Image as ImageIcon,
   Inbox,
+  Layers,
   LayoutDashboard,
   LogOut,
   Mail,
   Menu,
+  Newspaper,
   Package,
+  PackageSearch,
   Search,
+  Send,
   Settings,
+  Shuffle,
+  SlidersHorizontal,
   Star,
   Tag,
+  Tags,
+  Target,
   Wrench,
   X,
 } from "lucide-react";
@@ -25,21 +34,61 @@ import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/site/Logo";
 import { supabase } from "@/integrations/supabase/client";
 
-const nav: { to: string; label: string; icon: typeof Package; params?: Record<string, string> }[] = [
-  { to: "/admin", label: "Dashboard", icon: LayoutDashboard },
-  { to: "/admin/$resource", params: { resource: "products" }, label: "Products", icon: Package },
-  { to: "/admin/$resource", params: { resource: "categories" }, label: "Categories", icon: Boxes },
-  { to: "/admin/$resource", params: { resource: "brands" }, label: "Brands", icon: Tag },
-  { to: "/admin/$resource", params: { resource: "services" }, label: "Services", icon: Wrench },
-  { to: "/admin/$resource", params: { resource: "enquiries" }, label: "Enquiries", icon: Inbox },
-  { to: "/admin/$resource", params: { resource: "contacts" }, label: "Contact messages", icon: Mail },
-  { to: "/admin/$resource", params: { resource: "testimonials" }, label: "Testimonials", icon: Star },
-  { to: "/admin/$resource", params: { resource: "gallery" }, label: "Gallery", icon: ImageIcon },
-  { to: "/admin/$resource", params: { resource: "faqs" }, label: "FAQs", icon: HelpCircle },
-  { to: "/admin/$resource", params: { resource: "pages" }, label: "Pages", icon: FileText },
-  { to: "/admin/$resource", params: { resource: "seo" }, label: "SEO", icon: Search },
-  { to: "/admin/settings", label: "Settings", icon: Settings },
-  { to: "/admin/logs", label: "Activity log", icon: Activity },
+type NavItem = { to: string; label: string; icon: typeof Package; params?: Record<string, string> };
+
+const navGroups: { title: string; items: NavItem[] }[] = [
+  {
+    title: "Overview",
+    items: [{ to: "/admin", label: "Dashboard", icon: LayoutDashboard }],
+  },
+  {
+    title: "Catalog",
+    items: [
+      { to: "/admin/$resource", params: { resource: "products" }, label: "Products", icon: Package },
+      { to: "/admin/$resource", params: { resource: "categories" }, label: "Categories", icon: Boxes },
+      { to: "/admin/$resource", params: { resource: "brands" }, label: "Brands", icon: Tag },
+      { to: "/admin/$resource", params: { resource: "collections" }, label: "Collections", icon: Layers },
+      { to: "/admin/$resource", params: { resource: "usage_tags" }, label: "Shop by usage", icon: Target },
+      { to: "/admin/$resource", params: { resource: "attributes" }, label: "Attributes", icon: SlidersHorizontal },
+    ],
+  },
+  {
+    title: "Leads",
+    items: [
+      { to: "/admin/$resource", params: { resource: "enquiries" }, label: "Enquiries", icon: Inbox },
+      { to: "/admin/$resource", params: { resource: "contacts" }, label: "Contact messages", icon: Mail },
+      { to: "/admin/$resource", params: { resource: "product_requests" }, label: "Product requests", icon: PackageSearch },
+      { to: "/admin/$resource", params: { resource: "newsletter" }, label: "Newsletter", icon: Send },
+    ],
+  },
+  {
+    title: "Content",
+    items: [
+      { to: "/admin/$resource", params: { resource: "banners" }, label: "Banners", icon: GalleryHorizontal },
+      { to: "/admin/$resource", params: { resource: "blog" }, label: "Blog posts", icon: Newspaper },
+      { to: "/admin/$resource", params: { resource: "blog_categories" }, label: "Blog categories", icon: Tags },
+      { to: "/admin/$resource", params: { resource: "services" }, label: "Services", icon: Wrench },
+      { to: "/admin/$resource", params: { resource: "testimonials" }, label: "Testimonials", icon: Star },
+      { to: "/admin/$resource", params: { resource: "gallery" }, label: "Gallery", icon: ImageIcon },
+      { to: "/admin/$resource", params: { resource: "faqs" }, label: "FAQs", icon: HelpCircle },
+      { to: "/admin/$resource", params: { resource: "pages" }, label: "Pages", icon: FileText },
+      { to: "/admin/$resource", params: { resource: "navigation" }, label: "Navigation", icon: Menu },
+    ],
+  },
+  {
+    title: "SEO",
+    items: [
+      { to: "/admin/$resource", params: { resource: "seo" }, label: "Metadata", icon: Search },
+      { to: "/admin/$resource", params: { resource: "redirects" }, label: "Redirects", icon: Shuffle },
+    ],
+  },
+  {
+    title: "System",
+    items: [
+      { to: "/admin/settings", label: "Settings", icon: Settings },
+      { to: "/admin/logs", label: "Activity log", icon: Activity },
+    ],
+  },
 ];
 
 export function AdminShell({ children }: { children: ReactNode }) {
@@ -106,21 +155,31 @@ export function AdminShell({ children }: { children: ReactNode }) {
           <div className="px-2 py-1">
             <Logo compact inverted />
           </div>
-          <nav className="mt-6 flex-1 space-y-0.5">
-            {nav.map((item) => (
-              <Link
-                key={item.label}
-                to={item.to}
-                {...(item.params ? { params: item.params } : {})}
-                activeOptions={{ exact: item.to === "/admin" }}
-                activeProps={{ className: "bg-white/10 text-cyan shadow-card" }}
-                className="flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-sm font-medium text-sidebar-foreground/70 transition-colors hover:bg-white/10 hover:text-sidebar-foreground"
-              >
-                <item.icon className="h-4 w-4" />
-                {item.label}
-              </Link>
+          <nav className="mt-6 flex-1 space-y-4">
+            {navGroups.map((group) => (
+              <div key={group.title}>
+                <p className="px-3 pb-1 text-[0.62rem] font-bold uppercase tracking-[0.18em] text-sidebar-foreground/40">
+                  {group.title}
+                </p>
+                <div className="space-y-0.5">
+                  {group.items.map((item) => (
+                    <Link
+                      key={item.label}
+                      to={item.to}
+                      {...(item.params ? { params: item.params } : {})}
+                      activeOptions={{ exact: item.to === "/admin" }}
+                      activeProps={{ className: "bg-white/10 text-cyan shadow-card" }}
+                      className="flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm font-medium text-sidebar-foreground/70 transition-colors hover:bg-white/10 hover:text-sidebar-foreground"
+                    >
+                      <item.icon className="h-4 w-4" />
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
             ))}
           </nav>
+
           <div className="mt-4 space-y-1 border-t border-sidebar-border pt-4">
             <Link
               to="/"
