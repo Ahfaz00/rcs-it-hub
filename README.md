@@ -12,7 +12,7 @@ Tagline: COMPUTER WHOLESALER
 
 Business type:
 
-Refurbished / Pre-Owned / Used Laptops, Desktops, Workstations, Monitors, Accessories, Parts, IT Hardware, Repair, AMC, Rental and Bulk IT Solutions.
+Refurbished / Pre-Owned / Used Laptops, Desktops, Workstations, Monitors, Accessories, Parts, IT Hardware, Repair, AMC, Rental and Bulk IT Solutions..
 
 IMPORTANT:
 
