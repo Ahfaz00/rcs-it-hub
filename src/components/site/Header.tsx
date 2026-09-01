@@ -271,6 +271,11 @@ export function Header() {
         </div>
       </div>
 
+      {/* Mobile search row */}
+      <div className="border-b border-border bg-background px-4 py-2 lg:hidden">
+        <SearchBox placeholder="Search laptops, desktops…" inputClassName="h-11 rounded-full bg-surface" />
+      </div>
+
       {/* Primary nav row (desktop) */}
       <div className="hidden border-b border-border bg-background/95 backdrop-blur lg:block">
         <nav className="container-page flex items-center justify-center gap-1 overflow-x-auto py-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
