@@ -105,9 +105,8 @@ export const getCollection = createServerFn({ method: "GET" })
           .eq("collection_id", collection.id)
           .order("sort_order");
         products = (links ?? [])
-          .map((l) => l.products)
-          .filter(Boolean)
-          .filter((p) => (p as { is_active?: boolean }).is_active !== false);
+          .map((l) => l.products as unknown as Record<string, unknown> | null)
+          .filter((p): p is Record<string, unknown> => Boolean(p) && p!["is_active"] !== false);
       } else {
         let query = supabase.from("products").select(PRODUCT_CARD_FIELDS).eq("is_active", true);
         if (collection.kind === "budget") {
