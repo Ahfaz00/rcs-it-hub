@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { ChevronDown, Menu, Phone, Search, MessageCircle, ShieldCheck, RotateCcw, Truck } from "lucide-react";
+import { ChevronDown, Heart, Menu, Phone, Scale, MessageCircle, ShieldCheck, RotateCcw, Truck } from "lucide-react";
 import { motion } from "motion/react";
 
 import { Logo } from "./Logo";
+import { SearchBox } from "./SearchBox";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { siteQueryOptions, whatsappLink, enquiryMessage } from "@/lib/site-query";
+import { useShortlist } from "@/lib/shortlist";
 import { cn } from "@/lib/utils";
 
 const NAV = [
@@ -30,10 +31,10 @@ const TRUST = [
 
 export function Header() {
   const { data: site } = useSuspenseQuery(siteQueryOptions);
-  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
-  const [term, setTerm] = useState("");
   const [scrolled, setScrolled] = useState(false);
+  const wishlist = useShortlist("wishlist");
+  const compare = useShortlist("compare");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -44,12 +45,6 @@ export function Header() {
 
   const s = site.settings;
   const announcement = s["announcement_enabled"] === "true" ? s["announcement_text"] : "";
-
-  function search(e: React.FormEvent) {
-    e.preventDefault();
-    navigate({ to: "/products", search: { search: term || undefined } });
-    setOpen(false);
-  }
 
   return (
     <header className="sticky top-0 z-50 w-full">
@@ -212,18 +207,13 @@ export function Header() {
                   <Logo compact />
                 </div>
 
-                <form onSubmit={search} className="border-b border-border p-4">
-                  <div className="relative">
-                    <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                    <Input
-                      value={term}
-                      onChange={(e) => setTerm(e.target.value)}
-                      placeholder="Search products"
-                      aria-label="Search products"
-                      className="rounded-full pl-9"
-                    />
-                  </div>
-                </form>
+                <div className="border-b border-border p-4">
+                  <SearchBox
+                    placeholder="Search products"
+                    inputClassName="rounded-full"
+                    onNavigate={() => setOpen(false)}
+                  />
+                </div>
                 <nav className="flex flex-col p-2">
                   {NAV.map((item, i) => (
                     <motion.div
