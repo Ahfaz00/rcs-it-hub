@@ -14,6 +14,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as BulkOrdersRouteImport } from './routes/bulk-orders'
+import { Route as CompareRouteImport } from './routes/compare'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as GalleryRouteImport } from './routes/gallery'
@@ -58,6 +59,11 @@ const AuthRoute = AuthRouteImport.update({
 const BulkOrdersRoute = BulkOrdersRouteImport.update({
   id: '/bulk-orders',
   path: '/bulk-orders',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CompareRoute = CompareRouteImport.update({
+  id: '/compare',
+  path: '/compare',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -174,6 +180,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/bulk-orders': typeof BulkOrdersRoute
+  '/compare': typeof CompareRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
   '/gallery': typeof GalleryRoute
@@ -201,6 +208,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/bulk-orders': typeof BulkOrdersRoute
+  '/compare': typeof CompareRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
   '/gallery': typeof GalleryRoute
@@ -230,6 +238,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/auth': typeof AuthRoute
   '/bulk-orders': typeof BulkOrdersRoute
+  '/compare': typeof CompareRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
   '/gallery': typeof GalleryRoute
@@ -259,6 +268,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/auth'
     | '/bulk-orders'
+    | '/compare'
     | '/contact'
     | '/faq'
     | '/gallery'
@@ -286,6 +296,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/auth'
     | '/bulk-orders'
+    | '/compare'
     | '/contact'
     | '/faq'
     | '/gallery'
@@ -314,6 +325,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/auth'
     | '/bulk-orders'
+    | '/compare'
     | '/contact'
     | '/faq'
     | '/gallery'
@@ -343,6 +355,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   AuthRoute: typeof AuthRoute
   BulkOrdersRoute: typeof BulkOrdersRoute
+  CompareRoute: typeof CompareRoute
   ContactRoute: typeof ContactRoute
   FaqRoute: typeof FaqRoute
   GalleryRoute: typeof GalleryRoute
@@ -396,6 +409,13 @@ declare module '@tanstack/react-router' {
       path: '/bulk-orders'
       fullPath: '/bulk-orders'
       preLoaderRoute: typeof BulkOrdersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compare': {
+      id: '/compare'
+      path: '/compare'
+      fullPath: '/compare'
+      preLoaderRoute: typeof CompareRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -573,6 +593,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   AuthRoute: AuthRoute,
   BulkOrdersRoute: BulkOrdersRoute,
+  CompareRoute: CompareRoute,
   ContactRoute: ContactRoute,
   FaqRoute: FaqRoute,
   GalleryRoute: GalleryRoute,
