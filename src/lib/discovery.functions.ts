@@ -96,7 +96,7 @@ export const getCollection = createServerFn({ method: "GET" })
       if (!collection) return null;
 
       const rules = (collection.rules ?? {}) as Rules;
-      let products: Record<string, unknown>[] = [];
+      let products: any[] = [];
 
       if (collection.kind === "manual") {
         const { data: links } = await supabase
@@ -105,8 +105,8 @@ export const getCollection = createServerFn({ method: "GET" })
           .eq("collection_id", collection.id)
           .order("sort_order");
         products = (links ?? [])
-          .map((l) => l.products as unknown as Record<string, unknown> | null)
-          .filter((p): p is Record<string, unknown> => Boolean(p) && p!["is_active"] !== false);
+          .map((l) => l.products as any)
+          .filter((p: any) => p && p.is_active !== false);
       } else {
         let query = supabase.from("products").select(PRODUCT_CARD_FIELDS).eq("is_active", true);
         if (collection.kind === "budget") {
