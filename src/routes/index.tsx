@@ -106,26 +106,30 @@ function HomeSections() {
 
   return (
     <>
-      {/* ============ HERO — editorial split, product-led ============ */}
+      {/* ============ HERO — premium, product-led, fully responsive ============ */}
       {showHero ? (
         <section className="relative isolate overflow-hidden bg-ink-ambient text-white">
           <div aria-hidden="true" className="absolute inset-0 grid-blueprint opacity-[0.12]" />
-          <div className="container-page relative z-10 grid items-center gap-12 pb-16 pt-14 md:pb-24 md:pt-20 lg:grid-cols-[1fr_1.05fr] lg:gap-16">
-            <div>
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -right-24 -top-32 h-[28rem] w-[28rem] rounded-full radial-glow blur-2xl md:h-[38rem] md:w-[38rem]"
+          />
+          <div className="container-page relative z-10 grid items-center gap-10 pb-14 pt-10 sm:pb-16 sm:pt-14 md:pb-24 md:pt-20 lg:grid-cols-[1fr_1.05fr] lg:gap-16">
+            <div className="min-w-0">
               <FadeIn y={14}>
-                <p className="text-eyebrow text-cyan">
+                <p className="inline-flex flex-wrap items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-[0.65rem] font-bold uppercase tracking-[0.18em] text-cyan sm:text-[0.7rem]">
                   R Computer Solutions <span className="text-white/40">•</span> The IT Hub
                 </p>
               </FadeIn>
               <FadeIn delay={0.08} y={20}>
-                <h1 className="mt-7 font-display text-hero font-bold uppercase text-white">
+                <h1 className="mt-5 font-display text-hero font-bold uppercase text-white sm:mt-7">
                   {s["hero_title"] ? (
                     s["hero_title"]
                   ) : (
                     <>
                       Refurbished
                       <br />
-                      <span className="text-cyan">Technology.</span>
+                      <span className="text-gradient-brand">Technology.</span>
                       <br />
                       Built to perform.
                     </>
@@ -133,17 +137,17 @@ function HomeSections() {
                 </h1>
               </FadeIn>
               <FadeIn delay={0.16}>
-                <p className="mt-7 max-w-md text-body-lg text-white/70">
+                <p className="mt-5 max-w-xl text-body-lg text-white/70 sm:mt-7">
                   {s["hero_subtitle"] ||
                     "Business-grade laptops, desktops and workstations — inspected, graded and bench-tested before dispatch."}
                 </p>
               </FadeIn>
               <FadeIn delay={0.24}>
-                <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
+                <div className="mt-8 grid gap-3 sm:mt-10 sm:flex sm:flex-wrap sm:items-center">
                   <Button
                     asChild
                     size="lg"
-                    className="group h-16 rounded-none bg-cyan px-9 text-[0.85rem] font-bold uppercase tracking-[0.14em] text-cyan-foreground transition-transform hover:bg-white active:scale-[0.98] sm:h-15"
+                    className="group h-14 w-full rounded-full bg-cyan px-8 text-[0.8rem] font-bold uppercase tracking-[0.14em] text-cyan-foreground transition-transform hover:bg-white active:scale-[0.98] sm:h-14 sm:w-auto sm:text-[0.85rem]"
                   >
                     <a href={safePath(s["hero_cta1_link"], "/products")}>
                       {s["hero_cta1_text"] || "Explore laptops"}
@@ -154,7 +158,7 @@ function HomeSections() {
                     asChild
                     size="lg"
                     variant="ghost"
-                    className="h-16 rounded-none border border-white/25 px-9 text-[0.85rem] font-bold uppercase tracking-[0.14em] text-white transition-colors hover:border-cyan hover:bg-white/5 hover:text-cyan active:scale-[0.98] sm:h-15"
+                    className="h-14 w-full rounded-full border border-white/25 px-8 text-[0.8rem] font-bold uppercase tracking-[0.14em] text-white transition-colors hover:border-cyan hover:bg-white/5 hover:text-cyan active:scale-[0.98] sm:w-auto sm:text-[0.85rem]"
                   >
                     <a href={safePath(s["hero_cta2_link"], "/bulk-orders")}>
                       {s["hero_cta2_text"] || "Get a quote"}
@@ -164,20 +168,40 @@ function HomeSections() {
               </FadeIn>
             </div>
 
-            <FadeIn delay={0.18} y={26} className="relative">
-              <div className="relative overflow-hidden shadow-lift">
+            <FadeIn delay={0.18} y={26} className="relative min-w-0">
+              <div className="relative overflow-hidden rounded-2xl border border-white/10 shadow-lift md:rounded-3xl">
                 <HeroSlider
                   slides={heroSlides}
                   interval={heroInterval}
                   showCaption={false}
                   showDots
                   overlay={false}
-                  className="aspect-4/3 w-full"
+                  className="aspect-4/3 w-full sm:aspect-16/10 lg:aspect-4/3"
                 />
               </div>
             </FadeIn>
           </div>
+
+          {/* stat strip */}
+          <div className="relative z-10 border-t border-white/10 bg-white/5">
+            <Stagger className="container-page grid grid-cols-2 gap-x-4 gap-y-6 py-7 lg:grid-cols-4" stagger={0.07}>
+              {[
+                { value: "10,000+", label: "Devices refurbished" },
+                { value: "500+", label: "Business clients" },
+                { value: "Pan-India", label: "Dispatch coverage" },
+                { value: "4.6 ★", label: "Google rating" },
+              ].map((stat) => (
+                <StaggerItem key={stat.label} className="min-w-0">
+                  <p className="font-display text-xl font-bold text-white sm:text-2xl">{stat.value}</p>
+                  <p className="mt-1 text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-white/55 sm:text-xs">
+                    {stat.label}
+                  </p>
+                </StaggerItem>
+              ))}
+            </Stagger>
+          </div>
         </section>
+
       ) : null}
 
 

@@ -93,35 +93,21 @@ export function Header() {
       >
         <div
           className={cn(
-            "container-page flex items-center gap-4 transition-all duration-300",
+            "container-page flex min-w-0 items-center gap-3 transition-all duration-300 md:gap-4",
             scrolled ? "h-[3.5rem]" : "h-[4.25rem]",
           )}
         >
           <Logo />
 
-          <nav className="mx-auto hidden shrink-0 items-center gap-1 whitespace-nowrap xl:flex">
-            {NAV.map((item) => (
-              <Link
-                key={item.to}
-                to={item.to}
-                activeOptions={{ exact: item.to === "/" }}
-                className="group relative px-3 py-2 text-[0.74rem] font-bold uppercase tracking-[0.12em] text-foreground/65 transition-colors hover:text-primary"
-                activeProps={{ className: "text-primary" }}
-              >
-                {item.label}
-                <span className="pointer-events-none absolute inset-x-3 bottom-0.5 h-0.5 origin-left scale-x-0 bg-primary transition-transform duration-300 group-hover:scale-x-100" />
-              </Link>
-            ))}
-          </nav>
-
-          <div className="hidden min-w-0 max-w-[15rem] flex-1 items-center xl:flex">
+          <div className="ml-auto hidden min-w-0 max-w-xl flex-1 items-center lg:flex">
             <SearchBox
-              placeholder="Search"
-              inputClassName="rounded-none border-0 border-b border-border bg-transparent shadow-none focus-visible:border-primary focus-visible:ring-0"
+              placeholder="Search laptops, desktops, monitors…"
+              inputClassName="h-11 rounded-full border border-border bg-surface shadow-none focus-visible:border-primary focus-visible:ring-0"
             />
           </div>
 
-          <div className="ml-auto flex shrink-0 items-center gap-2 xl:ml-3">
+          <div className="ml-auto flex shrink-0 items-center gap-1 lg:ml-3 lg:gap-2">
+
             <Link
               to="/wishlist"
               aria-label="Wishlist"
@@ -173,7 +159,7 @@ export function Header() {
                 asChild
                 size="sm"
                 variant="ghost"
-                className="hidden h-11 rounded-none px-3 text-[0.75rem] font-bold uppercase tracking-[0.12em] hover:bg-success/10 hover:text-success sm:inline-flex"
+                className="hidden h-11 rounded-full px-4 text-[0.75rem] font-bold uppercase tracking-[0.12em] hover:bg-success/10 hover:text-success md:inline-flex"
               >
                 <a
                   href={whatsappLink(s["whatsapp"], enquiryMessage(s["default_enquiry_message"]))}
@@ -188,7 +174,7 @@ export function Header() {
               <Button
                 asChild
                 size="sm"
-                className="hidden h-11 rounded-none bg-navy px-5 text-[0.75rem] font-bold uppercase tracking-[0.12em] text-navy-foreground transition-colors hover:bg-primary sm:inline-flex"
+                className="hidden h-11 rounded-full bg-navy px-5 text-[0.75rem] font-bold uppercase tracking-[0.12em] text-navy-foreground transition-colors hover:bg-primary sm:inline-flex"
               >
                 <a href={`tel:${s["phone"].replace(/\s/g, "")}`}>
                   <Phone className="mr-1.5 h-4 w-4" /> Call now
@@ -198,7 +184,7 @@ export function Header() {
 
             <Sheet open={open} onOpenChange={setOpen}>
               <SheetTrigger asChild>
-                <Button variant="outline" size="icon" className="h-11 w-11 rounded-none xl:hidden" aria-label="Open menu">
+                <Button variant="outline" size="icon" className="h-11 w-11 rounded-full lg:hidden" aria-label="Open menu">
                   <Menu className="h-5 w-5" />
                 </Button>
               </SheetTrigger>
@@ -270,7 +256,7 @@ export function Header() {
                   <div className="border-t border-border p-4">
                     <Button
                       asChild
-                      className="h-14 w-full rounded-none bg-navy text-[0.8rem] font-bold uppercase tracking-[0.14em] text-navy-foreground hover:bg-primary"
+                      className="h-14 w-full rounded-full bg-navy text-[0.8rem] font-bold uppercase tracking-[0.14em] text-navy-foreground hover:bg-primary"
                     >
                       <a href={`tel:${s["phone"].replace(/\s/g, "")}`}>
                         <Phone className="mr-2 h-4 w-4" /> Call {s["phone"]}
@@ -285,13 +271,37 @@ export function Header() {
         </div>
       </div>
 
+      {/* Mobile search row */}
+      <div className="border-b border-border bg-background px-4 py-2 lg:hidden">
+        <SearchBox placeholder="Search laptops, desktops…" inputClassName="h-11 rounded-full bg-surface" />
+      </div>
+
+      {/* Primary nav row (desktop) */}
+      <div className="hidden border-b border-border bg-background/95 backdrop-blur lg:block">
+        <nav className="container-page flex items-center justify-center gap-1 overflow-x-auto py-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          {NAV.map((item) => (
+            <Link
+              key={item.to}
+              to={item.to}
+              activeOptions={{ exact: item.to === "/" }}
+              className="group relative shrink-0 whitespace-nowrap px-3 py-2.5 text-[0.72rem] font-bold uppercase tracking-[0.12em] text-foreground/65 transition-colors hover:text-primary"
+              activeProps={{ className: "text-primary" }}
+            >
+              {item.label}
+              <span className="pointer-events-none absolute inset-x-3 bottom-1 h-0.5 origin-left scale-x-0 bg-primary transition-transform duration-300 group-hover:scale-x-100" />
+            </Link>
+          ))}
+        </nav>
+      </div>
+
       {/* Category rail */}
       <div
         className={cn(
-          "hidden border-b border-border bg-background/90 backdrop-blur transition-all duration-500 lg:block",
+          "hidden border-b border-border bg-surface/70 backdrop-blur transition-all duration-500 lg:block",
           scrolled ? "max-h-0 overflow-hidden border-transparent opacity-0" : "max-h-16 opacity-100",
         )}
       >
+
         <div className="container-page flex items-center gap-2 overflow-x-auto py-2">
           <span className="mr-1 flex items-center gap-1 whitespace-nowrap text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
             Shop <ChevronDown className="h-3 w-3" />
