@@ -20,6 +20,7 @@ import { Route as GalleryRouteImport } from './routes/gallery'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as CollectionsIndexRouteImport } from './routes/collections.index'
 import { Route as CollectionsSlugRouteImport } from './routes/collections.$slug'
+import { Route as LaptopsUsageRouteImport } from './routes/laptops.$usage'
 import { Route as PoliciesSlugRouteImport } from './routes/policies.$slug'
 import { Route as ProductsIndexRouteImport } from './routes/products.index'
 import { Route as ProductsSlugRouteImport } from './routes/products.$slug'
@@ -84,6 +85,11 @@ const CollectionsIndexRoute = CollectionsIndexRouteImport.update({
 const CollectionsSlugRoute = CollectionsSlugRouteImport.update({
   id: '/collections/$slug',
   path: '/collections/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LaptopsUsageRoute = LaptopsUsageRouteImport.update({
+  id: '/laptops/$usage',
+  path: '/laptops/$usage',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PoliciesSlugRoute = PoliciesSlugRouteImport.update({
@@ -155,6 +161,7 @@ export interface FileRoutesByFullPath {
   '/gallery': typeof GalleryRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/collections/$slug': typeof CollectionsSlugRoute
+  '/laptops/$usage': typeof LaptopsUsageRoute
   '/policies/$slug': typeof PoliciesSlugRoute
   '/products/$slug': typeof ProductsSlugRoute
   '/services/$slug': typeof ServicesSlugRoute
@@ -178,6 +185,7 @@ export interface FileRoutesByTo {
   '/gallery': typeof GalleryRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/collections/$slug': typeof CollectionsSlugRoute
+  '/laptops/$usage': typeof LaptopsUsageRoute
   '/policies/$slug': typeof PoliciesSlugRoute
   '/products/$slug': typeof ProductsSlugRoute
   '/services/$slug': typeof ServicesSlugRoute
@@ -203,6 +211,7 @@ export interface FileRoutesById {
   '/gallery': typeof GalleryRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/collections/$slug': typeof CollectionsSlugRoute
+  '/laptops/$usage': typeof LaptopsUsageRoute
   '/policies/$slug': typeof PoliciesSlugRoute
   '/products/$slug': typeof ProductsSlugRoute
   '/services/$slug': typeof ServicesSlugRoute
@@ -228,6 +237,7 @@ export interface FileRouteTypes {
     | '/gallery'
     | '/sitemap.xml'
     | '/collections/$slug'
+    | '/laptops/$usage'
     | '/policies/$slug'
     | '/products/$slug'
     | '/services/$slug'
@@ -251,6 +261,7 @@ export interface FileRouteTypes {
     | '/gallery'
     | '/sitemap.xml'
     | '/collections/$slug'
+    | '/laptops/$usage'
     | '/policies/$slug'
     | '/products/$slug'
     | '/services/$slug'
@@ -275,6 +286,7 @@ export interface FileRouteTypes {
     | '/gallery'
     | '/sitemap.xml'
     | '/collections/$slug'
+    | '/laptops/$usage'
     | '/policies/$slug'
     | '/products/$slug'
     | '/services/$slug'
@@ -300,6 +312,7 @@ export interface RootRouteChildren {
   GalleryRoute: typeof GalleryRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   CollectionsSlugRoute: typeof CollectionsSlugRoute
+  LaptopsUsageRoute: typeof LaptopsUsageRoute
   PoliciesSlugRoute: typeof PoliciesSlugRoute
   ProductsSlugRoute: typeof ProductsSlugRoute
   ServicesSlugRoute: typeof ServicesSlugRoute
@@ -386,6 +399,13 @@ declare module '@tanstack/react-router' {
       path: '/collections/$slug'
       fullPath: '/collections/$slug'
       preLoaderRoute: typeof CollectionsSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/laptops/$usage': {
+      id: '/laptops/$usage'
+      path: '/laptops/$usage'
+      fullPath: '/laptops/$usage'
+      preLoaderRoute: typeof LaptopsUsageRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/policies/$slug': {
@@ -498,6 +518,7 @@ const rootRouteChildren: RootRouteChildren = {
   GalleryRoute: GalleryRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   CollectionsSlugRoute: CollectionsSlugRoute,
+  LaptopsUsageRoute: LaptopsUsageRoute,
   PoliciesSlugRoute: PoliciesSlugRoute,
   ProductsSlugRoute: ProductsSlugRoute,
   ServicesSlugRoute: ServicesSlugRoute,
