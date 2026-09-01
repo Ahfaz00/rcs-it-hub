@@ -19,6 +19,7 @@ const NAV = [
   { label: "Services", to: "/services" },
   { label: "Bulk Orders", to: "/bulk-orders" },
   { label: "Blog", to: "/blog" },
+  { label: "Gallery", to: "/gallery" },
   { label: "About", to: "/about" },
   { label: "Contact", to: "/contact" },
 ] as const;
@@ -232,6 +233,22 @@ export function Header() {
                     </motion.div>
                   ))}
                 </nav>
+                <div className="grid grid-cols-2 gap-2 border-t border-border p-4">
+                  <Link
+                    to="/wishlist"
+                    onClick={() => setOpen(false)}
+                    className="rounded-xl border border-border px-4 py-3 text-sm font-semibold"
+                  >
+                    Wishlist ({wishlist.ids.length})
+                  </Link>
+                  <Link
+                    to="/compare"
+                    onClick={() => setOpen(false)}
+                    className="rounded-xl border border-border px-4 py-3 text-sm font-semibold"
+                  >
+                    Compare ({compare.ids.length})
+                  </Link>
+                </div>
                 <div className="border-t border-border p-4">
                   <p className="mb-3 text-eyebrow text-muted-foreground">Categories</p>
                   <div className="flex flex-col">
