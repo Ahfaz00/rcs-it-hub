@@ -503,8 +503,21 @@ function HomeSections() {
               eyebrow={s["testimonials_eyebrow"] || "Customer feedback"}
               title={s["testimonials_title"] || "What buyers say"}
             />
+            {s["google_rating"] ? (
+              <div className="mt-6 inline-flex items-center gap-3 rounded-full border border-border px-5 py-2.5">
+                <span className="font-display text-lg font-bold">{s["google_rating"]}</span>
+                <span className="flex gap-0.5" aria-hidden>
+                  {Array.from({ length: 5 }).map((_, si) => (
+                    <Star key={si} className="h-3.5 w-3.5 fill-primary text-primary" />
+                  ))}
+                </span>
+                <span className="text-xs text-muted-foreground">
+                  {s["google_review_count"] || ""} Google reviews
+                </span>
+              </div>
+            ) : null}
             <div className="mt-12 grid gap-px border border-border bg-border md:grid-cols-3">
-              {home.testimonials.slice(0, 3).map((t, i) => (
+              {home.testimonials.slice(0, 6).map((t, i) => (
                 <Reveal key={t.id} delay={i * motion.stagger} className="h-full">
                   <figure className="flex h-full flex-col bg-background p-8">
                     <Quote className="h-6 w-6 text-primary/40" />
