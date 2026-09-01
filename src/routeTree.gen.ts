@@ -21,6 +21,7 @@ import { Route as GalleryRouteImport } from './routes/gallery'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as WishlistRouteImport } from './routes/wishlist'
+import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as BrandsSlugRouteImport } from './routes/brands.$slug'
 import { Route as CollectionsIndexRouteImport } from './routes/collections.index'
 import { Route as CollectionsSlugRouteImport } from './routes/collections.$slug'
@@ -94,6 +95,11 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
 const WishlistRoute = WishlistRouteImport.update({
   id: '/wishlist',
   path: '/wishlist',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogIndexRoute = BlogIndexRouteImport.update({
+  id: '/blog/',
+  path: '/blog/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BrandsSlugRoute = BrandsSlugRouteImport.update({
@@ -193,6 +199,7 @@ export interface FileRoutesByFullPath {
   '/policies/$slug': typeof PoliciesSlugRoute
   '/products/$slug': typeof ProductsSlugRoute
   '/services/$slug': typeof ServicesSlugRoute
+  '/blog/': typeof BlogIndexRoute
   '/collections/': typeof CollectionsIndexRoute
   '/products/': typeof ProductsIndexRoute
   '/services/': typeof ServicesIndexRoute
@@ -221,6 +228,7 @@ export interface FileRoutesByTo {
   '/policies/$slug': typeof PoliciesSlugRoute
   '/products/$slug': typeof ProductsSlugRoute
   '/services/$slug': typeof ServicesSlugRoute
+  '/blog': typeof BlogIndexRoute
   '/collections': typeof CollectionsIndexRoute
   '/products': typeof ProductsIndexRoute
   '/services': typeof ServicesIndexRoute
@@ -251,6 +259,7 @@ export interface FileRoutesById {
   '/policies/$slug': typeof PoliciesSlugRoute
   '/products/$slug': typeof ProductsSlugRoute
   '/services/$slug': typeof ServicesSlugRoute
+  '/blog/': typeof BlogIndexRoute
   '/collections/': typeof CollectionsIndexRoute
   '/products/': typeof ProductsIndexRoute
   '/services/': typeof ServicesIndexRoute
@@ -281,6 +290,7 @@ export interface FileRouteTypes {
     | '/policies/$slug'
     | '/products/$slug'
     | '/services/$slug'
+    | '/blog/'
     | '/collections/'
     | '/products/'
     | '/services/'
@@ -309,6 +319,7 @@ export interface FileRouteTypes {
     | '/policies/$slug'
     | '/products/$slug'
     | '/services/$slug'
+    | '/blog'
     | '/collections'
     | '/products'
     | '/services'
@@ -338,6 +349,7 @@ export interface FileRouteTypes {
     | '/policies/$slug'
     | '/products/$slug'
     | '/services/$slug'
+    | '/blog/'
     | '/collections/'
     | '/products/'
     | '/services/'
@@ -368,6 +380,7 @@ export interface RootRouteChildren {
   PoliciesSlugRoute: typeof PoliciesSlugRoute
   ProductsSlugRoute: typeof ProductsSlugRoute
   ServicesSlugRoute: typeof ServicesSlugRoute
+  BlogIndexRoute: typeof BlogIndexRoute
   CollectionsIndexRoute: typeof CollectionsIndexRoute
   ProductsIndexRoute: typeof ProductsIndexRoute
   ServicesIndexRoute: typeof ServicesIndexRoute
@@ -458,6 +471,13 @@ declare module '@tanstack/react-router' {
       path: '/wishlist'
       fullPath: '/wishlist'
       preLoaderRoute: typeof WishlistRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog/': {
+      id: '/blog/'
+      path: '/blog'
+      fullPath: '/blog/'
+      preLoaderRoute: typeof BlogIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/brands/$slug': {
@@ -606,6 +626,7 @@ const rootRouteChildren: RootRouteChildren = {
   PoliciesSlugRoute: PoliciesSlugRoute,
   ProductsSlugRoute: ProductsSlugRoute,
   ServicesSlugRoute: ServicesSlugRoute,
+  BlogIndexRoute: BlogIndexRoute,
   CollectionsIndexRoute: CollectionsIndexRoute,
   ProductsIndexRoute: ProductsIndexRoute,
   ServicesIndexRoute: ServicesIndexRoute,
