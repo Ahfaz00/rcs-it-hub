@@ -32,8 +32,17 @@ export function Footer() {
   const socials = [
     { url: s["social_facebook"], Icon: Facebook, label: "Facebook" },
     { url: s["social_instagram"], Icon: Instagram, label: "Instagram" },
-    { url: s["social_linkedin"], Icon: Linkedin, label: "LinkedIn" },
     { url: s["social_youtube"], Icon: Youtube, label: "YouTube" },
+    { url: s["social_x"], Icon: Twitter, label: "X (Twitter)" },
+    { url: s["social_telegram"], Icon: Send, label: "Telegram" },
+    { url: s["social_linkedin"], Icon: Linkedin, label: "LinkedIn" },
+    {
+      url: s["whatsapp_number"]
+        ? `https://wa.me/${s["whatsapp_number"].replace(/\D/g, "")}`
+        : "",
+      Icon: MessageCircle,
+      label: "WhatsApp",
+    },
   ].filter((x) => x.url);
 
   return (
