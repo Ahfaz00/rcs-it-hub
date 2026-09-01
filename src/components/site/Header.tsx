@@ -14,9 +14,10 @@ import { cn } from "@/lib/utils";
 const NAV = [
   { label: "Home", to: "/" },
   { label: "Products", to: "/products" },
+  { label: "Collections", to: "/collections" },
   { label: "Services", to: "/services" },
   { label: "Bulk Orders", to: "/bulk-orders" },
-  { label: "Gallery", to: "/gallery" },
+  { label: "Blog", to: "/blog" },
   { label: "About", to: "/about" },
   { label: "Contact", to: "/contact" },
 ] as const;
