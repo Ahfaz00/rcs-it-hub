@@ -96,7 +96,7 @@ export const getCollection = createServerFn({ method: "GET" })
       if (!collection) return null;
 
       const rules = (collection.rules ?? {}) as Rules;
-      let products: unknown[] = [];
+      let products: Record<string, unknown>[] = [];
 
       if (collection.kind === "manual") {
         const { data: links } = await supabase
