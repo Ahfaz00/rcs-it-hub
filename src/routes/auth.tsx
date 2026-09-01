@@ -24,7 +24,6 @@ export const Route = createFileRoute("/auth")({
 function AuthPage() {
   const navigate = useNavigate();
   const [busy, setBusy] = useState(false);
-  const [mode, setMode] = useState<"signin" | "signup">("signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -37,32 +36,6 @@ function AuthPage() {
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     setBusy(true);
-
-    if (mode === "signup") {
-      const { error } = await supabase.auth.signUp({
-        email: email.trim(),
-        password,
-        options: { emailRedirectTo: `${window.location.origin}/auth` },
-      });
-      setBusy(false);
-      if (error) {
-        toast.error(error.message);
-        return;
-      }
-      toast.success("Account created. Signing you in...");
-      const { error: signInError } = await supabase.auth.signInWithPassword({
-        email: email.trim(),
-        password,
-      });
-      if (signInError) {
-        toast.info("Please confirm your email, then sign in.");
-        setMode("signin");
-        return;
-      }
-      navigate({ to: "/admin" });
-      return;
-    }
-
     const { error } = await supabase.auth.signInWithPassword({ email: email.trim(), password });
     setBusy(false);
     if (error) {
@@ -95,9 +68,7 @@ function AuthPage() {
           className="mt-8 space-y-4 rounded-lg border border-border bg-card p-6 shadow-card"
         >
           <div>
-            <h1 className="font-display text-lg font-bold">
-              {mode === "signin" ? "Staff sign in" : "Create staff account"}
-            </h1>
+            <h1 className="font-display text-lg font-bold">Staff sign in</h1>
             <p className="mt-1 text-sm text-muted-foreground">
               Admin access for managing the website content.
             </p>
@@ -118,30 +89,16 @@ function AuthPage() {
             <Input
               id="password"
               type="password"
-              autoComplete={mode === "signin" ? "current-password" : "new-password"}
-              minLength={8}
+              autoComplete="current-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
           </div>
           <Button type="submit" className="w-full" disabled={busy}>
-            {busy
-              ? mode === "signin"
-                ? "Signing in..."
-                : "Creating account..."
-              : mode === "signin"
-                ? "Sign in"
-                : "Create account"}
+            {busy ? "Signing in..." : "Sign in"}
           </Button>
-          <div className="flex items-center justify-between text-xs text-muted-foreground">
-            <button
-              type="button"
-              onClick={() => setMode(mode === "signin" ? "signup" : "signin")}
-              className="underline-offset-2 hover:underline"
-            >
-              {mode === "signin" ? "Create an account" : "I already have an account"}
-            </button>
+          <div className="flex justify-end text-xs text-muted-foreground">
             <button type="button" onClick={onReset} className="underline-offset-2 hover:underline">
               Forgot password?
             </button>
@@ -156,3 +113,4 @@ function AuthPage() {
     </div>
   );
 }
+
