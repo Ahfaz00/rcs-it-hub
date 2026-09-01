@@ -93,35 +93,21 @@ export function Header() {
       >
         <div
           className={cn(
-            "container-page flex items-center gap-4 transition-all duration-300",
+            "container-page flex min-w-0 items-center gap-3 transition-all duration-300 md:gap-4",
             scrolled ? "h-[3.5rem]" : "h-[4.25rem]",
           )}
         >
           <Logo />
 
-          <nav className="mx-auto hidden shrink-0 items-center gap-1 whitespace-nowrap xl:flex">
-            {NAV.map((item) => (
-              <Link
-                key={item.to}
-                to={item.to}
-                activeOptions={{ exact: item.to === "/" }}
-                className="group relative px-3 py-2 text-[0.74rem] font-bold uppercase tracking-[0.12em] text-foreground/65 transition-colors hover:text-primary"
-                activeProps={{ className: "text-primary" }}
-              >
-                {item.label}
-                <span className="pointer-events-none absolute inset-x-3 bottom-0.5 h-0.5 origin-left scale-x-0 bg-primary transition-transform duration-300 group-hover:scale-x-100" />
-              </Link>
-            ))}
-          </nav>
-
-          <div className="hidden min-w-0 max-w-[15rem] flex-1 items-center xl:flex">
+          <div className="ml-auto hidden min-w-0 max-w-xl flex-1 items-center lg:flex">
             <SearchBox
-              placeholder="Search"
-              inputClassName="rounded-none border-0 border-b border-border bg-transparent shadow-none focus-visible:border-primary focus-visible:ring-0"
+              placeholder="Search laptops, desktops, monitors…"
+              inputClassName="h-11 rounded-full border border-border bg-surface shadow-none focus-visible:border-primary focus-visible:ring-0"
             />
           </div>
 
-          <div className="ml-auto flex shrink-0 items-center gap-2 xl:ml-3">
+          <div className="ml-auto flex shrink-0 items-center gap-1 lg:ml-3 lg:gap-2">
+
             <Link
               to="/wishlist"
               aria-label="Wishlist"
