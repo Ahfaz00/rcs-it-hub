@@ -18,6 +18,7 @@ import { Route as ContactRouteImport } from './routes/contact'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as GalleryRouteImport } from './routes/gallery'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as BrandsSlugRouteImport } from './routes/brands.$slug'
 import { Route as CollectionsIndexRouteImport } from './routes/collections.index'
 import { Route as CollectionsSlugRouteImport } from './routes/collections.$slug'
 import { Route as LaptopsUsageRouteImport } from './routes/laptops.$usage'
@@ -75,6 +76,11 @@ const GalleryRoute = GalleryRouteImport.update({
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BrandsSlugRoute = BrandsSlugRouteImport.update({
+  id: '/brands/$slug',
+  path: '/brands/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CollectionsIndexRoute = CollectionsIndexRouteImport.update({
@@ -160,6 +166,7 @@ export interface FileRoutesByFullPath {
   '/faq': typeof FaqRoute
   '/gallery': typeof GalleryRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/brands/$slug': typeof BrandsSlugRoute
   '/collections/$slug': typeof CollectionsSlugRoute
   '/laptops/$usage': typeof LaptopsUsageRoute
   '/policies/$slug': typeof PoliciesSlugRoute
@@ -184,6 +191,7 @@ export interface FileRoutesByTo {
   '/faq': typeof FaqRoute
   '/gallery': typeof GalleryRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/brands/$slug': typeof BrandsSlugRoute
   '/collections/$slug': typeof CollectionsSlugRoute
   '/laptops/$usage': typeof LaptopsUsageRoute
   '/policies/$slug': typeof PoliciesSlugRoute
@@ -210,6 +218,7 @@ export interface FileRoutesById {
   '/faq': typeof FaqRoute
   '/gallery': typeof GalleryRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/brands/$slug': typeof BrandsSlugRoute
   '/collections/$slug': typeof CollectionsSlugRoute
   '/laptops/$usage': typeof LaptopsUsageRoute
   '/policies/$slug': typeof PoliciesSlugRoute
@@ -236,6 +245,7 @@ export interface FileRouteTypes {
     | '/faq'
     | '/gallery'
     | '/sitemap.xml'
+    | '/brands/$slug'
     | '/collections/$slug'
     | '/laptops/$usage'
     | '/policies/$slug'
@@ -260,6 +270,7 @@ export interface FileRouteTypes {
     | '/faq'
     | '/gallery'
     | '/sitemap.xml'
+    | '/brands/$slug'
     | '/collections/$slug'
     | '/laptops/$usage'
     | '/policies/$slug'
@@ -285,6 +296,7 @@ export interface FileRouteTypes {
     | '/faq'
     | '/gallery'
     | '/sitemap.xml'
+    | '/brands/$slug'
     | '/collections/$slug'
     | '/laptops/$usage'
     | '/policies/$slug'
@@ -311,6 +323,7 @@ export interface RootRouteChildren {
   FaqRoute: typeof FaqRoute
   GalleryRoute: typeof GalleryRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  BrandsSlugRoute: typeof BrandsSlugRoute
   CollectionsSlugRoute: typeof CollectionsSlugRoute
   LaptopsUsageRoute: typeof LaptopsUsageRoute
   PoliciesSlugRoute: typeof PoliciesSlugRoute
@@ -385,6 +398,13 @@ declare module '@tanstack/react-router' {
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/brands/$slug': {
+      id: '/brands/$slug'
+      path: '/brands/$slug'
+      fullPath: '/brands/$slug'
+      preLoaderRoute: typeof BrandsSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/collections/': {
@@ -517,6 +537,7 @@ const rootRouteChildren: RootRouteChildren = {
   FaqRoute: FaqRoute,
   GalleryRoute: GalleryRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  BrandsSlugRoute: BrandsSlugRoute,
   CollectionsSlugRoute: CollectionsSlugRoute,
   LaptopsUsageRoute: LaptopsUsageRoute,
   PoliciesSlugRoute: PoliciesSlugRoute,
