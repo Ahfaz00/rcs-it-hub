@@ -37,9 +37,7 @@ export function Footer() {
     { url: s["social_telegram"], Icon: Send, label: "Telegram" },
     { url: s["social_linkedin"], Icon: Linkedin, label: "LinkedIn" },
     {
-      url: s["whatsapp_number"]
-        ? `https://wa.me/${s["whatsapp_number"].replace(/\D/g, "")}`
-        : "",
+      url: s["whatsapp"] ? `https://wa.me/${s["whatsapp"].replace(/\D/g, "")}` : "",
       Icon: MessageCircle,
       label: "WhatsApp",
     },
