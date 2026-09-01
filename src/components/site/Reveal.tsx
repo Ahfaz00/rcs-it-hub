@@ -49,10 +49,15 @@ export function Reveal({
           }
         }
       },
-      { rootMargin: "0px 0px -10% 0px", threshold: 0.08 },
+      { rootMargin: "0px 0px -10% 0px", threshold: 0 },
     );
     observer.observe(el);
-    return () => observer.disconnect();
+    // Safety net so content is never stuck invisible.
+    const timer = setTimeout(() => setShown(true), 900);
+    return () => {
+      clearTimeout(timer);
+      observer.disconnect();
+    };
   }, [motion.enabled]);
 
   if (!motion.enabled) {
