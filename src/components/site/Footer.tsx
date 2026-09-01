@@ -1,6 +1,17 @@
 import { Link } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { Facebook, Instagram, Linkedin, Mail, MapPin, Phone, Youtube } from "lucide-react";
+import {
+  Facebook,
+  Instagram,
+  Linkedin,
+  Mail,
+  MapPin,
+  MessageCircle,
+  Phone,
+  Send,
+  Twitter,
+  Youtube,
+} from "lucide-react";
 
 import { Logo } from "./Logo";
 import { siteQueryOptions } from "@/lib/site-query";
