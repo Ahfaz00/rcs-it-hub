@@ -117,21 +117,38 @@ export function Header() {
             ))}
           </nav>
 
-          <form onSubmit={search} className="hidden min-w-0 max-w-[13rem] flex-1 items-center xl:flex">
-            <div className="relative w-full min-w-0">
-              <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-              <Input
-                value={term}
-                onChange={(e) => setTerm(e.target.value)}
-                placeholder="Search"
-                aria-label="Search products"
-                className="h-10 rounded-none border-0 border-b border-border bg-transparent pl-10 text-sm shadow-none focus-visible:border-primary focus-visible:ring-0"
-              />
-            </div>
-          </form>
-
+          <div className="hidden min-w-0 max-w-[15rem] flex-1 items-center xl:flex">
+            <SearchBox
+              placeholder="Search"
+              inputClassName="rounded-none border-0 border-b border-border bg-transparent shadow-none focus-visible:border-primary focus-visible:ring-0"
+            />
+          </div>
 
           <div className="ml-auto flex shrink-0 items-center gap-2 xl:ml-3">
+            <Link
+              to="/wishlist"
+              aria-label="Wishlist"
+              className="relative hidden h-11 w-11 items-center justify-center text-foreground/70 transition-colors hover:text-primary sm:inline-flex"
+            >
+              <Heart className="h-5 w-5" />
+              {wishlist.ids.length ? (
+                <span className="absolute right-1.5 top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-primary px-1 text-[0.6rem] font-bold text-primary-foreground">
+                  {wishlist.ids.length}
+                </span>
+              ) : null}
+            </Link>
+            <Link
+              to="/compare"
+              aria-label="Compare products"
+              className="relative hidden h-11 w-11 items-center justify-center text-foreground/70 transition-colors hover:text-primary sm:inline-flex"
+            >
+              <Scale className="h-5 w-5" />
+              {compare.ids.length ? (
+                <span className="absolute right-1.5 top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-primary px-1 text-[0.6rem] font-bold text-primary-foreground">
+                  {compare.ids.length}
+                </span>
+              ) : null}
+            </Link>
             {/* Mobile quick actions */}
             {s["whatsapp"] ? (
               <a
