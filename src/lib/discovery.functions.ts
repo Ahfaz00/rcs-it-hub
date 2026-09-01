@@ -353,7 +353,12 @@ export const submitProductRequest = createServerFn({ method: "POST" })
     const { createPublicServerClient } = await import("./supabase-public.server");
     const supabase = createPublicServerClient();
     const { error } = await supabase.from("product_requests").insert({
-      ...data,
+      product_name: data.product_name,
+      name: data.name,
+      phone: data.phone,
+      quantity: data.quantity ?? null,
+      budget: data.budget ?? null,
+      message: data.message ?? null,
       email: data.email || null,
       source: data.source ?? "search",
     });
