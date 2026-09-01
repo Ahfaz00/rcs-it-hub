@@ -22,6 +22,7 @@ import { Route as SearchRouteImport } from './routes/search'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as WishlistRouteImport } from './routes/wishlist'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
+import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as BrandsSlugRouteImport } from './routes/brands.$slug'
 import { Route as CollectionsIndexRouteImport } from './routes/collections.index'
 import { Route as CollectionsSlugRouteImport } from './routes/collections.$slug'
@@ -100,6 +101,11 @@ const WishlistRoute = WishlistRouteImport.update({
 const BlogIndexRoute = BlogIndexRouteImport.update({
   id: '/blog/',
   path: '/blog/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/blog/$slug',
+  path: '/blog/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BrandsSlugRoute = BrandsSlugRouteImport.update({
@@ -193,6 +199,7 @@ export interface FileRoutesByFullPath {
   '/search': typeof SearchRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/wishlist': typeof WishlistRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/brands/$slug': typeof BrandsSlugRoute
   '/collections/$slug': typeof CollectionsSlugRoute
   '/laptops/$usage': typeof LaptopsUsageRoute
@@ -222,6 +229,7 @@ export interface FileRoutesByTo {
   '/search': typeof SearchRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/wishlist': typeof WishlistRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/brands/$slug': typeof BrandsSlugRoute
   '/collections/$slug': typeof CollectionsSlugRoute
   '/laptops/$usage': typeof LaptopsUsageRoute
@@ -253,6 +261,7 @@ export interface FileRoutesById {
   '/search': typeof SearchRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/wishlist': typeof WishlistRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/brands/$slug': typeof BrandsSlugRoute
   '/collections/$slug': typeof CollectionsSlugRoute
   '/laptops/$usage': typeof LaptopsUsageRoute
@@ -284,6 +293,7 @@ export interface FileRouteTypes {
     | '/search'
     | '/sitemap.xml'
     | '/wishlist'
+    | '/blog/$slug'
     | '/brands/$slug'
     | '/collections/$slug'
     | '/laptops/$usage'
@@ -313,6 +323,7 @@ export interface FileRouteTypes {
     | '/search'
     | '/sitemap.xml'
     | '/wishlist'
+    | '/blog/$slug'
     | '/brands/$slug'
     | '/collections/$slug'
     | '/laptops/$usage'
@@ -343,6 +354,7 @@ export interface FileRouteTypes {
     | '/search'
     | '/sitemap.xml'
     | '/wishlist'
+    | '/blog/$slug'
     | '/brands/$slug'
     | '/collections/$slug'
     | '/laptops/$usage'
@@ -374,6 +386,7 @@ export interface RootRouteChildren {
   SearchRoute: typeof SearchRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   WishlistRoute: typeof WishlistRoute
+  BlogSlugRoute: typeof BlogSlugRoute
   BrandsSlugRoute: typeof BrandsSlugRoute
   CollectionsSlugRoute: typeof CollectionsSlugRoute
   LaptopsUsageRoute: typeof LaptopsUsageRoute
@@ -478,6 +491,13 @@ declare module '@tanstack/react-router' {
       path: '/blog'
       fullPath: '/blog/'
       preLoaderRoute: typeof BlogIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog/$slug': {
+      id: '/blog/$slug'
+      path: '/blog/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/brands/$slug': {
@@ -620,6 +640,7 @@ const rootRouteChildren: RootRouteChildren = {
   SearchRoute: SearchRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   WishlistRoute: WishlistRoute,
+  BlogSlugRoute: BlogSlugRoute,
   BrandsSlugRoute: BrandsSlugRoute,
   CollectionsSlugRoute: CollectionsSlugRoute,
   LaptopsUsageRoute: LaptopsUsageRoute,
