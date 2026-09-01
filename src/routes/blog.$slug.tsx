@@ -23,9 +23,9 @@ export const Route = createFileRoute("/blog/$slug")({
     if (!loaderData) {
       return { meta: [{ title: "Article not found" }, { name: "robots", content: "noindex" }] };
     }
-    const p = loaderData.post as Record<string, string | null>;
-    const title = p.seo_title || `${p.title} | R Computer Solution`;
-    const description = p.seo_description || p.excerpt || "Refurbished IT hardware guide from R Computer Solution.";
+    const p = loaderData.post as unknown as Record<string, string | null | undefined>;
+    const title = p["seo_title"] || `${p["title"]} | R Computer Solution`;
+    const description = p["seo_description"] || p["excerpt"] || "Refurbished IT hardware guide from R Computer Solution.";
     const meta: { title?: string; name?: string; property?: string; content?: string }[] = [
       { title },
       { name: "description", content: description },
@@ -33,7 +33,7 @@ export const Route = createFileRoute("/blog/$slug")({
       { property: "og:description", content: description },
       { property: "og:type", content: "article" },
     ];
-    const cover = p.cover_image_url;
+    const cover = p["cover_image_url"];
     if (cover && cover.startsWith("https://")) {
       meta.push({ property: "og:image", content: cover }, { name: "twitter:image", content: cover });
     }
@@ -56,14 +56,14 @@ function BlogPost() {
   const { slug } = Route.useParams();
   const { data } = useSuspenseQuery(postQuery(slug));
   if (!data) return null;
-  const post = data.post as Record<string, any>;
-  const cover = mediaUrl(post.cover_image_url);
+  const post = data.post as unknown as Record<string, any>;
+  const cover = mediaUrl(post["cover_image_url"]);
 
   return (
     <SiteShell>
       <PageHero
-        title={post.title}
-        {...(post.excerpt ? { subtitle: post.excerpt as string } : {})}
+        title={post["title"]}
+        {...(post["excerpt"] ? { subtitle: post["excerpt"] as string } : {})}
         breadcrumb={
           <span>
             <Link to="/" className="hover:text-primary">
@@ -79,20 +79,20 @@ function BlogPost() {
       <article className="container-page py-10 md:py-14">
         <div className="mx-auto max-w-3xl">
           <p className="text-xs text-muted-foreground">
-            {post.author_name ? `${post.author_name} · ` : ""}
-            {formatDate(post.published_at)}
-            {post.reading_minutes ? ` · ${post.reading_minutes} min read` : ""}
+            {post["author_name"] ? `${post["author_name"]} · ` : ""}
+            {formatDate(post["published_at"])}
+            {post["reading_minutes"] ? ` · ${post["reading_minutes"]} min read` : ""}
           </p>
           {cover ? (
             <img
               src={cover}
-              alt={post.cover_image_alt || post.title}
+              alt={post["cover_image_alt"] || post["title"]}
               className="mt-6 w-full rounded-2xl border border-border object-cover"
             />
           ) : null}
           <div
             className="prose prose-slate mt-8 max-w-none prose-headings:font-display prose-a:text-primary"
-            dangerouslySetInnerHTML={{ __html: post.content || post.body || "" }}
+            dangerouslySetInnerHTML={{ __html: post["content"] || post["body"] || "" }}
           />
         </div>
 
