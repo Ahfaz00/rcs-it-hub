@@ -1,21 +1,24 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { ChevronDown, Menu, Phone, Search, MessageCircle, ShieldCheck, RotateCcw, Truck } from "lucide-react";
+import { ChevronDown, Heart, Menu, Phone, Scale, MessageCircle, ShieldCheck, RotateCcw, Truck } from "lucide-react";
 import { motion } from "motion/react";
 
 import { Logo } from "./Logo";
+import { SearchBox } from "./SearchBox";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { siteQueryOptions, whatsappLink, enquiryMessage } from "@/lib/site-query";
+import { useShortlist } from "@/lib/shortlist";
 import { cn } from "@/lib/utils";
 
 const NAV = [
   { label: "Home", to: "/" },
   { label: "Products", to: "/products" },
+  { label: "Collections", to: "/collections" },
   { label: "Services", to: "/services" },
   { label: "Bulk Orders", to: "/bulk-orders" },
+  { label: "Blog", to: "/blog" },
   { label: "Gallery", to: "/gallery" },
   { label: "About", to: "/about" },
   { label: "Contact", to: "/contact" },
@@ -29,10 +32,10 @@ const TRUST = [
 
 export function Header() {
   const { data: site } = useSuspenseQuery(siteQueryOptions);
-  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
-  const [term, setTerm] = useState("");
   const [scrolled, setScrolled] = useState(false);
+  const wishlist = useShortlist("wishlist");
+  const compare = useShortlist("compare");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -43,12 +46,6 @@ export function Header() {
 
   const s = site.settings;
   const announcement = s["announcement_enabled"] === "true" ? s["announcement_text"] : "";
-
-  function search(e: React.FormEvent) {
-    e.preventDefault();
-    navigate({ to: "/products", search: { search: term || undefined } });
-    setOpen(false);
-  }
 
   return (
     <header className="sticky top-0 z-50 w-full">
@@ -116,21 +113,38 @@ export function Header() {
             ))}
           </nav>
 
-          <form onSubmit={search} className="hidden min-w-0 max-w-[13rem] flex-1 items-center xl:flex">
-            <div className="relative w-full min-w-0">
-              <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-              <Input
-                value={term}
-                onChange={(e) => setTerm(e.target.value)}
-                placeholder="Search"
-                aria-label="Search products"
-                className="h-10 rounded-none border-0 border-b border-border bg-transparent pl-10 text-sm shadow-none focus-visible:border-primary focus-visible:ring-0"
-              />
-            </div>
-          </form>
-
+          <div className="hidden min-w-0 max-w-[15rem] flex-1 items-center xl:flex">
+            <SearchBox
+              placeholder="Search"
+              inputClassName="rounded-none border-0 border-b border-border bg-transparent shadow-none focus-visible:border-primary focus-visible:ring-0"
+            />
+          </div>
 
           <div className="ml-auto flex shrink-0 items-center gap-2 xl:ml-3">
+            <Link
+              to="/wishlist"
+              aria-label="Wishlist"
+              className="relative hidden h-11 w-11 items-center justify-center text-foreground/70 transition-colors hover:text-primary sm:inline-flex"
+            >
+              <Heart className="h-5 w-5" />
+              {wishlist.ids.length ? (
+                <span className="absolute right-1.5 top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-primary px-1 text-[0.6rem] font-bold text-primary-foreground">
+                  {wishlist.ids.length}
+                </span>
+              ) : null}
+            </Link>
+            <Link
+              to="/compare"
+              aria-label="Compare products"
+              className="relative hidden h-11 w-11 items-center justify-center text-foreground/70 transition-colors hover:text-primary sm:inline-flex"
+            >
+              <Scale className="h-5 w-5" />
+              {compare.ids.length ? (
+                <span className="absolute right-1.5 top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-primary px-1 text-[0.6rem] font-bold text-primary-foreground">
+                  {compare.ids.length}
+                </span>
+              ) : null}
+            </Link>
             {/* Mobile quick actions */}
             {s["whatsapp"] ? (
               <a
@@ -194,18 +208,13 @@ export function Header() {
                   <Logo compact />
                 </div>
 
-                <form onSubmit={search} className="border-b border-border p-4">
-                  <div className="relative">
-                    <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                    <Input
-                      value={term}
-                      onChange={(e) => setTerm(e.target.value)}
-                      placeholder="Search products"
-                      aria-label="Search products"
-                      className="rounded-full pl-9"
-                    />
-                  </div>
-                </form>
+                <div className="border-b border-border p-4">
+                  <SearchBox
+                    placeholder="Search products"
+                    inputClassName="rounded-full"
+                    onNavigate={() => setOpen(false)}
+                  />
+                </div>
                 <nav className="flex flex-col p-2">
                   {NAV.map((item, i) => (
                     <motion.div
@@ -224,6 +233,22 @@ export function Header() {
                     </motion.div>
                   ))}
                 </nav>
+                <div className="grid grid-cols-2 gap-2 border-t border-border p-4">
+                  <Link
+                    to="/wishlist"
+                    onClick={() => setOpen(false)}
+                    className="rounded-xl border border-border px-4 py-3 text-sm font-semibold"
+                  >
+                    Wishlist ({wishlist.ids.length})
+                  </Link>
+                  <Link
+                    to="/compare"
+                    onClick={() => setOpen(false)}
+                    className="rounded-xl border border-border px-4 py-3 text-sm font-semibold"
+                  >
+                    Compare ({compare.ids.length})
+                  </Link>
+                </div>
                 <div className="border-t border-border p-4">
                   <p className="mb-3 text-eyebrow text-muted-foreground">Categories</p>
                   <div className="flex flex-col">
