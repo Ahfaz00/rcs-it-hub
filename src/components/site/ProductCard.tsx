@@ -94,6 +94,41 @@ export function ProductCard({ product }: { product: ProductCardData }) {
         </div>
       </Link>
 
+      <div className="absolute right-2.5 top-2.5 flex flex-col gap-1.5">
+        <button
+          type="button"
+          aria-label={saved ? `Remove ${product.name} from wishlist` : `Save ${product.name} to wishlist`}
+          aria-pressed={saved}
+          onClick={() => {
+            const r = wishlist.toggle(product.id);
+            if (r?.limitReached) toast.error(`Wishlist is limited to ${wishlist.limit} products.`);
+            else toast.success(r?.added ? "Saved to wishlist" : "Removed from wishlist");
+          }}
+          className={cn(
+            "inline-flex h-9 w-9 items-center justify-center rounded-full border border-border bg-card/90 backdrop-blur transition-colors hover:border-primary/40",
+            saved ? "text-destructive" : "text-muted-foreground",
+          )}
+        >
+          <Heart className={cn("h-4 w-4", saved && "fill-current")} />
+        </button>
+        <button
+          type="button"
+          aria-label={comparing ? `Remove ${product.name} from comparison` : `Add ${product.name} to comparison`}
+          aria-pressed={comparing}
+          onClick={() => {
+            const r = compare.toggle(product.id);
+            if (r?.limitReached) toast.error(`You can compare up to ${compare.limit} products.`);
+            else toast.success(r?.added ? "Added to compare" : "Removed from compare");
+          }}
+          className={cn(
+            "inline-flex h-9 w-9 items-center justify-center rounded-full border border-border bg-card/90 backdrop-blur transition-colors hover:border-primary/40",
+            comparing ? "text-primary" : "text-muted-foreground",
+          )}
+        >
+          <Scale className="h-4 w-4" />
+        </button>
+      </div>
+
       <div className="flex flex-1 flex-col p-3 sm:p-4">
         {product.brands?.name ? (
           <p className="text-[0.65rem] font-bold uppercase tracking-[0.16em] text-muted-foreground">
