@@ -203,14 +203,6 @@ function HomeSections() {
                 </FadeIn>
               </div>
             </FadeIn>
-                <FadeIn delay={0.62} y={12} className="absolute bottom-6 right-0 max-w-[13rem]">
-                  <div className="border-l-2 border-cyan bg-white/[0.06] px-4 py-3 backdrop-blur-sm">
-                    <p className="text-[0.68rem] font-bold uppercase tracking-[0.16em] text-cyan">6 month warranty</p>
-                    <p className="mt-1 text-[0.78rem] text-white/70">Product-specific support</p>
-                  </div>
-                </FadeIn>
-              </div>
-            </FadeIn>
           </div>
 
           {/* stat strip */}
