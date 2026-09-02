@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useSuspenseQuery, queryOptions } from "@tanstack/react-query";
 import { ArrowRight, ArrowUpRight, Boxes, ClipboardCheck, Quote, ShieldCheck, Star, Truck } from "lucide-react";
@@ -8,9 +9,10 @@ import { Icon } from "@/components/site/Icon";
 import { Reveal } from "@/components/site/Reveal";
 import { FadeIn, Stagger, StaggerItem } from "@/components/site/Motion";
 
-import { HeroSlider, type HeroSlide } from "@/components/site/HeroSlider";
+import { type HeroSlide } from "@/components/site/HeroSlider";
 import { CategoryShowcase, type ShowcaseItem } from "@/components/site/CategoryShowcase";
-import { MotionProvider, readBool, readNum, useMotion } from "@/components/site/MotionProvider";
+import { HeroProductImage } from "@/components/site/HeroProductImage";
+import { MotionProvider, readBool, useMotion } from "@/components/site/MotionProvider";
 import { safePath } from "@/lib/format";
 import { Button } from "@/components/ui/button";
 import {
@@ -93,7 +95,21 @@ function HomeSections() {
   const showTestimonials = readBool(s["section_testimonials_enabled"], true);
   const showFacility = readBool(s["section_facility_enabled"], true);
   const showCta = readBool(s["section_cta_enabled"], true);
-  const heroInterval = readNum(s["hero_slider_interval_ms"], 5200, 1500, 30000);
+  // Hero visual: prefer a real, landscape product photo from the catalogue.
+  const heroCandidates = useMemo(
+    () =>
+      products
+        .filter((p) => Boolean(p.main_image_url))
+        .slice(0, 10)
+        .map((p) => ({ src: mediaUrl(p.main_image_url)!, alt: p.main_image_alt || p.name })),
+    [products],
+  );
+  const heroFallback = useMemo(
+    () => ({ src: heroSlides[0]!.src, alt: heroSlides[0]!.alt }),
+    [],
+  );
+
+
 
   const showcaseItems: ShowcaseItem[] = site.categories.map((c, i) => ({
     id: c.id,
@@ -106,48 +122,48 @@ function HomeSections() {
 
   return (
     <>
-      {/* ============ HERO — premium, product-led, fully responsive ============ */}
+      {/* ============ HERO — cinematic, product-led ============ */}
       {showHero ? (
         <section className="relative isolate overflow-hidden bg-ink-ambient text-white">
-          <div aria-hidden="true" className="absolute inset-0 grid-blueprint opacity-[0.12]" />
+          <div aria-hidden="true" className="absolute inset-0 grid-blueprint opacity-[0.10]" />
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute -right-24 -top-32 h-[28rem] w-[28rem] rounded-full radial-glow blur-2xl md:h-[38rem] md:w-[38rem]"
+            className="pointer-events-none absolute -right-24 -top-32 h-[28rem] w-[28rem] rounded-full radial-glow blur-2xl md:h-[42rem] md:w-[42rem]"
           />
-          <div className="container-page relative z-10 grid items-center gap-10 pb-14 pt-10 sm:pb-16 sm:pt-14 md:pb-24 md:pt-20 lg:grid-cols-[1fr_1.05fr] lg:gap-16">
+          <div className="container-page relative z-10 grid items-center gap-12 pb-16 pt-12 sm:pb-20 sm:pt-16 md:pb-28 md:pt-24 lg:grid-cols-[1fr_1fr] lg:gap-14 xl:gap-20">
             <div className="min-w-0">
               <FadeIn y={14}>
-                <p className="inline-flex flex-wrap items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-[0.65rem] font-bold uppercase tracking-[0.18em] text-cyan sm:text-[0.7rem]">
-                  R Computer Solutions <span className="text-white/40">•</span> The IT Hub
+                <p className="flex flex-wrap items-center gap-2 text-[0.7rem] font-bold uppercase tracking-[0.24em] text-cyan">
+                  R Computer Solutions <span className="text-white/30">•</span> The IT Hub
                 </p>
               </FadeIn>
               <FadeIn delay={0.08} y={20}>
-                <h1 className="mt-5 font-display text-hero font-bold uppercase text-white sm:mt-7">
+                <h1 className="mt-6 max-w-[13ch] font-display text-hero font-extrabold uppercase leading-[0.95] tracking-[-0.03em] text-white">
                   {s["hero_title"] ? (
                     s["hero_title"]
                   ) : (
                     <>
                       Refurbished
                       <br />
-                      <span className="text-gradient-brand">Technology.</span>
+                      Technology.
                       <br />
-                      Built to perform.
+                      <span className="text-gradient-brand">Built to perform.</span>
                     </>
                   )}
                 </h1>
               </FadeIn>
               <FadeIn delay={0.16}>
-                <p className="mt-5 max-w-xl text-body-lg text-white/70 sm:mt-7">
+                <p className="mt-6 max-w-lg text-body-lg text-white/70">
                   {s["hero_subtitle"] ||
-                    "Business-grade laptops, desktops and workstations — inspected, graded and bench-tested before dispatch."}
+                    "Professionally tested laptops, desktops and workstations from trusted brands — ready for business, work and performance."}
                 </p>
               </FadeIn>
               <FadeIn delay={0.24}>
-                <div className="mt-8 grid gap-3 sm:mt-10 sm:flex sm:flex-wrap sm:items-center">
+                <div className="mt-9 grid gap-3 sm:flex sm:flex-wrap sm:items-center">
                   <Button
                     asChild
                     size="lg"
-                    className="group h-14 w-full rounded-full bg-cyan px-8 text-[0.8rem] font-bold uppercase tracking-[0.14em] text-cyan-foreground transition-transform hover:bg-white active:scale-[0.98] sm:h-14 sm:w-auto sm:text-[0.85rem]"
+                    className="group h-14 w-full rounded-full bg-cyan px-8 text-[0.8rem] font-bold uppercase tracking-[0.14em] text-cyan-foreground transition-transform hover:bg-white active:scale-[0.98] sm:w-auto"
                   >
                     <a href={safePath(s["hero_cta1_link"], "/products")}>
                       {s["hero_cta1_text"] || "Explore laptops"}
@@ -158,7 +174,7 @@ function HomeSections() {
                     asChild
                     size="lg"
                     variant="ghost"
-                    className="h-14 w-full rounded-full border border-white/25 px-8 text-[0.8rem] font-bold uppercase tracking-[0.14em] text-white transition-colors hover:border-cyan hover:bg-white/5 hover:text-cyan active:scale-[0.98] sm:w-auto sm:text-[0.85rem]"
+                    className="h-14 w-full rounded-full border border-white/25 px-8 text-[0.8rem] font-bold uppercase tracking-[0.14em] text-white transition-colors hover:border-cyan hover:bg-white/5 hover:text-cyan active:scale-[0.98] sm:w-auto"
                   >
                     <a href={safePath(s["hero_cta2_link"], "/bulk-orders")}>
                       {s["hero_cta2_text"] || "Get a quote"}
@@ -169,22 +185,29 @@ function HomeSections() {
             </div>
 
             <FadeIn delay={0.18} y={26} className="relative min-w-0">
-              <div className="relative overflow-hidden rounded-2xl border border-white/10 shadow-lift md:rounded-3xl">
-                <HeroSlider
-                  slides={heroSlides}
-                  interval={heroInterval}
-                  showCaption={false}
-                  showDots
-                  overlay={false}
-                  className="aspect-4/3 w-full sm:aspect-16/10 lg:aspect-4/3"
-                />
+              <HeroProductImage candidates={heroCandidates} fallback={heroFallback} />
+
+
+              <div className="mt-8 grid gap-3 sm:grid-cols-2">
+                <FadeIn delay={0.5} y={12}>
+                  <div className="border-l-2 border-cyan bg-white/[0.05] px-4 py-3">
+                    <p className="text-[0.68rem] font-bold uppercase tracking-[0.16em] text-cyan">Quality tested</p>
+                    <p className="mt-1 text-[0.8rem] text-white/70">Professionally inspected</p>
+                  </div>
+                </FadeIn>
+                <FadeIn delay={0.62} y={12}>
+                  <div className="border-l-2 border-cyan bg-white/[0.05] px-4 py-3">
+                    <p className="text-[0.68rem] font-bold uppercase tracking-[0.16em] text-cyan">6 month warranty</p>
+                    <p className="mt-1 text-[0.8rem] text-white/70">Product-specific support</p>
+                  </div>
+                </FadeIn>
               </div>
             </FadeIn>
           </div>
 
           {/* stat strip */}
-          <div className="relative z-10 border-t border-white/10 bg-white/5">
-            <Stagger className="container-page grid grid-cols-2 gap-x-4 gap-y-6 py-7 lg:grid-cols-4" stagger={0.07}>
+          <div className="relative z-10 border-t border-white/10">
+            <Stagger className="container-page grid grid-cols-2 gap-x-4 gap-y-7 py-8 lg:grid-cols-4" stagger={0.07}>
               {[
                 { value: "10,000+", label: "Devices refurbished" },
                 { value: "500+", label: "Business clients" },
@@ -192,8 +215,10 @@ function HomeSections() {
                 { value: "4.6 ★", label: "Google rating" },
               ].map((stat) => (
                 <StaggerItem key={stat.label} className="min-w-0">
-                  <p className="font-display text-xl font-bold text-white sm:text-2xl">{stat.value}</p>
-                  <p className="mt-1 text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-white/55 sm:text-xs">
+                  <p className="font-display text-2xl font-extrabold tracking-tight text-white sm:text-3xl">
+                    {stat.value}
+                  </p>
+                  <p className="mt-1 text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-white/50 sm:text-xs">
                     {stat.label}
                   </p>
                 </StaggerItem>
@@ -203,6 +228,7 @@ function HomeSections() {
         </section>
 
       ) : null}
+
 
 
       {/* ============ BRAND MARQUEE ============ */}
@@ -425,24 +451,27 @@ function HomeSections() {
       {site.services.length > 0 ? (
         <section className="container-page section-y">
           <SectionHeading eyebrow="What we do" title="Services beyond the sale" action={{ to: "/services", label: "All services" }} />
-          <div className="mt-10 grid divide-y divide-border border-y border-border sm:grid-cols-2 sm:divide-y-0 lg:grid-cols-3">
-            {site.services.slice(0, 6).map((service, i) => (
-              <Reveal key={service.id} delay={(i % 3) * motion.stagger}>
+          <div className="mt-6 divide-y divide-border border-b border-border">
+            {site.services.slice(0, 7).map((service, i) => (
+              <Reveal key={service.id} delay={(i % 4) * motion.stagger}>
                 <Link
                   to="/services/$slug"
                   params={{ slug: service.slug }}
-                  className="group flex h-full flex-col border-border p-7 transition-colors hover:bg-surface sm:border-b lg:border-r"
+                  className="group grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-4 py-6 transition-colors hover:bg-surface sm:gap-8 sm:py-8"
                 >
-                  <Icon name={service.icon} className="h-6 w-6 text-primary" />
-                  <h3 className="mt-5 font-display text-lg font-semibold tracking-tight transition-colors group-hover:text-primary">
-                    {service.title}
-                  </h3>
-                  <p className="mt-2 text-body text-muted-foreground">{service.short_description}</p>
-                  <ArrowRight className="mt-5 h-4 w-4 text-primary opacity-0 transition-all duration-300 group-hover:translate-x-1 group-hover:opacity-100" />
+                  <Icon name={service.icon} className="h-5 w-5 shrink-0 text-primary sm:h-6 sm:w-6" />
+                  <div className="min-w-0 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:items-baseline lg:gap-10">
+                    <h3 className="font-display text-xl font-extrabold uppercase tracking-[-0.02em] transition-colors group-hover:text-primary sm:text-2xl lg:text-3xl">
+                      {service.title}
+                    </h3>
+                    <p className="mt-1.5 text-body text-muted-foreground lg:mt-0">{service.short_description}</p>
+                  </div>
+                  <ArrowRight className="h-5 w-5 shrink-0 text-muted-foreground transition-all duration-300 group-hover:translate-x-1 group-hover:text-primary" />
                 </Link>
               </Reveal>
             ))}
           </div>
+
         </section>
       ) : null}
 
