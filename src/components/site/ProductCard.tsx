@@ -57,12 +57,12 @@ export function ProductCard({ product }: { product: ProductCardData }) {
     <motion.article
       whileHover={reduced ? {} : { y: -4 }}
       transition={{ type: "spring", stiffness: 300, damping: 28 }}
-      className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card transition-shadow duration-300 hover:shadow-lift"
+      className="group relative flex h-full flex-col overflow-hidden rounded-lg border border-border bg-card transition-shadow duration-300 hover:shadow-lift"
     >
       <Link
         to="/products/$slug"
         params={{ slug: product.slug }}
-        className="relative block aspect-[4/3] overflow-hidden bg-[oklch(0.978_0.005_250)]"
+        className="relative block aspect-[5/4] overflow-hidden bg-[oklch(0.978_0.005_250)]"
         aria-label={product.name}
       >
         {img ? (
@@ -143,21 +143,15 @@ export function ProductCard({ product }: { product: ProductCardData }) {
         </h3>
 
         {chips.length > 0 ? (
-          <div className="mt-2.5 flex flex-wrap gap-1.5">
-            {chips.map((c) => (
-              <span
-                key={c}
-                className="rounded-md bg-muted px-2 py-1 text-[0.68rem] font-medium leading-none text-muted-foreground"
-              >
-                {c}
-              </span>
-            ))}
-          </div>
+          <p className="mt-2 text-[0.78rem] leading-relaxed text-muted-foreground">
+            {chips.join(" • ")}
+          </p>
         ) : product.short_description ? (
-          <p className="mt-2.5 line-clamp-2 text-[0.8rem] leading-relaxed text-muted-foreground">
+          <p className="mt-2 line-clamp-2 text-[0.8rem] leading-relaxed text-muted-foreground">
             {product.short_description}
           </p>
         ) : null}
+
 
         <div className="mt-auto pt-4">
           <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
@@ -175,7 +169,7 @@ export function ProductCard({ product }: { product: ProductCardData }) {
           {product.warranty ? (
             <p className="mt-2 flex items-center gap-1.5 text-[0.72rem] font-medium text-muted-foreground">
               <ShieldCheck className="h-3.5 w-3.5 text-success" />
-              <span className="line-clamp-1">{product.warranty}</span>
+              <span className="line-clamp-1 uppercase tracking-[0.1em]">{product.warranty}</span>
             </p>
           ) : null}
 
