@@ -247,14 +247,14 @@
 @keyframes rcs-intro-approach {
   0% {
     opacity: 0;
-    transform: translate3d(0, 0, -700px) scale(0.38);
-    filter: blur(8px);
+    transform: translate3d(0, 0, -1600px) scale(0.28);
+    filter: blur(14px);
   }
-  32% {
+  22% {
     opacity: 1;
   }
-  72% {
-    transform: translate3d(0, 0, 34px) scale(1.035);
+  68% {
+    transform: translate3d(0, 0, 60px) scale(1.06);
     filter: blur(0);
   }
   100% {
@@ -263,6 +263,65 @@
     filter: blur(0);
   }
 }
+
+@keyframes rcs-intro-welcome {
+  0% {
+    opacity: 0;
+    letter-spacing: 0.9em;
+    transform: translateY(6px);
+  }
+  40% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    letter-spacing: 0.35em;
+    transform: translateY(0);
+  }
+}
+
+@keyframes rcs-intro-sweep {
+  0% {
+    opacity: 0;
+    transform: translateX(-140%) skewX(-16deg);
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(240%) skewX(-16deg);
+  }
+}
+
+@keyframes rcs-intro-ring {
+  0% {
+    opacity: 0;
+    transform: scale(0.35);
+  }
+  35% {
+    opacity: 0.55;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(2.1);
+  }
+}
+
+@keyframes rcs-intro-warp {
+  0% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  45% {
+    opacity: 0.85;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(2.6);
+  }
+}
+
 
 @keyframes rcs-float {
   0%,
