@@ -81,13 +81,13 @@ export function IntroReveal() {
 
       {/* Brand lockup */}
       <div
-        className="absolute inset-0 flex origin-center flex-col items-center justify-center transition-[transform,opacity,filter] duration-[1300ms] ease-[cubic-bezier(0.22,1,0.36,1)]"
+        className="absolute inset-0 flex origin-center flex-col items-center justify-center transition-[transform,opacity,filter] duration-[1500ms] ease-[cubic-bezier(0.55,0,1,0.45)]"
         style={
           landing
             ? {
                 opacity: 0,
-                filter: "blur(2px)",
-                transform: "translate3d(-36vw,-43vh,420px) scale(0.2)",
+                filter: "blur(10px)",
+                transform: "translate3d(0,0,900px) scale(9)",
               }
             : { opacity: 1, filter: "blur(0)", transform: "translate3d(0,0,0) scale(1)" }
         }
