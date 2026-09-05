@@ -91,11 +91,6 @@ export function IntroReveal() {
           The IT Hub
         </p>
       </div>
-      {/* Center seam light when doors open */}
-      <div
-        className="absolute inset-y-0 left-1/2 w-px bg-cyan/60 transition-opacity duration-300"
-        style={{ opacity: phase === "open" ? 0 : 1 }}
-      />
     </div>
   );
 }
