@@ -1,10 +1,24 @@
-<!-- LOVABLE:BEGIN -->
-> [!IMPORTANT]
-> This project is connected to [Lovable](https://lovable.dev). Avoid rewriting
-> published git history — force pushing, or rebasing/amending/squashing commits
-> that are already pushed — as it rewrites history on Lovable's side and the
-> user will likely lose their project history.
->
-> Commits you push to the connected branch sync back to Lovable and show up in
-> the editor, so keep the branch in a working state.
-<!-- LOVABLE:END -->
+# Agent Notes
+
+## Project
+
+R Computer Solutions — The IT Hub. Full-stack business website + admin CMS.
+
+## Conventions
+
+- TanStack Start (React 19 + Vite SSR). File routes in `src/routes/`, never edit
+  `src/routeTree.gen.ts` (auto-generated).
+- Styling: Tailwind v4 tokens in `src/styles.css`. Never hardcode color utilities
+  in components — use semantic tokens.
+- Server logic: `createServerFn` from `@tanstack/react-start` in `*.functions.ts`
+  files; public webhooks/cron under `src/routes/api/public/`.
+- Database: every new public table needs GRANTs + RLS policies in the same
+  migration. Roles live only in `user_roles` via the `has_role` function.
+- Business rules: no invented prices/stock/warranties — render
+  "Contact for Price" / "Enquire for Availability". No checkout/cart.
+
+## Ground rules
+
+- Don't rewrite git history.
+- Keep dependencies Worker-runtime compatible (see server constraints in code
+  comments); no native binaries or child processes in server functions.
