@@ -8,7 +8,9 @@ const STORAGE_KEY = "rcs_intro_seen";
  * Shows once per browser session; skipped for reduced-motion users.
  */
 export function IntroReveal() {
-  const [phase, setPhase] = useState<"hidden" | "brand" | "open" | "done">("hidden");
+  // Default to "brand" so the overlay is already painted on first load
+  // (SSR included) — repeat visitors get it removed immediately in the effect.
+  const [phase, setPhase] = useState<"brand" | "open" | "done">("brand");
 
   useEffect(() => {
     let seen = false;
@@ -22,7 +24,6 @@ export function IntroReveal() {
       setPhase("done");
       return;
     }
-    setPhase("brand");
     try {
       sessionStorage.setItem(STORAGE_KEY, "1");
     } catch {
