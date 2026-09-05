@@ -37,7 +37,7 @@ export function IntroReveal() {
     };
   }, []);
 
-  if (phase === "hidden" || phase === "done") return null;
+  if (phase === "done") return null;
 
   const name = "R COMPUTER SOLUTIONS";
 
