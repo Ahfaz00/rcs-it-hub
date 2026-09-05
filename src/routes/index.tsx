@@ -24,12 +24,12 @@ import {
 import { getHomeData } from "@/lib/public.functions";
 import { siteQueryOptions } from "@/lib/site-query";
 import { mediaUrl } from "@/lib/media";
-import slider1 from "@/assets/slider1.jpg.asset.json";
-import slider2 from "@/assets/slider2.jpg.asset.json";
-import slider3 from "@/assets/slider3.jpg.asset.json";
-import slider4 from "@/assets/slider4_1.jpg.asset.json";
-import slider5 from "@/assets/slider5_1.jpg.asset.json";
-import slider6 from "@/assets/slider6.jpg.asset.json";
+const slider1 = { url: "/slider1.jpg" };
+const slider2 = { url: "/slider2.jpg" };
+const slider3 = { url: "/slider3.jpg" };
+const slider4 = { url: "/slider4_1.jpg" };
+const slider5 = { url: "/slider5_1.jpg" };
+const slider6 = { url: "/slider6.jpg" };
 
 const heroSlides: HeroSlide[] = [
   { src: slider6.url, alt: "Rows of refurbished laptops under testing", caption: "Every unit bench-tested before dispatch" },

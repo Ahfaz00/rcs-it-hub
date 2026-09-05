@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import logoMark from "@/assets/logo-mark.png.asset.json";
+
 import { cn } from "@/lib/utils";
 
 export function Logo({
@@ -18,7 +18,7 @@ export function Logo({
       aria-label="R Computer Solutions home"
     >
       <img
-        src={logoMark.url}
+        src="/logo-mark.png"
         alt=""
         width={44}
         height={44}
