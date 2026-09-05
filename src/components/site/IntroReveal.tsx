@@ -73,8 +73,8 @@ export function IntroReveal() {
               key={i}
               className="inline-block animate-fade-in"
               style={{
-                ["--rcs-duration" as string]: "0.45s",
-                animationDelay: `${0.25 + i * 0.035}s`,
+                ["--rcs-duration" as string]: "0.6s",
+                animationDelay: `${0.5 + i * 0.085}s`,
               }}
             >
               {ch === " " ? "\u00A0" : ch}
@@ -84,8 +84,8 @@ export function IntroReveal() {
         <p
           className="mt-3 animate-fade-in text-[0.65rem] font-bold uppercase tracking-[0.35em] text-cyan md:text-xs"
           style={{
-            ["--rcs-duration" as string]: "0.5s",
-            animationDelay: "1s",
+            ["--rcs-duration" as string]: "0.7s",
+            animationDelay: "2.4s",
           }}
         >
           The IT Hub
