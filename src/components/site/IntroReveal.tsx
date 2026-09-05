@@ -4,8 +4,8 @@ const STORAGE_KEY = "rcs_intro_seen";
 
 /**
  * First-visit cinematic intro: light rings warp outward while the brand
- * lockup rushes in from depth, a sheen sweeps the wordmark, then the whole
- * lockup lands toward the site header as the website is revealed.
+ * lockup rushes in from depth, a sheen sweeps the wordmark, then the camera
+ * dives straight through the lockup (planet-entry style) into the homepage.
  * Shows once per browser session; skipped for reduced-motion users.
  * Pure CSS transforms/opacity only — no layout work, no JS animation loop.
  */
@@ -29,8 +29,8 @@ export function IntroReveal() {
     } catch {
       /* ignore */
     }
-    const t1 = window.setTimeout(() => setPhase("land"), 3700);
-    const t2 = window.setTimeout(() => setPhase("done"), 5000);
+    const t1 = window.setTimeout(() => setPhase("land"), 3800);
+    const t2 = window.setTimeout(() => setPhase("done"), 5400);
     return () => {
       window.clearTimeout(t1);
       window.clearTimeout(t2);
@@ -49,18 +49,24 @@ export function IntroReveal() {
     >
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-navy transition-opacity duration-[1300ms] ease-[cubic-bezier(0.22,1,0.36,1)]"
+        className="absolute inset-0 bg-navy transition-opacity duration-[1600ms] ease-[cubic-bezier(0.22,1,0.36,1)]"
         style={{ opacity: landing ? 0 : 1 }}
       />
       {/* Ambient light bloom */}
       <div
-        className="absolute inset-0 radial-glow transition-opacity duration-[1300ms]"
+        className="absolute inset-0 radial-glow transition-opacity duration-[1600ms]"
         style={{ opacity: landing ? 0 : 1 }}
+      />
+
+      {/* Entry flash — the burst of light as the camera passes through */}
+      <div
+        className="absolute inset-0 bg-cyan/40 blur-2xl transition-opacity duration-[900ms]"
+        style={{ opacity: landing ? 1 : 0 }}
       />
 
       {/* Warping light rings — sense of travelling through depth */}
       <div
-        className="absolute inset-0 flex items-center justify-center transition-opacity duration-700"
+        className="absolute inset-0 flex items-center justify-center transition-opacity duration-500"
         style={{ opacity: landing ? 0 : 1 }}
       >
         {[0, 1, 2, 3].map((i) => (
@@ -75,13 +81,13 @@ export function IntroReveal() {
 
       {/* Brand lockup */}
       <div
-        className="absolute inset-0 flex origin-center flex-col items-center justify-center transition-[transform,opacity,filter] duration-[1300ms] ease-[cubic-bezier(0.22,1,0.36,1)]"
+        className="absolute inset-0 flex origin-center flex-col items-center justify-center transition-[transform,opacity,filter] duration-[1500ms] ease-[cubic-bezier(0.55,0,1,0.45)]"
         style={
           landing
             ? {
                 opacity: 0,
-                filter: "blur(2px)",
-                transform: "translate3d(-36vw,-43vh,420px) scale(0.2)",
+                filter: "blur(10px)",
+                transform: "translate3d(0,0,900px) scale(9)",
               }
             : { opacity: 1, filter: "blur(0)", transform: "translate3d(0,0,0) scale(1)" }
         }
