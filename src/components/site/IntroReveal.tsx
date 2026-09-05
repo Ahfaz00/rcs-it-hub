@@ -4,8 +4,8 @@ const STORAGE_KEY = "rcs_intro_seen";
 
 /**
  * First-visit cinematic intro: light rings warp outward while the brand
- * lockup rushes in from depth, a sheen sweeps the wordmark, then the whole
- * lockup lands toward the site header as the website is revealed.
+ * lockup rushes in from depth, a sheen sweeps the wordmark, then the camera
+ * dives straight through the lockup (planet-entry style) into the homepage.
  * Shows once per browser session; skipped for reduced-motion users.
  * Pure CSS transforms/opacity only — no layout work, no JS animation loop.
  */
