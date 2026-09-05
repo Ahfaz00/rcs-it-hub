@@ -29,8 +29,8 @@ export function IntroReveal() {
     } catch {
       /* ignore */
     }
-    const t1 = window.setTimeout(() => setPhase("open"), 1500);
-    const t2 = window.setTimeout(() => setPhase("done"), 2600);
+    const t1 = window.setTimeout(() => setPhase("open"), 4800);
+    const t2 = window.setTimeout(() => setPhase("done"), 6500);
     return () => {
       window.clearTimeout(t1);
       window.clearTimeout(t2);
@@ -48,12 +48,12 @@ export function IntroReveal() {
     >
       {/* Left door */}
       <div
-        className="absolute inset-y-0 left-0 w-1/2 bg-navy transition-transform duration-1000 ease-[cubic-bezier(0.76,0,0.24,1)]"
+        className="absolute inset-y-0 left-0 w-1/2 bg-navy transition-transform duration-[1600ms] ease-[cubic-bezier(0.76,0,0.24,1)]"
         style={{ transform: phase === "open" ? "translateX(-101%)" : "translateX(0)" }}
       />
       {/* Right door */}
       <div
-        className="absolute inset-y-0 right-0 w-1/2 bg-navy transition-transform duration-1000 ease-[cubic-bezier(0.76,0,0.24,1)]"
+        className="absolute inset-y-0 right-0 w-1/2 bg-navy transition-transform duration-[1600ms] ease-[cubic-bezier(0.76,0,0.24,1)]"
         style={{ transform: phase === "open" ? "translateX(101%)" : "translateX(0)" }}
       />
       {/* Brand layer */}
