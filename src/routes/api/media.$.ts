@@ -34,9 +34,9 @@ export const Route = createFileRoute("/api/media/$")({
 
         // Fallback: download with the publishable key and stream the bytes.
         const { createClient } = await import("@supabase/supabase-js");
-        const url = process.env["SUPABASE_URL"] ?? import.meta.env.VITE_SUPABASE_URL;
+        const url = process.env["SUPABASE_URL"] ?? import.meta.env["VITE_SUPABASE_URL"];
         const key =
-          process.env["SUPABASE_PUBLISHABLE_KEY"] ?? import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+          process.env["SUPABASE_PUBLISHABLE_KEY"] ?? import.meta.env["VITE_SUPABASE_PUBLISHABLE_KEY"];
         if (!url || !key) return new Response("Not found", { status: 404 });
 
         const pub = createClient(url, key, {
