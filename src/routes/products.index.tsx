@@ -166,10 +166,12 @@ function ProductsPage() {
     </div>
   );
 
+  const categoryName = filters.categories.find((c) => c.slug === search.category)?.name;
+  const brandName = filters.brands.find((b) => b.slug === search.brand)?.name;
   const activeChips = [
     search.search ? { key: "search" as const, label: `"${search.search}"` } : null,
-    search.category ? { key: "category" as const, label: search.category } : null,
-    search.brand ? { key: "brand" as const, label: search.brand } : null,
+    search.category ? { key: "category" as const, label: categoryName ?? search.category } : null,
+    search.brand ? { key: "brand" as const, label: brandName ?? search.brand } : null,
     search.condition ? { key: "condition" as const, label: search.condition } : null,
     search.type ? { key: "type" as const, label: search.type } : null,
   ].filter(Boolean) as { key: keyof ProductSearch; label: string }[];
