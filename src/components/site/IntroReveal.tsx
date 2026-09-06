@@ -121,16 +121,16 @@ export function IntroReveal() {
           </div>
 
           <p
-            className="mt-4 animate-fade-in text-[0.65rem] font-bold uppercase tracking-[0.35em] text-cyan md:text-xs"
+            className="mt-4 animate-fade-in text-[0.75rem] font-bold uppercase tracking-[0.35em] text-cyan md:text-sm"
             style={{
               ["--rcs-duration" as string]: "0.6s",
-              animationDelay: "2.15s",
+              animationDelay: "4.15s",
             }}
           >
             The IT Hub
           </p>
           <span
-            className="mt-5 block h-px w-0 animate-[rcs-intro-line_1s_cubic-bezier(0.22,1,0.36,1)_2.4s_forwards] bg-gradient-to-r from-transparent via-cyan to-transparent"
+            className="mt-5 block h-px w-0 animate-[rcs-intro-line_1s_cubic-bezier(0.22,1,0.36,1)_4.4s_forwards] bg-gradient-to-r from-transparent via-cyan to-transparent"
             style={{ animationFillMode: "forwards" }}
           />
         </div>
