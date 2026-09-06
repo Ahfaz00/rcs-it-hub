@@ -14,7 +14,7 @@ export function Logo({
   return (
     <Link
       to="/"
-      className={cn("flex shrink-0 items-center gap-3 whitespace-nowrap", className)}
+      className={cn("flex min-w-0 items-center gap-2 sm:shrink-0 sm:gap-3", className)}
       aria-label="R Computer Solutions home"
     >
       <img
@@ -22,12 +22,12 @@ export function Logo({
         alt=""
         width={44}
         height={44}
-        className={cn("h-10 w-10 shrink-0 object-contain", compact && "h-8 w-8")}
+        className={cn("h-8 w-8 shrink-0 object-contain sm:h-10 sm:w-10", compact && "h-8 w-8")}
       />
-      <span className="flex flex-col leading-none">
+      <span className="flex min-w-0 flex-col leading-none">
         <span
           className={cn(
-            "font-display text-base font-bold tracking-tight sm:text-lg",
+            "truncate font-display text-[0.82rem] font-bold sm:text-lg",
             inverted ? "text-white" : "text-foreground",
           )}
         >
@@ -35,7 +35,7 @@ export function Logo({
         </span>
         <span
           className={cn(
-            "mt-1 text-[0.65rem] font-medium uppercase tracking-[0.18em]",
+            "mt-1 truncate text-[0.55rem] font-medium uppercase tracking-[0.12em] sm:text-[0.65rem] sm:tracking-[0.18em]",
             inverted ? "text-white/70" : "text-muted-foreground",
           )}
         >

@@ -66,8 +66,8 @@ export function Header() {
           "bg-gradient-navy text-sidebar-foreground",
         )}
       >
-        <div className="container-page flex h-9 items-center gap-6 overflow-hidden text-[0.72rem]">
-          {announcement ? <p className="truncate font-medium">{announcement}</p> : null}
+        <div className="container-page flex h-9 min-w-0 items-center gap-3 overflow-hidden text-[0.68rem] sm:gap-6 sm:text-[0.72rem]">
+          {announcement ? <p className="min-w-0 truncate font-medium">{announcement}</p> : null}
           <div className="hidden flex-1 items-center justify-center gap-8 xl:flex">
             {TRUST.map(({ Icon, text }) => (
               <span key={text} className="flex items-center gap-1.5 whitespace-nowrap text-sidebar-foreground/80">
@@ -101,7 +101,7 @@ export function Header() {
         )}
       >
         <div
-          className="container-page flex h-[4.25rem] min-w-0 items-center gap-3 md:gap-4"
+          className="container-page grid h-[4.25rem] min-w-0 grid-cols-[minmax(0,1fr)_auto] items-center gap-2 md:flex md:gap-4"
         >
           <Logo />
 
@@ -112,7 +112,7 @@ export function Header() {
             />
           </div>
 
-          <div className="ml-auto flex shrink-0 items-center gap-1 lg:ml-3 lg:gap-2">
+          <div className="flex shrink-0 items-center gap-0.5 sm:gap-1 lg:ml-3 lg:gap-2">
 
             <ThemeToggle />
             <Link
@@ -147,7 +147,7 @@ export function Header() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Chat on WhatsApp"
-                className="inline-flex h-11 w-11 items-center justify-center text-success transition-colors hover:bg-success/10 active:scale-95 sm:hidden"
+                className="hidden h-11 w-11 items-center justify-center text-success transition-colors hover:bg-success/10 active:scale-95 min-[360px]:inline-flex sm:hidden"
               >
                 <MessageCircle className="h-5 w-5" />
               </a>
@@ -156,7 +156,7 @@ export function Header() {
               <a
                 href={`tel:${s["phone"].replace(/\s/g, "")}`}
                 aria-label={`Call ${s["phone"]}`}
-                className="inline-flex h-11 w-11 items-center justify-center text-foreground transition-colors hover:bg-muted active:scale-95 sm:hidden"
+                className="hidden h-11 w-11 items-center justify-center text-foreground transition-colors hover:bg-muted active:scale-95 min-[430px]:inline-flex sm:hidden"
               >
                 <Phone className="h-5 w-5" />
               </a>
@@ -280,7 +280,7 @@ export function Header() {
       </div>
 
       {/* Mobile search row */}
-      <div className="border-b border-border bg-background px-4 py-2 lg:hidden">
+      <div className="border-b border-border bg-background px-3 py-2 sm:px-4 lg:hidden">
         <SearchBox placeholder="Search laptops, desktops…" inputClassName="h-11 rounded-full bg-surface" />
       </div>
 
