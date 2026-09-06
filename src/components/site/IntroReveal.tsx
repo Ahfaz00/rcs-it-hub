@@ -94,7 +94,7 @@ export function IntroReveal() {
       >
         <div className="animate-intro-approach flex flex-col items-center">
           <p
-            className="animate-intro-welcome mb-5 text-[0.6rem] font-bold uppercase text-cyan md:text-[0.7rem]"
+            className="animate-intro-welcome mb-6 text-[1.1rem] font-bold uppercase tracking-[0.4em] text-cyan md:text-[1.5rem]"
             style={{ animationDelay: "0.25s" }}
           >
             Welcome to
