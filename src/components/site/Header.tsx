@@ -39,7 +39,15 @@ export function Header() {
   const compare = useShortlist("compare");
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    // Use separate enter/exit thresholds so collapsing the announcement strip
+    // cannot move the page back across the same threshold and make it flicker.
+    const onScroll = () => {
+      setScrolled((current) => {
+        if (!current && window.scrollY > 80) return true;
+        if (current && window.scrollY < 8) return false;
+        return current;
+      });
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -53,8 +61,7 @@ export function Header() {
       {/* Trust / announcement strip */}
       <div
         className={cn(
-          "bg-gradient-navy text-sidebar-foreground transition-all duration-500",
-          scrolled ? "max-h-0 overflow-hidden opacity-0" : "max-h-12 opacity-100",
+          "bg-gradient-navy text-sidebar-foreground",
         )}
       >
         <div className="container-page flex h-9 items-center gap-6 overflow-hidden text-[0.72rem]">
@@ -92,10 +99,7 @@ export function Header() {
         )}
       >
         <div
-          className={cn(
-            "container-page flex min-w-0 items-center gap-3 transition-all duration-300 md:gap-4",
-            scrolled ? "h-[3.5rem]" : "h-[4.25rem]",
-          )}
+          className="container-page flex h-[4.25rem] min-w-0 items-center gap-3 md:gap-4"
         >
           <Logo />
 
@@ -296,10 +300,7 @@ export function Header() {
 
       {/* Category rail */}
       <div
-        className={cn(
-          "hidden border-b border-border bg-surface/70 backdrop-blur transition-all duration-500 lg:block",
-          scrolled ? "max-h-0 overflow-hidden border-transparent opacity-0" : "max-h-16 opacity-100",
-        )}
+        className="hidden border-b border-border bg-surface/70 backdrop-blur lg:block"
       >
 
         <div className="container-page flex items-center gap-2 overflow-x-auto py-2">
