@@ -281,14 +281,14 @@ export function Header() {
       </div>
 
       {/* Primary nav row (desktop) */}
-      <div className="hidden border-b border-border bg-background/95 backdrop-blur lg:block">
+      <div className="hidden border-b border-border bg-background lg:block">
         <nav className="container-page flex items-center justify-center gap-1 overflow-x-auto py-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {NAV.map((item) => (
             <Link
               key={item.to}
               to={item.to}
               activeOptions={{ exact: item.to === "/" }}
-              className="group relative shrink-0 whitespace-nowrap px-3 py-2.5 text-[0.72rem] font-bold uppercase tracking-[0.12em] text-foreground/65 transition-colors hover:text-primary"
+              className="group relative shrink-0 whitespace-nowrap px-3 py-2.5 text-[0.72rem] font-bold uppercase tracking-[0.12em] text-foreground transition-colors hover:text-primary"
               activeProps={{ className: "text-primary" }}
             >
               {item.label}
@@ -313,7 +313,7 @@ export function Header() {
               to="/products"
               search={{ category: c.slug }}
               className={cn(
-                "whitespace-nowrap rounded-full border border-border px-3.5 py-1.5 text-xs font-medium text-muted-foreground",
+                "whitespace-nowrap rounded-full border border-border px-3.5 py-1.5 text-xs font-semibold text-foreground/80",
                 "transition-all hover:border-primary/50 hover:bg-primary/5 hover:text-primary",
               )}
             >
