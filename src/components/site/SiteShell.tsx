@@ -4,7 +4,6 @@ import { MessageCircle } from "lucide-react";
 
 import { Header } from "./Header";
 import { Footer } from "./Footer";
-import { IntroReveal } from "./IntroReveal";
 import { siteQueryOptions, whatsappLink, enquiryMessage } from "@/lib/site-query";
 
 export function SiteShell({ children }: { children: ReactNode }) {
@@ -13,7 +12,6 @@ export function SiteShell({ children }: { children: ReactNode }) {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <IntroReveal />
       <Header />
       <main className="flex-1">{children}</main>
       <Footer />

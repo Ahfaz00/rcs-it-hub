@@ -12,6 +12,7 @@ import { FadeIn, Stagger, StaggerItem } from "@/components/site/Motion";
 import { type HeroSlide } from "@/components/site/HeroSlider";
 import { CategoryShowcase, type ShowcaseItem } from "@/components/site/CategoryShowcase";
 import { HeroProductImage } from "@/components/site/HeroProductImage";
+import { PromoBannerSlider } from "@/components/site/PromoBannerSlider";
 import { MotionProvider, readBool, useMotion } from "@/components/site/MotionProvider";
 import { safePath } from "@/lib/format";
 import { Button } from "@/components/ui/button";
@@ -122,6 +123,9 @@ function HomeSections() {
 
   return (
     <>
+      {/* ============ PROMO BANNER — sliding offers ============ */}
+      <PromoBannerSlider />
+
       {/* ============ HERO — cinematic, product-led ============ */}
       {showHero ? (
         <section className="relative isolate overflow-hidden bg-ink-ambient text-white">
