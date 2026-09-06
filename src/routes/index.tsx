@@ -1,5 +1,5 @@
-import { useMemo } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
+
 import { useSuspenseQuery, queryOptions } from "@tanstack/react-query";
 import { ArrowRight, ArrowUpRight, Boxes, ClipboardCheck, Quote, ShieldCheck, Star, Truck } from "lucide-react";
 
@@ -11,7 +11,7 @@ import { FadeIn, Stagger, StaggerItem } from "@/components/site/Motion";
 
 import { type HeroSlide } from "@/components/site/HeroSlider";
 import { CategoryShowcase, type ShowcaseItem } from "@/components/site/CategoryShowcase";
-import { HeroProductImage } from "@/components/site/HeroProductImage";
+import { HeroAdSlider } from "@/components/site/HeroAdSlider";
 import { PromoBannerSlider } from "@/components/site/PromoBannerSlider";
 import { MotionProvider, readBool, useMotion } from "@/components/site/MotionProvider";
 import { safePath } from "@/lib/format";
@@ -96,19 +96,8 @@ function HomeSections() {
   const showTestimonials = readBool(s["section_testimonials_enabled"], true);
   const showFacility = readBool(s["section_facility_enabled"], true);
   const showCta = readBool(s["section_cta_enabled"], true);
-  // Hero visual: prefer a real, landscape product photo from the catalogue.
-  const heroCandidates = useMemo(
-    () =>
-      products
-        .filter((p) => Boolean(p.main_image_url))
-        .slice(0, 10)
-        .map((p) => ({ src: mediaUrl(p.main_image_url)!, alt: p.main_image_alt || p.name })),
-    [products],
-  );
-  const heroFallback = useMemo(
-    () => ({ src: heroSlides[0]!.src, alt: heroSlides[0]!.alt }),
-    [],
-  );
+
+
 
 
 
@@ -189,7 +178,7 @@ function HomeSections() {
             </div>
 
             <FadeIn delay={0.18} y={26} className="relative min-w-0">
-              <HeroProductImage candidates={heroCandidates} fallback={heroFallback} />
+              <HeroAdSlider />
 
 
               <div className="mt-8 grid gap-3 sm:grid-cols-2">
