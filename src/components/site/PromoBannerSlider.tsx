@@ -99,7 +99,7 @@ export function PromoBannerSlider({ interval = 4500 }: { interval?: number }) {
 
         <Link
           to={slide.to}
-          search={slide.search}
+          {...(slide.search ? { search: slide.search } : {})}
           className="group hidden shrink-0 items-center gap-2 rounded-full bg-white px-5 py-2.5 text-[0.7rem] font-bold uppercase tracking-[0.12em] text-ink transition-colors hover:bg-cyan hover:text-cyan-foreground sm:inline-flex"
         >
           {slide.cta}
