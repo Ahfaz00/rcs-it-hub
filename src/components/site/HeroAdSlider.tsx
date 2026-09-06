@@ -4,24 +4,25 @@ import adDellImport from "@/assets/ad-dell-import.png.asset.json";
 import adWholesaleStock from "@/assets/ad-wholesale-stock.png.asset.json";
 import adServerRam from "@/assets/ad-server-ram.png.asset.json";
 import adDesktopRam from "@/assets/ad-desktop-ram.png.asset.json";
+import { assetCdnUrl } from "@/lib/media";
 
 type AdSlide = { src: string; alt: string };
 
 const ADS: AdSlide[] = [
   {
-    src: adDellImport.url,
+    src: assetCdnUrl(adDellImport.url),
     alt: "Dell Latitude pure import stock arrived — bulk laptops at R Computer Solutions",
   },
   {
-    src: adDesktopRam.url,
+    src: assetCdnUrl(adDesktopRam.url),
     alt: "Desktop RAM bulk deal — high performance memory, big savings on bulk orders",
   },
   {
-    src: adServerRam.url,
+    src: assetCdnUrl(adServerRam.url),
     alt: "Premium server RAM stock — DDR5 RDIMM wholesale inventory",
   },
   {
-    src: adWholesaleStock.url,
+    src: assetCdnUrl(adWholesaleStock.url),
     alt: "Wholesale IT stock — premium bulk inventory of used RAM and components",
   },
 ];
