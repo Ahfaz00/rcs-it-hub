@@ -39,7 +39,15 @@ export function Header() {
   const compare = useShortlist("compare");
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    // Use separate enter/exit thresholds so collapsing the announcement strip
+    // cannot move the page back across the same threshold and make it flicker.
+    const onScroll = () => {
+      setScrolled((current) => {
+        if (!current && window.scrollY > 80) return true;
+        if (current && window.scrollY < 8) return false;
+        return current;
+      });
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
