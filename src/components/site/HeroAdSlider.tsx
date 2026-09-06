@@ -46,7 +46,7 @@ export function HeroAdSlider({ interval = 4200 }: { interval?: number }) {
         aria-hidden="true"
         className="pointer-events-none absolute inset-x-6 top-6 bottom-10 rounded-[3rem] bg-[radial-gradient(ellipse_at_center,oklch(0.78_0.14_217/0.22),transparent_70%)] blur-2xl"
       />
-      <div className="relative z-10 mx-auto aspect-[16/10] w-full max-w-full overflow-hidden rounded-2xl border border-white/10 bg-ink-ambient shadow-[0_40px_60px_oklch(0.1_0.03_255/0.45)]">
+      <div className="relative z-10 mx-auto aspect-[4/3] w-full max-w-full overflow-hidden rounded-2xl border border-white/10 bg-white sm:aspect-[16/10] shadow-[0_40px_60px_oklch(0.1_0.03_255/0.45)]">
         {ADS.map((ad, i) => (
           <img
             key={ad.src}
@@ -56,7 +56,7 @@ export function HeroAdSlider({ interval = 4200 }: { interval?: number }) {
             fetchPriority={i === 0 ? "high" : "low"}
             decoding={i === 0 ? "sync" : "async"}
             aria-hidden={i !== index}
-            className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ease-out ${
+            className={`absolute inset-0 h-full w-full object-contain transition-opacity duration-700 ease-out ${
               i === index ? "opacity-100" : "opacity-0"
             }`}
           />
