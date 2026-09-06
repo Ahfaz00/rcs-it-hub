@@ -29,8 +29,8 @@ export function IntroReveal() {
     } catch {
       /* ignore */
     }
-    const t1 = window.setTimeout(() => setPhase("land"), 3800);
-    const t2 = window.setTimeout(() => setPhase("done"), 5400);
+    const t1 = window.setTimeout(() => setPhase("land"), 5800);
+    const t2 = window.setTimeout(() => setPhase("done"), 7400);
     return () => {
       window.clearTimeout(t1);
       window.clearTimeout(t2);
