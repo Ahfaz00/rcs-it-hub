@@ -29,8 +29,8 @@ export function IntroReveal() {
     } catch {
       /* ignore */
     }
-    const t1 = window.setTimeout(() => setPhase("land"), 3800);
-    const t2 = window.setTimeout(() => setPhase("done"), 5400);
+    const t1 = window.setTimeout(() => setPhase("land"), 5800);
+    const t2 = window.setTimeout(() => setPhase("done"), 7400);
     return () => {
       window.clearTimeout(t1);
       window.clearTimeout(t2);
@@ -94,7 +94,7 @@ export function IntroReveal() {
       >
         <div className="animate-intro-approach flex flex-col items-center">
           <p
-            className="animate-intro-welcome mb-5 text-[0.6rem] font-bold uppercase text-cyan md:text-[0.7rem]"
+            className="animate-intro-welcome mb-6 text-[1.1rem] font-bold uppercase tracking-[0.4em] text-cyan md:text-[1.5rem]"
             style={{ animationDelay: "0.25s" }}
           >
             Welcome to
@@ -121,16 +121,16 @@ export function IntroReveal() {
           </div>
 
           <p
-            className="mt-4 animate-fade-in text-[0.65rem] font-bold uppercase tracking-[0.35em] text-cyan md:text-xs"
+            className="mt-4 animate-fade-in text-[0.75rem] font-bold uppercase tracking-[0.35em] text-cyan md:text-sm"
             style={{
               ["--rcs-duration" as string]: "0.6s",
-              animationDelay: "2.15s",
+              animationDelay: "4.15s",
             }}
           >
             The IT Hub
           </p>
           <span
-            className="mt-5 block h-px w-0 animate-[rcs-intro-line_1s_cubic-bezier(0.22,1,0.36,1)_2.4s_forwards] bg-gradient-to-r from-transparent via-cyan to-transparent"
+            className="mt-5 block h-px w-0 animate-[rcs-intro-line_1s_cubic-bezier(0.22,1,0.36,1)_4.4s_forwards] bg-gradient-to-r from-transparent via-cyan to-transparent"
             style={{ animationFillMode: "forwards" }}
           />
         </div>
