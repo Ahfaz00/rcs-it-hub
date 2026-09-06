@@ -6,6 +6,8 @@ import { motion } from "motion/react";
 
 import { Logo } from "./Logo";
 import { SearchBox } from "./SearchBox";
+import { ThemeToggle } from "./ThemeToggle";
+
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { siteQueryOptions, whatsappLink, enquiryMessage } from "@/lib/site-query";
