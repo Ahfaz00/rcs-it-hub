@@ -503,9 +503,10 @@
 
 /* ---- Fluid premium type scale ---- */
 @utility text-hero {
-  font-size: clamp(2.5rem, 9vw, 5rem);
-  line-height: 1.02;
-  letter-spacing: -0.035em;
+  font-size: clamp(2.25rem, 6.2vw, 3.9rem);
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+  overflow-wrap: break-word;
 }
 
 @utility text-section {
