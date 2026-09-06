@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { ArrowRight, BadgePercent, Cpu, Laptop, Truck } from "lucide-react";
+import { ArrowRight, BadgePercent, Cpu, Laptop, MemoryStick, Truck } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
@@ -19,14 +19,25 @@ type PromoSlide = {
 const SLIDES: PromoSlide[] = [
   {
     id: "processors",
-    eyebrow: "Bulk lot • Min 100 pcs",
+    eyebrow: "Mega deal • Min 100 pcs",
     title: "Intel Processor Stock",
     offer: "i3 7th Gen @ ₹375*",
-    detail: "i3 / i5 / i7 — 2nd to 11th Gen. Below market rates, negotiable for one-shot buyers.",
+    detail: "i3 / i5 / i7 — 2nd to 11th Gen. Lower than market price, negotiable for one-shot buyers.",
     cta: "View processors",
     to: "/products",
     search: { category: "processors" },
     Icon: Cpu,
+  },
+  {
+    id: "ram",
+    eyebrow: "Bulk deal • Tested pullout stock",
+    title: "RAM Stock — DDR3 / DDR4",
+    offer: "8GB DDR4 @ ₹4,100",
+    detail: "Desktop & server RAM — Samsung, Hynix, Micron, Kingston. 1 month testing.",
+    cta: "View RAM stock",
+    to: "/products",
+    search: { category: "ram-memory" },
+    Icon: MemoryStick,
   },
   {
     id: "laptops",
