@@ -114,7 +114,9 @@ export function Header() {
 
           <div className="ml-auto flex shrink-0 items-center gap-1 lg:ml-3 lg:gap-2">
 
+            <ThemeToggle />
             <Link
+
               to="/wishlist"
               aria-label="Wishlist"
               className="relative hidden h-11 w-11 items-center justify-center text-foreground/70 transition-colors hover:text-primary sm:inline-flex"
