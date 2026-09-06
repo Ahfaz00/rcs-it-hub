@@ -123,7 +123,7 @@ function HomeSections() {
             aria-hidden="true"
             className="pointer-events-none absolute -right-24 -top-32 h-[28rem] w-[28rem] rounded-full radial-glow blur-2xl md:h-[42rem] md:w-[42rem]"
           />
-          <div className="container-page relative z-10 grid items-center gap-12 pb-16 pt-12 sm:pb-20 sm:pt-16 md:pb-28 md:pt-24 lg:grid-cols-[1fr_1fr] lg:gap-14 xl:gap-20">
+          <div className="container-page relative z-10 grid items-center gap-12 pb-16 pt-12 sm:pb-20 sm:pt-16 md:pb-28 md:pt-24 lg:grid-cols-[0.85fr_1.15fr] lg:gap-10 xl:gap-14">
             <div className="min-w-0">
               <FadeIn y={14}>
                 <p className="flex flex-wrap items-center gap-2 text-[0.7rem] font-bold uppercase tracking-[0.24em] text-cyan">
