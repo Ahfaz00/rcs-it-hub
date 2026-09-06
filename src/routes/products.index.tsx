@@ -189,13 +189,13 @@ function ProductsPage() {
         </aside>
 
         <div>
-          <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
+          <div className="mb-5 grid gap-3 sm:flex sm:flex-wrap sm:items-center sm:justify-between">
             <p className="text-sm text-muted-foreground">
               <span className="font-semibold text-foreground">{data.total}</span>{" "}
               {data.total === 1 ? "product" : "products"}
               {search.search ? ` for "${search.search}"` : ""}
             </p>
-            <div className="flex items-center gap-2">
+            <div className="grid grid-cols-2 items-center gap-2 sm:flex">
               <Sheet open={showFilters} onOpenChange={setShowFilters}>
                 <SheetTrigger asChild>
                   <Button variant="outline" size="sm" className="h-10 rounded-full lg:hidden">
@@ -215,7 +215,7 @@ function ProductsPage() {
                 value={search.sort ?? "newest"}
                 onValueChange={(v) => update({ sort: v === "newest" ? undefined : v })}
               >
-                <SelectTrigger className="h-10 w-[170px] rounded-full" aria-label="Sort products">
+                <SelectTrigger className="h-10 w-full min-w-0 rounded-full sm:w-[170px]" aria-label="Sort products">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -263,7 +263,7 @@ function ProductsPage() {
               </div>
             </div>
           ) : (
-            <Stagger className="grid grid-cols-2 gap-3 sm:gap-5 xl:grid-cols-3" stagger={0.06}>
+            <Stagger className="grid grid-cols-1 gap-4 min-[400px]:grid-cols-2 sm:gap-5 xl:grid-cols-3" stagger={0.06}>
               {data.products.map((p) => (
                 <StaggerItem key={p.id} className="h-full [&>*]:h-full">
                   <ProductCard product={p} />

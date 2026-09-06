@@ -57,7 +57,7 @@ export function ProductCard({ product }: { product: ProductCardData }) {
     <motion.article
       whileHover={reduced ? {} : { y: -4 }}
       transition={{ type: "spring", stiffness: 300, damping: 28 }}
-      className="group relative flex h-full flex-col overflow-hidden rounded-lg border border-border bg-card transition-shadow duration-300 hover:shadow-lift"
+      className="group relative flex h-full min-w-0 flex-col overflow-hidden rounded-lg border border-border bg-card transition-shadow duration-300 hover:shadow-lift"
     >
       <Link
         to="/products/$slug"
@@ -143,7 +143,7 @@ export function ProductCard({ product }: { product: ProductCardData }) {
         </h3>
 
         {chips.length > 0 ? (
-          <p className="mt-2 text-[0.78rem] leading-relaxed text-muted-foreground">
+          <p className="mt-2 break-words text-[0.78rem] leading-relaxed text-muted-foreground">
             {chips.join(" • ")}
           </p>
         ) : product.short_description ? (
@@ -177,7 +177,7 @@ export function ProductCard({ product }: { product: ProductCardData }) {
             <Link
               to="/products/$slug"
               params={{ slug: product.slug }}
-              className="inline-flex h-10 flex-1 items-center justify-center whitespace-nowrap rounded-lg bg-navy px-2 text-[0.75rem] font-bold text-navy-foreground transition-colors hover:bg-primary active:scale-[0.98]"
+              className="inline-flex h-10 min-w-0 flex-1 items-center justify-center whitespace-nowrap rounded-lg bg-navy px-2 text-[0.72rem] font-bold text-navy-foreground transition-colors hover:bg-primary active:scale-[0.98] sm:text-[0.75rem]"
             >
               View details
             </Link>

@@ -195,6 +195,7 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    overflow-x: clip;
     font-family: var(--font-sans);
     font-size: 1rem;
     line-height: 1.65;
@@ -224,7 +225,13 @@
   margin-inline: auto;
   width: 100%;
   max-width: 80rem;
-  padding-inline: 1rem;
+  padding-inline: 0.875rem;
+}
+
+@media (min-width: 400px) {
+  .container-page {
+    padding-inline: 1rem;
+  }
 }
 
 @media (min-width: 768px) {

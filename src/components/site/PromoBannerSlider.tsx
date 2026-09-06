@@ -87,8 +87,8 @@ export function PromoBannerSlider({ interval = 4500 }: { interval?: number }) {
       className="relative overflow-hidden border-b border-white/10 bg-ink-ambient text-white"
     >
       <div aria-hidden="true" className="absolute inset-0 grid-blueprint opacity-[0.07]" />
-      <div className="container-page relative flex min-h-[7.5rem] items-center gap-4 py-4 sm:gap-8">
-        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-cyan/15 text-cyan sm:h-14 sm:w-14">
+      <div className="container-page relative grid min-h-[8.5rem] grid-cols-[auto_minmax(0,1fr)] items-center gap-3 py-5 pb-8 sm:flex sm:min-h-[7.5rem] sm:gap-8 sm:py-4">
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-cyan/15 text-cyan sm:h-14 sm:w-14 sm:rounded-2xl">
           <slide.Icon className="h-6 w-6 sm:h-7 sm:w-7" />
         </div>
 
@@ -105,7 +105,7 @@ export function PromoBannerSlider({ interval = 4500 }: { interval?: number }) {
               {slide.offer}
             </span>
           </div>
-          <p className="mt-1 truncate text-[0.72rem] text-white/60 sm:text-sm">{slide.detail}</p>
+          <p className="mt-1 text-[0.7rem] leading-relaxed text-white/65 sm:text-sm">{slide.detail}</p>
         </div>
 
         <Link

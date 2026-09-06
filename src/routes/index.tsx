@@ -123,7 +123,7 @@ function HomeSections() {
             aria-hidden="true"
             className="pointer-events-none absolute -right-24 -top-32 h-[28rem] w-[28rem] rounded-full radial-glow blur-2xl md:h-[42rem] md:w-[42rem]"
           />
-          <div className="container-page relative z-10 grid items-center gap-12 pb-16 pt-12 sm:pb-20 sm:pt-16 md:pb-28 md:pt-24 lg:grid-cols-[0.85fr_1.15fr] lg:gap-10 xl:gap-14">
+          <div className="container-page relative z-10 grid items-center gap-10 pb-14 pt-10 sm:gap-12 sm:pb-20 sm:pt-16 md:pb-28 md:pt-24 lg:grid-cols-[0.85fr_1.15fr] lg:gap-10 xl:gap-14">
             <div className="min-w-0">
               <FadeIn y={14}>
                 <p className="flex flex-wrap items-center gap-2 text-[0.7rem] font-bold uppercase tracking-[0.24em] text-cyan">
@@ -131,7 +131,7 @@ function HomeSections() {
                 </p>
               </FadeIn>
               <FadeIn delay={0.08} y={20}>
-                <h1 className="mt-6 max-w-[13ch] font-display text-hero font-extrabold uppercase leading-[0.95] tracking-[-0.03em] text-white">
+                <h1 className="mt-5 max-w-full font-display text-[clamp(2rem,11vw,3.9rem)] font-extrabold uppercase leading-[1.02] text-white sm:mt-6 sm:max-w-[13ch] sm:leading-[0.95]">
                   {s["hero_title"] ? (
                     s["hero_title"]
                   ) : (
@@ -200,7 +200,7 @@ function HomeSections() {
 
           {/* stat strip */}
           <div className="relative z-10 border-t border-white/10">
-            <Stagger className="container-page grid grid-cols-2 gap-x-4 gap-y-7 py-8 lg:grid-cols-4" stagger={0.07}>
+            <Stagger className="container-page grid grid-cols-1 gap-x-4 gap-y-6 py-8 min-[360px]:grid-cols-2 lg:grid-cols-4" stagger={0.07}>
               {[
                 { value: "10,000+", label: "Devices refurbished" },
                 { value: "500+", label: "Business clients" },
@@ -283,7 +283,7 @@ function HomeSections() {
               title={s["featured_title"] || "The current stock"}
               action={{ to: "/products", label: "See all" }}
             />
-            <Stagger className="mt-12 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4" stagger={0.08}>
+            <Stagger className="mt-12 grid grid-cols-1 gap-4 min-[400px]:grid-cols-2 sm:gap-5 lg:grid-cols-4" stagger={0.08}>
               {products.slice(0, 8).map((p) => (
                 <StaggerItem key={p.id} className="h-full [&>*]:h-full">
                   <ProductCard product={p} />
