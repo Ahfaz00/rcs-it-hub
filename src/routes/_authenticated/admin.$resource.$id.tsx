@@ -209,7 +209,10 @@ function ResourceEditor() {
                 <div
                   key={field.name}
                   className={
-                    field.type === "textarea" || field.type === "richtext" || field.type === "tags"
+                    field.type === "textarea" ||
+                    field.type === "richtext" ||
+                    field.type === "article" ||
+                    field.type === "tags"
                       ? "md:col-span-2"
                       : ""
                   }
