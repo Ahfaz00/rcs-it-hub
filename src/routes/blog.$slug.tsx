@@ -98,6 +98,14 @@ function BlogPost() {
           <ArticleBody className="mt-8" html={post["content"] || post["body"] || ""} />
         </div>
 
+        <div className="mx-auto mt-14 max-w-3xl">
+          <EnquiryForm
+            source="blog-article"
+            title="Need a quote for bulk IT hardware?"
+            description="Leave your name and mobile number — our team will call you back with pricing and stock details."
+          />
+        </div>
+
         {data.related.length ? (
           <div className="mx-auto mt-14 max-w-3xl border-t border-border pt-8">
             <h2 className="font-display text-lg font-bold">Read next</h2>
