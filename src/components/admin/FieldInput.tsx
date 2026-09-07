@@ -16,6 +16,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import type { Field } from "@/lib/admin/resources";
+import { RichTextEditor } from "@/components/admin/RichTextEditor";
 import { uploadMedia } from "@/lib/admin/upload";
 import { mediaUrl } from "@/lib/media";
 import { supabase } from "@/integrations/supabase/client";
@@ -128,6 +129,13 @@ function Control({
             ))}
           </SelectContent>
         </Select>
+      );
+    case "article":
+      return (
+        <RichTextEditor
+          value={typeof value === "string" ? value : ""}
+          onChange={(html) => onChange(html)}
+        />
       );
     case "reference":
       return <ReferenceSelect field={field} id={id} value={value} onChange={onChange} />;

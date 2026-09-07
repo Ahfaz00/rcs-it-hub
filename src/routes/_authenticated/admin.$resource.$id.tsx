@@ -11,6 +11,8 @@ import { getResource } from "@/lib/admin/resources";
 import { logActivity } from "@/lib/admin/log";
 import { supabase } from "@/integrations/supabase/client";
 import { slugify } from "@/lib/format";
+import { missingAltCount, readingMinutes } from "@/lib/article";
+import { BlogEditorPanels } from "@/components/admin/BlogEditorPanels";
 
 export const Route = createFileRoute("/_authenticated/admin/$resource/$id")({
   beforeLoad: ({ params }) => {
@@ -77,6 +79,16 @@ function ResourceEditor() {
       }
     }
 
+    const isBlog = resource === "blog";
+    if (isBlog) {
+      const body = String(values["body"] ?? "");
+      if (values["is_published"] && missingAltCount(body) > 0) {
+        toast.error("Every article image needs alt text before publishing.");
+        return;
+      }
+      values["reading_minutes"] = readingMinutes(body);
+    }
+
     const payload: Values = {};
     for (const field of config.fields) {
       if (field.name in values) {
@@ -110,6 +122,25 @@ function ResourceEditor() {
           .update(payload as never)
           .eq("id", id);
         if (error) throw error;
+        if (isBlog) {
+          const oldSlug = String(row?.["slug"] ?? "");
+          const newSlug = String(payload["slug"] ?? "");
+          const wasPublished = Boolean(row?.["is_published"]);
+          if (oldSlug && newSlug && oldSlug !== newSlug && wasPublished) {
+            const { error: redirectError } = await supabase.from("redirects").upsert(
+              {
+                from_path: `/blog/${oldSlug}`,
+                to_path: `/blog/${newSlug}`,
+                status_code: 301,
+                is_active: true,
+                note: "Auto-created when a published blog slug changed.",
+              },
+              { onConflict: "from_path" },
+            );
+            if (redirectError) toast.error(`Saved, but the redirect failed: ${redirectError.message}`);
+            else toast.success(`301 redirect added from /blog/${oldSlug}.`);
+          }
+        }
         void logActivity({
           action: "updated",
           entity_type: config.table,
@@ -167,6 +198,12 @@ function ResourceEditor() {
         }
       />
 
+      {resource === "blog" ? (
+        <div className="mb-6">
+          <BlogEditorPanels values={values} />
+        </div>
+      ) : null}
+
       <div className="space-y-6">
         {groups.map(([group, fields]) => (
           <section key={group} className="rounded-lg border border-border bg-card p-5">
@@ -178,7 +215,10 @@ function ResourceEditor() {
                 <div
                   key={field.name}
                   className={
-                    field.type === "textarea" || field.type === "richtext" || field.type === "tags"
+                    field.type === "textarea" ||
+                    field.type === "richtext" ||
+                    field.type === "article" ||
+                    field.type === "tags"
                       ? "md:col-span-2"
                       : ""
                   }

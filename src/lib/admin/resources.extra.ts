@@ -134,7 +134,7 @@ export const extraResources: Record<string, ResourceConfig> = {
       { name: "title", label: "Title", type: "text", required: true, group: "Basics" },
       { name: "slug", label: "URL slug", type: "text", required: true, group: "Basics" },
       { name: "excerpt", label: "Excerpt", type: "textarea", group: "Basics" },
-      { name: "body", label: "Article", type: "richtext", group: "Basics" },
+      { name: "body", label: "Article", type: "article", group: "Article" },
       { name: "author_name", label: "Author", type: "text", group: "Basics" },
       { name: "reading_minutes", label: "Reading time (minutes)", type: "number", group: "Basics" },
       { name: "tags", label: "Tags", type: "tags", group: "Basics", help: "One per line." },

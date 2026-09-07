@@ -385,3 +385,20 @@ export const listBanners = createServerFn({ method: "GET" })
       return rows ?? [];
     }),
   );
+
+/* -------------------------------- redirects ------------------------------- */
+
+/** Returns the destination path for an old URL, or null when none is set. */
+export const lookupRedirect = createServerFn({ method: "GET" })
+  .inputValidator((data: unknown) => z.object({ from: z.string().min(1).max(300) }).parse(data))
+  .handler(async ({ data }) => {
+    const { createPublicServerClient } = await import("./supabase-public.server");
+    const supabase = createPublicServerClient();
+    const { data: row } = await supabase
+      .from("redirects")
+      .select("to_path")
+      .eq("from_path", data.from)
+      .eq("is_active", true)
+      .maybeSingle();
+    return row?.to_path ?? null;
+  });
