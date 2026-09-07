@@ -1,8 +1,9 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound, redirect } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 
 import { SiteShell, PageHero } from "@/components/site/SiteShell";
-import { getBlogPost } from "@/lib/discovery.functions";
+import { getBlogPost, lookupRedirect } from "@/lib/discovery.functions";
+import { ArticleBody } from "@/components/site/ArticleBody";
 import { mediaUrl } from "@/lib/media";
 import { formatDate } from "@/lib/format";
 
@@ -16,7 +17,11 @@ const postQuery = (slug: string) =>
 export const Route = createFileRoute("/blog/$slug")({
   loader: async ({ context, params }) => {
     const data = await context.queryClient.ensureQueryData(postQuery(params.slug));
-    if (!data) throw notFound();
+    if (!data) {
+      const target = await lookupRedirect({ data: { from: `/blog/${params.slug}` } });
+      if (target) throw redirect({ href: target, statusCode: 301 });
+      throw notFound();
+    }
     return data;
   },
   head: ({ loaderData }) => {
@@ -90,10 +95,7 @@ function BlogPost() {
               className="mt-6 w-full rounded-2xl border border-border object-cover"
             />
           ) : null}
-          <div
-            className="prose prose-slate mt-8 max-w-none prose-headings:font-display prose-a:text-primary"
-            dangerouslySetInnerHTML={{ __html: post["content"] || post["body"] || "" }}
-          />
+          <ArticleBody className="mt-8" html={post["content"] || post["body"] || ""} />
         </div>
 
         {data.related.length ? (
