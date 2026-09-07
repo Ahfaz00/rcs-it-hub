@@ -438,6 +438,18 @@ function ProductDetail() {
         </section>
       ) : null}
 
+      <section className="container-page section-y-sm">
+        <div className="mx-auto max-w-3xl">
+          <EnquiryForm
+            productId={product.id}
+            productName={product.name}
+            source="product-page"
+            title={`Enquire about ${product.name}`}
+            description="Send your name and mobile number — we will share price, configuration and availability."
+          />
+        </div>
+      </section>
+
       </MotionProvider>
     </SiteShell>
   );
