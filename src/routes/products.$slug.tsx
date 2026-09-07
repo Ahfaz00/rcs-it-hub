@@ -7,6 +7,7 @@ import { SiteShell } from "@/components/site/SiteShell";
 import { ProductCard } from "@/components/site/ProductCard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { EnquiryDialog } from "@/components/site/EnquiryDialog";
+import { EnquiryForm } from "@/components/site/EnquiryForm";
 import { Lightbox, type LightboxImage } from "@/components/site/Lightbox";
 import { MotionProvider } from "@/components/site/MotionProvider";
 import { Badge } from "@/components/ui/badge";
