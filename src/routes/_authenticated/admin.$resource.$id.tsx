@@ -198,6 +198,12 @@ function ResourceEditor() {
         }
       />
 
+      {resource === "blog" ? (
+        <div className="mb-6">
+          <BlogEditorPanels values={values} />
+        </div>
+      ) : null}
+
       <div className="space-y-6">
         {groups.map(([group, fields]) => (
           <section key={group} className="rounded-lg border border-border bg-card p-5">
