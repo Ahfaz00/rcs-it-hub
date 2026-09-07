@@ -51,7 +51,7 @@ import {
 import { supabase } from "@/integrations/supabase/client";
 import { uploadMedia } from "@/lib/admin/upload";
 import { mediaUrl } from "@/lib/media";
-import { readingMinutes, wordCount } from "@/lib/article";
+import { normalizeArticleHtml, readingMinutes, wordCount } from "@/lib/article";
 import { ArticleImage, FaqBlock, TocPlaceholder } from "./article-extensions";
 import { cn } from "@/lib/utils";
 
@@ -93,7 +93,7 @@ export function RichTextEditor({
       FaqBlock,
       TocPlaceholder,
     ],
-    content: value || "",
+    content: normalizeArticleHtml(value),
     editorProps: {
       attributes: {
         class: "article-editor-content focus:outline-none",
@@ -112,7 +112,7 @@ export function RichTextEditor({
     const incoming = value ?? "";
     if (incoming === lastEmitted.current) return;
     lastEmitted.current = incoming;
-    editor.commands.setContent(incoming, { emitUpdate: false });
+    editor.commands.setContent(normalizeArticleHtml(incoming), { emitUpdate: false });
   }, [value, editor]);
 
   if (!editor) {

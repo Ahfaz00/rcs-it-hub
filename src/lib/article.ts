@@ -52,11 +52,27 @@ export function anchorId(text: string, used: Set<string>): string {
  * returns the table of contents entries. Existing posts stay valid: the input
  * is plain HTML and untouched apart from heading ids.
  */
+/**
+ * Older posts were stored as plain text. Convert those to paragraphs so they
+ * keep rendering (and editing) correctly; HTML content passes through as-is.
+ */
+export function normalizeArticleHtml(raw: string | null | undefined): string {
+  const source = (raw ?? "").trim();
+  if (!source) return "";
+  if (/<\/?(p|div|h[1-6]|ul|ol|figure|table|blockquote|img|iframe|section)\b/i.test(source)) return source;
+  return source
+    .split(/\n\s*\n/)
+    .map((block) => block.trim())
+    .filter(Boolean)
+    .map((block) => `<p>${block.replace(/\n/g, "<br />")}</p>`)
+    .join("\n");
+}
+
 export function enhanceArticle(rawHtml: string | null | undefined): {
   html: string;
   toc: TocItem[];
 } {
-  const source = (rawHtml ?? "").trim();
+  const source = normalizeArticleHtml(rawHtml);
   if (!source) return { html: "", toc: [] };
 
   const toc: TocItem[] = [];
