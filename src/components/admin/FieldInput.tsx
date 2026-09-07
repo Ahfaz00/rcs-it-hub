@@ -129,6 +129,13 @@ function Control({
           </SelectContent>
         </Select>
       );
+    case "article":
+      return (
+        <RichTextEditor
+          value={typeof value === "string" ? value : ""}
+          onChange={(html) => onChange(html)}
+        />
+      );
     case "reference":
       return <ReferenceSelect field={field} id={id} value={value} onChange={onChange} />;
     case "image":
