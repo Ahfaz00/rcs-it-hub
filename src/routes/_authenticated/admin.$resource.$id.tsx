@@ -11,6 +11,8 @@ import { getResource } from "@/lib/admin/resources";
 import { logActivity } from "@/lib/admin/log";
 import { supabase } from "@/integrations/supabase/client";
 import { slugify } from "@/lib/format";
+import { missingAltCount, readingMinutes } from "@/lib/article";
+import { BlogEditorPanels } from "@/components/admin/BlogEditorPanels";
 
 export const Route = createFileRoute("/_authenticated/admin/$resource/$id")({
   beforeLoad: ({ params }) => {
