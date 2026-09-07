@@ -4,6 +4,7 @@ import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { SiteShell, PageHero } from "@/components/site/SiteShell";
 import { getBlogPost, lookupRedirect } from "@/lib/discovery.functions";
 import { ArticleBody } from "@/components/site/ArticleBody";
+import { EnquiryForm } from "@/components/site/EnquiryForm";
 import { mediaUrl } from "@/lib/media";
 import { formatDate } from "@/lib/format";
 
