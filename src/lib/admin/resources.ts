@@ -2,6 +2,7 @@ export type FieldType =
   | "text"
   | "textarea"
   | "richtext"
+  | "article"
   | "number"
   | "boolean"
   | "select"
