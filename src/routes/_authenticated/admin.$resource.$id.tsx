@@ -77,6 +77,16 @@ function ResourceEditor() {
       }
     }
 
+    const isBlog = resource === "blog";
+    if (isBlog) {
+      const body = String(values["body"] ?? "");
+      if (values["is_published"] && missingAltCount(body) > 0) {
+        toast.error("Every article image needs alt text before publishing.");
+        return;
+      }
+      values["reading_minutes"] = readingMinutes(body);
+    }
+
     const payload: Values = {};
     for (const field of config.fields) {
       if (field.name in values) {
