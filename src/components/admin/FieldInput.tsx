@@ -16,6 +16,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import type { Field } from "@/lib/admin/resources";
+import { RichTextEditor } from "@/components/admin/RichTextEditor";
 import { uploadMedia } from "@/lib/admin/upload";
 import { mediaUrl } from "@/lib/media";
 import { supabase } from "@/integrations/supabase/client";
