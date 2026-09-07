@@ -7,6 +7,7 @@ import { SiteShell } from "@/components/site/SiteShell";
 import { ProductCard } from "@/components/site/ProductCard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { EnquiryDialog } from "@/components/site/EnquiryDialog";
+import { EnquiryForm } from "@/components/site/EnquiryForm";
 import { Lightbox, type LightboxImage } from "@/components/site/Lightbox";
 import { MotionProvider } from "@/components/site/MotionProvider";
 import { Badge } from "@/components/ui/badge";
@@ -437,6 +438,18 @@ function ProductDetail() {
           </div>
         </section>
       ) : null}
+
+      <section className="container-page section-y-sm">
+        <div className="mx-auto max-w-3xl">
+          <EnquiryForm
+            productId={product.id}
+            productName={product.name}
+            source="product-page"
+            title={`Enquire about ${product.name}`}
+            description="Send your name and mobile number — we will share price, configuration and availability."
+          />
+        </div>
+      </section>
 
       </MotionProvider>
     </SiteShell>
