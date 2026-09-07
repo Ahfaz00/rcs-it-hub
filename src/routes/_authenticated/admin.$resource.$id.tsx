@@ -120,6 +120,25 @@ function ResourceEditor() {
           .update(payload as never)
           .eq("id", id);
         if (error) throw error;
+        if (isBlog) {
+          const oldSlug = String(row?.["slug"] ?? "");
+          const newSlug = String(payload["slug"] ?? "");
+          const wasPublished = Boolean(row?.["is_published"]);
+          if (oldSlug && newSlug && oldSlug !== newSlug && wasPublished) {
+            const { error: redirectError } = await supabase.from("redirects").upsert(
+              {
+                from_path: `/blog/${oldSlug}`,
+                to_path: `/blog/${newSlug}`,
+                status_code: 301,
+                is_active: true,
+                note: "Auto-created when a published blog slug changed.",
+              },
+              { onConflict: "from_path" },
+            );
+            if (redirectError) toast.error(`Saved, but the redirect failed: ${redirectError.message}`);
+            else toast.success(`301 redirect added from /blog/${oldSlug}.`);
+          }
+        }
         void logActivity({
           action: "updated",
           entity_type: config.table,
