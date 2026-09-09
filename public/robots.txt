@@ -1,3 +1,6 @@
+User-agent: *
+Allow: /
+
 User-agent: Googlebot
 Allow: /
 
@@ -10,7 +13,7 @@ Allow: /
 User-agent: facebookexternalhit
 Allow: /
 
-User-agent: *
-Allow: /
+Disallow: /admin
+Disallow: /auth
 
-Sitemap: /sitemap.xml
+Sitemap: https://rcs-it-hub.lovable.app/sitemap.xml

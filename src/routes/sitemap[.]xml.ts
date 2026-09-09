@@ -9,6 +9,12 @@ const STATIC_PATHS = [
   "/bulk-orders",
   "/gallery",
   "/faq",
+  "/blog",
+  "/collections",
+  "/brands",
+  "/videos",
+  "/search",
+  "/compare",
 ];
 
 export const Route = createFileRoute("/sitemap.xml")({
@@ -19,10 +25,16 @@ export const Route = createFileRoute("/sitemap.xml")({
         const { createPublicServerClient } = await import("@/lib/supabase-public.server");
         const supabase = createPublicServerClient();
 
-        const [products, services, pages] = await Promise.all([
+        const [products, services, pages, posts, collections, brands] = await Promise.all([
           supabase.from("products").select("slug, updated_at").eq("is_active", true),
           supabase.from("services").select("slug, updated_at").eq("is_active", true),
           supabase.from("pages").select("slug, updated_at").eq("is_published", true),
+          supabase
+            .from("blog_posts")
+            .select("slug, updated_at")
+            .eq("is_published", true),
+          supabase.from("collections").select("slug, updated_at").eq("is_active", true),
+          supabase.from("brands").select("slug, updated_at").eq("is_active", true),
         ]);
 
         const urls: { loc: string; lastmod?: string }[] = [
@@ -38,6 +50,18 @@ export const Route = createFileRoute("/sitemap.xml")({
           ...(pages.data ?? [])
             .filter((p) => p.slug !== "about")
             .map((p) => ({ loc: `${origin}/policies/${p.slug}`, lastmod: p.updated_at })),
+          ...(posts.data ?? []).map((p) => ({
+            loc: `${origin}/blog/${p.slug}`,
+            lastmod: p.updated_at,
+          })),
+          ...(collections.data ?? []).map((c) => ({
+            loc: `${origin}/collections/${c.slug}`,
+            lastmod: c.updated_at,
+          })),
+          ...(brands.data ?? []).map((b) => ({
+            loc: `${origin}/brands/${b.slug}`,
+            lastmod: b.updated_at,
+          })),
         ];
 
         const body = `<?xml version="1.0" encoding="UTF-8"?>
