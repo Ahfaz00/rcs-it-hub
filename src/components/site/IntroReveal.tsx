@@ -116,36 +116,18 @@ export function IntroReveal() {
           Welcome to
         </p>
 
-        <img
-          src={logoMark}
-          alt=""
-          className="h-24 w-24 drop-shadow-[0_0_28px_hsl(var(--cyan)/0.45)] md:h-32 md:w-32"
-          style={{ animation: "rcs-logo-zoom 1.6s cubic-bezier(0.22,1,0.36,1) 0.9s both" }}
-        />
-
-        <div className="relative mt-6 overflow-hidden">
-          <h1
-            className="font-display text-[2rem] font-extrabold uppercase tracking-tight text-white md:text-[3.5rem]"
-            style={{ animation: "rcs-name-zoom 1.4s cubic-bezier(0.22,1,0.36,1) 1.6s both" }}
-          >
-            R Computer <span className="text-cyan">Solutions</span>
-          </h1>
+        <div className="relative overflow-hidden rounded-2xl">
+          <img
+            src={introLogo}
+            alt="R Computer Solutions"
+            className="h-auto w-[19rem] max-w-full drop-shadow-[0_0_45px_hsl(var(--cyan)/0.5)] md:w-[32rem]"
+            style={{ animation: "rcs-logo-zoom 2s cubic-bezier(0.22,1,0.36,1) 0.9s both" }}
+          />
           <span
-            className="pointer-events-none absolute inset-y-0 w-1/3 bg-gradient-to-r from-transparent via-white/35 to-transparent"
+            className="pointer-events-none absolute inset-y-0 w-1/3 bg-gradient-to-r from-transparent via-white/25 to-transparent"
             style={{ animation: "rcs-shine 1.6s ease-in-out 3.4s both" }}
           />
         </div>
-
-        <p
-          className="mt-4 text-[0.75rem] font-bold uppercase text-white/70 md:text-sm"
-          style={{ animation: "rcs-hub-in 1s cubic-bezier(0.22,1,0.36,1) 4.15s both" }}
-        >
-          The IT Hub
-        </p>
-        <span
-          className="mt-4 h-0.5 w-40 origin-center bg-cyan md:w-56"
-          style={{ animation: "rcs-line 0.9s cubic-bezier(0.22,1,0.36,1) 4.4s both" }}
-        />
       </div>
     </div>
   );
