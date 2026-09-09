@@ -28,7 +28,10 @@ export const Route = createFileRoute("/services/")({
         property: "og:description",
         content: "Repair, upgrades, AMC, rental and corporate IT support from our Navi Mumbai facility.",
       },
+      { name: "keywords", content: "laptop repair navi mumbai, desktop repair, amc services navi mumbai, laptop rental, bulk it supply, ssd upgrade" },
+      { property: "og:url", content: "https://rcs-it-hub.lovable.app/services" },
     ],
+    links: [{ rel: "canonical", href: "https://rcs-it-hub.lovable.app/services" }],
   }),
   component: ServicesPage,
 });

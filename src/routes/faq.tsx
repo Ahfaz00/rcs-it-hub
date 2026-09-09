@@ -31,7 +31,10 @@ export const Route = createFileRoute("/faq")({
         property: "og:description",
         content: "Common questions about buying refurbished IT hardware from R Computer Solutions.",
       },
+      { name: "keywords", content: "refurbished laptop faq, warranty, gst invoice laptop wholesaler" },
+      { property: "og:url", content: "https://rcs-it-hub.lovable.app/faq" },
     ],
+    links: [{ rel: "canonical", href: "https://rcs-it-hub.lovable.app/faq" }],
   }),
   component: FaqPage,
 });

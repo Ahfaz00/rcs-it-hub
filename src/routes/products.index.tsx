@@ -74,7 +74,10 @@ export const Route = createFileRoute("/products/")({
         content:
           "Refurbished laptops, desktops and workstations supplied from Navi Mumbai with bulk options and pan-India delivery.",
       },
+      { name: "keywords", content: "refurbished laptops, second hand laptops wholesale, used desktops, refurbished workstations, bulk laptop dealer india, dell hp lenovo refurbished" },
+      { property: "og:url", content: "https://rcs-it-hub.lovable.app/products" },
     ],
+    links: [{ rel: "canonical", href: "https://rcs-it-hub.lovable.app/products" }],
   }),
   component: ProductsPage,
 });

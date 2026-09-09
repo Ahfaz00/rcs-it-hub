@@ -29,7 +29,10 @@ export const Route = createFileRoute("/about")({
         property: "og:description",
         content: "Computer wholesaler in Navi Mumbai for refurbished IT hardware, repair, AMC and rental.",
       },
+      { name: "keywords", content: "about r computer solutions, computer wholesaler navi mumbai, refurbished laptop dealer navi mumbai, second hand laptop wholesaler india" },
+      { property: "og:url", content: "https://rcs-it-hub.lovable.app/about" },
     ],
+    links: [{ rel: "canonical", href: "https://rcs-it-hub.lovable.app/about" }],
   }),
   component: AboutPage,
 });

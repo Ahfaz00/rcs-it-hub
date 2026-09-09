@@ -33,7 +33,10 @@ export const Route = createFileRoute("/videos")({
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "keywords", content: "refurbished laptop stock video, bulk laptop lot video, r computer solutions youtube" },
+      { property: "og:url", content: "https://rcs-it-hub.lovable.app/videos" },
     ],
+    links: [{ rel: "canonical", href: "https://rcs-it-hub.lovable.app/videos" }],
   }),
   component: VideosPage,
 });
