@@ -17,6 +17,6 @@ export function whatsappLink(number: string, message?: string | null) {
 export function enquiryMessage(template: string | null | undefined, product?: string) {
   const base =
     template ||
-    "Hello R Computer Solutions, I am interested in {product}. Please share current price, availability and details.";
+    "Hi R Computer Solutions, I am interested in {product}. Please share the latest price, availability and details.";
   return base.replace("{product}", product || "your refurbished IT hardware");
 }
