@@ -45,9 +45,9 @@ export function IntroReveal() {
           100% { opacity: 1; letter-spacing: 0.4em; transform: translateY(0); }
         }
         @keyframes rcs-logo-zoom {
-          0% { opacity: 0; transform: scale(0.15); filter: blur(6px); }
-          60% { opacity: 1; filter: blur(0); }
-          100% { opacity: 1; transform: scale(1); }
+          0% { opacity: 0; transform: scale(0.15); filter: blur(6px) brightness(0) invert(1); }
+          60% { opacity: 1; filter: blur(0) brightness(0) invert(1); }
+          100% { opacity: 1; transform: scale(1); filter: blur(0) brightness(0) invert(1); }
         }
         @keyframes rcs-name-zoom {
           0% { opacity: 0; transform: scale(0.4) translateY(10px); filter: blur(8px); }
@@ -116,7 +116,7 @@ export function IntroReveal() {
         <img
           src={logoMark}
           alt=""
-          className="h-24 w-24 md:h-32 md:w-32"
+          className="h-24 w-24 drop-shadow-[0_0_28px_hsl(var(--cyan)/0.45)] md:h-32 md:w-32"
           style={{ animation: "rcs-logo-zoom 1.6s cubic-bezier(0.22,1,0.36,1) 0.9s both" }}
         />
 
