@@ -27,7 +27,10 @@ export const Route = createFileRoute("/contact")({
         property: "og:description",
         content: "Get in touch for refurbished IT hardware, repair, AMC, rental and bulk supply.",
       },
+      { name: "keywords", content: "r computer solutions contact, computer shop navi mumbai, laptop wholesaler contact number, refurbished laptop dealer near me" },
+      { property: "og:url", content: "https://rcs-it-hub.lovable.app/contact" },
     ],
+    links: [{ rel: "canonical", href: "https://rcs-it-hub.lovable.app/contact" }],
   }),
   component: ContactPage,
 });

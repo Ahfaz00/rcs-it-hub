@@ -94,7 +94,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "theme-color", content: "#fafbfc" },
+      {
+        name: "keywords",
+        content:
+          "r computer solutions, rcomputersolution, the it hub navi mumbai, computer wholesaler navi mumbai, refurbished laptops wholesale, used laptops bulk india, refurbished desktops, workstations, monitors, ddr3 ddr4 ram wholesale, intel processor bulk stock, laptop repair, amc, laptop rental, bulk it supply",
+      },
+      { name: "robots", content: "index, follow, max-image-preview:large, max-snippet:-1" },
+      { property: "og:locale", content: "en_IN" },
     ],
+
     links: [
       { rel: "stylesheet", href: appCss },
       { rel: "icon", type: "image/png", href: "/favicon.png" },
@@ -106,7 +114,57 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: "https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap",
       },
     ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "LocalBusiness",
+          "@id": "https://rcs-it-hub.lovable.app/#business",
+          name: "R Computer Solutions - The IT Hub",
+          alternateName: ["R Computer Solutions", "The IT Hub"],
+          description:
+            "Computer wholesaler in Navi Mumbai supplying refurbished laptops, desktops, workstations, monitors, RAM, processors and IT hardware with repair, AMC, rental and bulk supply.",
+          url: "https://rcs-it-hub.lovable.app",
+          telephone: "+918691914641",
+          email: "theithub400709@gmail.com",
+          openingHours: "Mo-Sa 10:00-20:00",
+          address: {
+            "@type": "PostalAddress",
+            streetAddress:
+              "Abhinav Building, 1st Floor, EL 107, Electronic Zone, TTC Industrial Area, Mahape",
+            addressLocality: "Navi Mumbai",
+            addressRegion: "Maharashtra",
+            postalCode: "400710",
+            addressCountry: "IN",
+          },
+          areaServed: "IN",
+          sameAs: [
+            "https://facebook.com/share/1a3k2BUT5D",
+            "https://instagram.com/r_romputer_solutions",
+            "https://x.com/RcomputerRiyaz",
+            "https://t.me/rcomputerdeals",
+            "https://www.youtube.com/@rcomputersolutions",
+          ],
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: "R Computer Solutions - The IT Hub",
+          url: "https://rcs-it-hub.lovable.app",
+          potentialAction: {
+            "@type": "SearchAction",
+            target: "https://rcs-it-hub.lovable.app/search?q={search_term_string}",
+            "query-input": "required name=search_term_string",
+          },
+        }),
+      },
+    ],
   }),
+
   loader: ({ context }) => context.queryClient.ensureQueryData(siteQueryOptions),
   shellComponent: RootShell,
   component: RootComponent,

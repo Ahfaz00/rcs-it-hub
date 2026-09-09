@@ -41,7 +41,10 @@ export const Route = createFileRoute("/bulk-orders")({
         property: "og:description",
         content: "Volume supply of tested refurbished IT hardware with GST invoicing and pan-India delivery.",
       },
+      { name: "keywords", content: "bulk laptop order india, corporate laptop supplier, refurbished laptop bulk dealer, it hardware bulk supply navi mumbai" },
+      { property: "og:url", content: "https://rcs-it-hub.lovable.app/bulk-orders" },
     ],
+    links: [{ rel: "canonical", href: "https://rcs-it-hub.lovable.app/bulk-orders" }],
   }),
   component: BulkOrdersPage,
 });

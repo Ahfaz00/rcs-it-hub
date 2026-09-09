@@ -28,7 +28,10 @@ export const Route = createFileRoute("/gallery")({
       },
       { property: "og:title", content: "Gallery | R Computer Solutions" },
       { property: "og:description", content: "Inside our refurbished IT hardware facility in Navi Mumbai." },
+      { name: "keywords", content: "r computer solutions gallery, refurbished laptop stock photos, navi mumbai it facility" },
+      { property: "og:url", content: "https://rcs-it-hub.lovable.app/gallery" },
     ],
+    links: [{ rel: "canonical", href: "https://rcs-it-hub.lovable.app/gallery" }],
   }),
   component: GalleryPage,
 });
