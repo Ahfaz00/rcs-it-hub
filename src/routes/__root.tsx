@@ -94,7 +94,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "theme-color", content: "#fafbfc" },
+      {
+        name: "keywords",
+        content:
+          "r computer solutions, rcomputersolution, the it hub navi mumbai, computer wholesaler navi mumbai, refurbished laptops wholesale, used laptops bulk india, refurbished desktops, workstations, monitors, ddr3 ddr4 ram wholesale, intel processor bulk stock, laptop repair, amc, laptop rental, bulk it supply",
+      },
+      { name: "robots", content: "index, follow, max-image-preview:large, max-snippet:-1" },
+      { property: "og:locale", content: "en_IN" },
     ],
+
     links: [
       { rel: "stylesheet", href: appCss },
       { rel: "icon", type: "image/png", href: "/favicon.png" },
