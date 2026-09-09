@@ -45,9 +45,9 @@ export function IntroReveal() {
           100% { opacity: 1; letter-spacing: 0.4em; transform: translateY(0); }
         }
         @keyframes rcs-logo-zoom {
-          0% { opacity: 0; transform: scale(0.15); filter: blur(6px) brightness(0) invert(1); }
-          60% { opacity: 1; filter: blur(0) brightness(0) invert(1); }
-          100% { opacity: 1; transform: scale(1); filter: blur(0) brightness(0) invert(1); }
+          0% { opacity: 0; transform: scale(0.15); filter: blur(6px); }
+          60% { opacity: 1; filter: blur(0); }
+          100% { opacity: 1; transform: scale(1); filter: blur(0); }
         }
         @keyframes rcs-name-zoom {
           0% { opacity: 0; transform: scale(0.4) translateY(10px); filter: blur(8px); }
