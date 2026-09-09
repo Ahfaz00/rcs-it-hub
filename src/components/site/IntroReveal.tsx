@@ -34,7 +34,7 @@ export function IntroReveal() {
   return (
     <div
       aria-hidden="true"
-      className={`fixed inset-0 z-[999] overflow-hidden bg-navy transition-opacity ${
+      className={`fixed inset-0 z-[999] overflow-hidden bg-slate-800 transition-opacity ${
         phase === "dive" ? "pointer-events-none opacity-0 duration-[1600ms]" : "opacity-100 duration-700"
       }`}
       style={{ perspective: "900px" }}
