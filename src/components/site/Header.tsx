@@ -7,6 +7,7 @@ import { motion } from "motion/react";
 import { Logo } from "./Logo";
 import { SearchBox } from "./SearchBox";
 import { ThemeToggle } from "./ThemeToggle";
+import { SpotlightNav } from "@/components/vengeance/SpotlightNav";
 
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
@@ -285,8 +286,8 @@ export function Header() {
       </div>
 
       {/* Primary nav row (desktop) */}
-      <div className="hidden border-b border-border bg-background lg:block">
-        <nav className="container-page flex items-center justify-center gap-1 overflow-x-auto py-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      <SpotlightNav className="hidden border-b border-border bg-background lg:block">
+        <nav className="container-page relative flex items-center justify-center gap-1 overflow-x-auto py-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {NAV.map((item) => (
             <Link
               key={item.to}
@@ -300,7 +301,7 @@ export function Header() {
             </Link>
           ))}
         </nav>
-      </div>
+      </SpotlightNav>
 
       {/* Category rail */}
       <div

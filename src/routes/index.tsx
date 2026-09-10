@@ -14,6 +14,11 @@ import { CategoryShowcase, type ShowcaseItem } from "@/components/site/CategoryS
 import { HeroAdSlider } from "@/components/site/HeroAdSlider";
 import { PromoBannerSlider } from "@/components/site/PromoBannerSlider";
 import { MotionProvider, readBool, useMotion } from "@/components/site/MotionProvider";
+import { GlowButton } from "@/components/vengeance/GlowButton";
+import { FlipText } from "@/components/vengeance/FlipText";
+import { AnimatedRays } from "@/components/vengeance/AnimatedRays";
+import { SpotlightCard } from "@/components/vengeance/SpotlightCard";
+import { GlassDock } from "@/components/vengeance/GlassDock";
 import { safePath } from "@/lib/format";
 import { Button } from "@/components/ui/button";
 import {
@@ -156,26 +161,17 @@ function HomeSections() {
               </FadeIn>
               <FadeIn delay={0.24}>
                 <div className="mt-9 grid gap-3 sm:flex sm:flex-wrap sm:items-center">
-                  <Button
-                    asChild
-                    size="lg"
-                    className="group h-14 w-full rounded-full bg-cyan px-8 text-[0.8rem] font-bold uppercase tracking-[0.14em] text-cyan-foreground transition-transform hover:bg-white active:scale-[0.98] sm:w-auto"
+                  <GlowButton href={safePath(s["hero_cta1_link"], "/products")} className="group w-full sm:w-auto">
+                    {s["hero_cta1_text"] || "Explore laptops"}
+                    <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                  </GlowButton>
+                  <GlowButton
+                    href={safePath(s["hero_cta2_link"], "/bulk-orders")}
+                    tone="outline"
+                    className="w-full border-white/25 text-white sm:w-auto"
                   >
-                    <a href={safePath(s["hero_cta1_link"], "/products")}>
-                      {s["hero_cta1_text"] || "Explore laptops"}
-                      <ArrowRight className="ml-3 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-                    </a>
-                  </Button>
-                  <Button
-                    asChild
-                    size="lg"
-                    variant="ghost"
-                    className="h-14 w-full rounded-full border border-white/25 px-8 text-[0.8rem] font-bold uppercase tracking-[0.14em] text-white transition-colors hover:border-cyan hover:bg-white/5 hover:text-cyan active:scale-[0.98] sm:w-auto"
-                  >
-                    <a href={safePath(s["hero_cta2_link"], "/bulk-orders")}>
-                      {s["hero_cta2_text"] || "Get a quote"}
-                    </a>
-                  </Button>
+                    {s["hero_cta2_text"] || "Get a quote"}
+                  </GlowButton>
                 </div>
               </FadeIn>
             </div>
@@ -267,7 +263,8 @@ function HomeSections() {
 
       {/* ============ CATEGORIES — asymmetric editorial ============ */}
       {showShowcase && showcaseItems.length > 0 ? (
-        <section className="container-page section-y">
+        <section className="relative isolate overflow-hidden container-page section-y">
+          <AnimatedRays />
           <SectionHeading
             eyebrow={s["showcase_eyebrow"] || "Shop by category"}
             title={s["showcase_title"] || "Hardware for every requirement"}
@@ -289,7 +286,9 @@ function HomeSections() {
             <Stagger className="mt-12 grid grid-cols-1 gap-4 min-[400px]:grid-cols-2 sm:gap-5 lg:grid-cols-4" stagger={0.08}>
               {products.slice(0, 8).map((p) => (
                 <StaggerItem key={p.id} className="h-full [&>*]:h-full">
-                  <ProductCard product={p} />
+                  <SpotlightCard>
+                    <ProductCard product={p} />
+                  </SpotlightCard>
                 </StaggerItem>
               ))}
             </Stagger>
@@ -688,6 +687,9 @@ function HomeSections() {
           </Reveal>
         </section>
       ) : null}
+
+      {/* ============ FLOATING GLASS DOCK ============ */}
+      <GlassDock />
     </>
   );
 }
@@ -706,9 +708,10 @@ function SectionHeading({
       <div className="flex flex-wrap items-end justify-between gap-6 border-b border-border pb-6">
         <div>
           <p className="text-eyebrow text-primary">{eyebrow}</p>
-          <h2 className="mt-4 font-display text-section font-bold uppercase">
-            {title}
-          </h2>
+          <FlipText
+            text={title}
+            className="mt-4 font-display text-section font-bold uppercase"
+          />
         </div>
         {action ? (
           <Link
