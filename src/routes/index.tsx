@@ -14,6 +14,11 @@ import { CategoryShowcase, type ShowcaseItem } from "@/components/site/CategoryS
 import { HeroAdSlider } from "@/components/site/HeroAdSlider";
 import { PromoBannerSlider } from "@/components/site/PromoBannerSlider";
 import { MotionProvider, readBool, useMotion } from "@/components/site/MotionProvider";
+import { GlowButton } from "@/components/vengeance/GlowButton";
+import { FlipText } from "@/components/vengeance/FlipText";
+import { AnimatedRays } from "@/components/vengeance/AnimatedRays";
+import { SpotlightCard } from "@/components/vengeance/SpotlightCard";
+import { GlassDock } from "@/components/vengeance/GlassDock";
 import { safePath } from "@/lib/format";
 import { Button } from "@/components/ui/button";
 import {
@@ -156,26 +161,17 @@ function HomeSections() {
               </FadeIn>
               <FadeIn delay={0.24}>
                 <div className="mt-9 grid gap-3 sm:flex sm:flex-wrap sm:items-center">
-                  <Button
-                    asChild
-                    size="lg"
-                    className="group h-14 w-full rounded-full bg-cyan px-8 text-[0.8rem] font-bold uppercase tracking-[0.14em] text-cyan-foreground transition-transform hover:bg-white active:scale-[0.98] sm:w-auto"
+                  <GlowButton href={safePath(s["hero_cta1_link"], "/products")} className="group w-full sm:w-auto">
+                    {s["hero_cta1_text"] || "Explore laptops"}
+                    <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                  </GlowButton>
+                  <GlowButton
+                    href={safePath(s["hero_cta2_link"], "/bulk-orders")}
+                    tone="outline"
+                    className="w-full border-white/25 text-white sm:w-auto"
                   >
-                    <a href={safePath(s["hero_cta1_link"], "/products")}>
-                      {s["hero_cta1_text"] || "Explore laptops"}
-                      <ArrowRight className="ml-3 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-                    </a>
-                  </Button>
-                  <Button
-                    asChild
-                    size="lg"
-                    variant="ghost"
-                    className="h-14 w-full rounded-full border border-white/25 px-8 text-[0.8rem] font-bold uppercase tracking-[0.14em] text-white transition-colors hover:border-cyan hover:bg-white/5 hover:text-cyan active:scale-[0.98] sm:w-auto"
-                  >
-                    <a href={safePath(s["hero_cta2_link"], "/bulk-orders")}>
-                      {s["hero_cta2_text"] || "Get a quote"}
-                    </a>
-                  </Button>
+                    {s["hero_cta2_text"] || "Get a quote"}
+                  </GlowButton>
                 </div>
               </FadeIn>
             </div>
