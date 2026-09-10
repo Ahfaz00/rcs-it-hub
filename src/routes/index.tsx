@@ -263,7 +263,8 @@ function HomeSections() {
 
       {/* ============ CATEGORIES — asymmetric editorial ============ */}
       {showShowcase && showcaseItems.length > 0 ? (
-        <section className="container-page section-y">
+        <section className="relative isolate overflow-hidden container-page section-y">
+          <AnimatedRays />
           <SectionHeading
             eyebrow={s["showcase_eyebrow"] || "Shop by category"}
             title={s["showcase_title"] || "Hardware for every requirement"}
@@ -285,7 +286,9 @@ function HomeSections() {
             <Stagger className="mt-12 grid grid-cols-1 gap-4 min-[400px]:grid-cols-2 sm:gap-5 lg:grid-cols-4" stagger={0.08}>
               {products.slice(0, 8).map((p) => (
                 <StaggerItem key={p.id} className="h-full [&>*]:h-full">
-                  <ProductCard product={p} />
+                  <SpotlightCard>
+                    <ProductCard product={p} />
+                  </SpotlightCard>
                 </StaggerItem>
               ))}
             </Stagger>
@@ -684,6 +687,9 @@ function HomeSections() {
           </Reveal>
         </section>
       ) : null}
+
+      {/* ============ FLOATING GLASS DOCK ============ */}
+      <GlassDock />
     </>
   );
 }
@@ -702,9 +708,10 @@ function SectionHeading({
       <div className="flex flex-wrap items-end justify-between gap-6 border-b border-border pb-6">
         <div>
           <p className="text-eyebrow text-primary">{eyebrow}</p>
-          <h2 className="mt-4 font-display text-section font-bold uppercase">
-            {title}
-          </h2>
+          <FlipText
+            text={title}
+            className="mt-4 font-display text-section font-bold uppercase"
+          />
         </div>
         {action ? (
           <Link
