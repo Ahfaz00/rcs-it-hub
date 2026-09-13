@@ -440,6 +440,16 @@ function ProductDetail() {
       ) : null}
 
       <section className="container-page section-y-sm">
+        <div className="mx-auto grid max-w-5xl gap-6">
+          <QualityPromise />
+          <div className="grid gap-6 lg:grid-cols-2">
+            <CallbackBar productId={product.id} productName={product.name} />
+            <WhatsappChannelCard />
+          </div>
+        </div>
+      </section>
+
+      <section className="container-page section-y-sm">
         <div className="mx-auto max-w-3xl">
           <EnquiryForm
             productId={product.id}
