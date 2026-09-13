@@ -307,6 +307,19 @@ function HomeSections() {
         </section>
       ) : null}
 
+      {/* ============ QUALITY CHECK + GRADES ============ */}
+      <section className="container-page section-y-sm">
+        <QualityPromise />
+        <div className="mt-6 flex flex-wrap gap-3">
+          <Link
+            to="/stock-sheet"
+            className="inline-flex h-12 items-center gap-2 rounded-full bg-navy px-6 text-[0.75rem] font-bold uppercase tracking-[0.12em] text-navy-foreground transition-colors hover:bg-primary"
+          >
+            View live wholesale stock sheet <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
+      </section>
+
       {/* ============ WHY US + PROCESS — dark editorial band ============ */}
       <div className="bg-ink-ambient text-white">
         <section className="container-page section-y">
