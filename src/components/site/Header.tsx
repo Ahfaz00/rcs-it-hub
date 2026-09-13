@@ -21,6 +21,7 @@ const NAV = [
   { label: "Collections", to: "/collections" },
   { label: "Services", to: "/services" },
   { label: "Bulk Orders", to: "/bulk-orders" },
+  { label: "Stock Sheet", to: "/stock-sheet" },
   { label: "Blog", to: "/blog" },
   { label: "Gallery", to: "/gallery" },
   { label: "Videos", to: "/videos" },

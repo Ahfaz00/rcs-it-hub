@@ -4,6 +4,7 @@ import { Heart, ImageOff, MessageCircle, Scale, ShieldCheck } from "lucide-react
 import { motion, useReducedMotion } from "motion/react";
 import { toast } from "sonner";
 
+import { AddToBasketButton } from "./AddToBasketButton";
 import { mediaUrl } from "@/lib/media";
 import { siteQueryOptions, whatsappLink } from "@/lib/site-query";
 import { discountPercent, formatINR, formatPrice } from "@/lib/format";
