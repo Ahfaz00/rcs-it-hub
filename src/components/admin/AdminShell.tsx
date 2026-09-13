@@ -14,6 +14,7 @@ import {
   LogOut,
   Mail,
   Menu,
+  MessageCircle,
   Newspaper,
   Package,
   PackageSearch,
