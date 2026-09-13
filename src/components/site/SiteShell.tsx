@@ -29,6 +29,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
           <MessageCircle className="h-6 w-6" />
         </a>
       ) : null}
+      <EnquiryBasketBar />
     </div>
   );
 }
