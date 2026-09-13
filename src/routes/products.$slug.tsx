@@ -351,6 +351,10 @@ function ProductDetail() {
                   </Button>
                 }
               />
+              <AddToBasketButton
+                product={{ id: product.id, name: product.name, slug: product.slug }}
+                className="h-14 w-full rounded-full sm:col-span-2"
+              />
               {phone ? (
                 <Button
                   asChild
