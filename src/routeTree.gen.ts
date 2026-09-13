@@ -36,6 +36,7 @@ import { Route as ServicesSlugRouteImport } from './routes/services.$slug'
 import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
 import { Route as AuthenticatedAdminLogsRouteImport } from './routes/_authenticated/admin.logs'
 import { Route as AuthenticatedAdminSettingsRouteImport } from './routes/_authenticated/admin.settings'
+import { Route as AuthenticatedAdminWhatsappImportRouteImport } from './routes/_authenticated/admin.whatsapp-import'
 import { Route as ApiMediaSplatRouteImport } from './routes/api/media.$'
 import { Route as AuthenticatedAdminResourceIndexRouteImport } from './routes/_authenticated/admin.$resource.index'
 import { Route as AuthenticatedAdminResourceIdRouteImport } from './routes/_authenticated/admin.$resource.$id'
@@ -175,6 +176,12 @@ const AuthenticatedAdminSettingsRoute =
     path: '/admin/settings',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedAdminWhatsappImportRoute =
+  AuthenticatedAdminWhatsappImportRouteImport.update({
+    id: '/admin/whatsapp-import',
+    path: '/admin/whatsapp-import',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const ApiMediaSplatRoute = ApiMediaSplatRouteImport.update({
   id: '/api/media/$',
   path: '/api/media/$',
@@ -219,6 +226,7 @@ export interface FileRoutesByFullPath {
   '/services/': typeof ServicesIndexRoute
   '/admin/logs': typeof AuthenticatedAdminLogsRoute
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
+  '/admin/whatsapp-import': typeof AuthenticatedAdminWhatsappImportRoute
   '/api/media/$': typeof ApiMediaSplatRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
   '/admin/$resource/$id': typeof AuthenticatedAdminResourceIdRoute
@@ -250,6 +258,7 @@ export interface FileRoutesByTo {
   '/services': typeof ServicesIndexRoute
   '/admin/logs': typeof AuthenticatedAdminLogsRoute
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
+  '/admin/whatsapp-import': typeof AuthenticatedAdminWhatsappImportRoute
   '/api/media/$': typeof ApiMediaSplatRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
   '/admin/$resource/$id': typeof AuthenticatedAdminResourceIdRoute
@@ -283,6 +292,7 @@ export interface FileRoutesById {
   '/services/': typeof ServicesIndexRoute
   '/_authenticated/admin/logs': typeof AuthenticatedAdminLogsRoute
   '/_authenticated/admin/settings': typeof AuthenticatedAdminSettingsRoute
+  '/_authenticated/admin/whatsapp-import': typeof AuthenticatedAdminWhatsappImportRoute
   '/api/media/$': typeof ApiMediaSplatRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/_authenticated/admin/$resource/$id': typeof AuthenticatedAdminResourceIdRoute
@@ -316,6 +326,7 @@ export interface FileRouteTypes {
     | '/services/'
     | '/admin/logs'
     | '/admin/settings'
+    | '/admin/whatsapp-import'
     | '/api/media/$'
     | '/admin/'
     | '/admin/$resource/$id'
@@ -347,6 +358,7 @@ export interface FileRouteTypes {
     | '/services'
     | '/admin/logs'
     | '/admin/settings'
+    | '/admin/whatsapp-import'
     | '/api/media/$'
     | '/admin'
     | '/admin/$resource/$id'
@@ -379,6 +391,7 @@ export interface FileRouteTypes {
     | '/services/'
     | '/_authenticated/admin/logs'
     | '/_authenticated/admin/settings'
+    | '/_authenticated/admin/whatsapp-import'
     | '/api/media/$'
     | '/_authenticated/admin/'
     | '/_authenticated/admin/$resource/$id'
@@ -604,6 +617,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminSettingsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin/whatsapp-import': {
+      id: '/_authenticated/admin/whatsapp-import'
+      path: '/admin/whatsapp-import'
+      fullPath: '/admin/whatsapp-import'
+      preLoaderRoute: typeof AuthenticatedAdminWhatsappImportRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/api/media/$': {
       id: '/api/media/$'
       path: '/api/media/$'
@@ -631,6 +651,7 @@ declare module '@tanstack/react-router' {
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAdminLogsRoute: typeof AuthenticatedAdminLogsRoute
   AuthenticatedAdminSettingsRoute: typeof AuthenticatedAdminSettingsRoute
+  AuthenticatedAdminWhatsappImportRoute: typeof AuthenticatedAdminWhatsappImportRoute
   AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
   AuthenticatedAdminResourceIdRoute: typeof AuthenticatedAdminResourceIdRoute
   AuthenticatedAdminResourceIndexRoute: typeof AuthenticatedAdminResourceIndexRoute
@@ -639,6 +660,7 @@ interface AuthenticatedRouteRouteChildren {
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAdminLogsRoute: AuthenticatedAdminLogsRoute,
   AuthenticatedAdminSettingsRoute: AuthenticatedAdminSettingsRoute,
+  AuthenticatedAdminWhatsappImportRoute: AuthenticatedAdminWhatsappImportRoute,
   AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
   AuthenticatedAdminResourceIdRoute: AuthenticatedAdminResourceIdRoute,
   AuthenticatedAdminResourceIndexRoute: AuthenticatedAdminResourceIndexRoute,

@@ -14,6 +14,7 @@ import {
   LogOut,
   Mail,
   Menu,
+  MessageCircle,
   Newspaper,
   Package,
   PackageSearch,
@@ -50,6 +51,7 @@ const navGroups: { title: string; items: NavItem[] }[] = [
       { to: "/admin/$resource", params: { resource: "collections" }, label: "Collections", icon: Layers },
       { to: "/admin/$resource", params: { resource: "usage_tags" }, label: "Shop by usage", icon: Target },
       { to: "/admin/$resource", params: { resource: "attributes" }, label: "Attributes", icon: SlidersHorizontal },
+      { to: "/admin/whatsapp-import", label: "WhatsApp import", icon: MessageCircle },
     ],
   },
   {
