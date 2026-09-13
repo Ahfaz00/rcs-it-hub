@@ -193,6 +193,12 @@ export function ProductCard({ product }: { product: ProductCardData }) {
               </a>
             ) : null}
           </div>
+
+          <AddToBasketButton
+            compact
+            product={{ id: product.id, name: product.name, slug: product.slug }}
+            className="mt-2 w-full"
+          />
         </div>
       </div>
     </motion.article>
