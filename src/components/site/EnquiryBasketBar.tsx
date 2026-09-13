@@ -104,8 +104,8 @@ export function EnquiryBasketBar() {
             </Button>
           ) : null}
           <Button
-            variant="outline"
-            className="h-11 w-full rounded-full text-[0.75rem] font-bold uppercase tracking-[0.12em]"
+            variant="ghost"
+            className="h-11 w-full rounded-full border border-border text-[0.75rem] font-bold uppercase tracking-[0.12em] text-muted-foreground"
             onClick={() => {
               basket.clear();
               setOpen(false);
