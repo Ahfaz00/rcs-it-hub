@@ -274,6 +274,17 @@ function HomeSections() {
         </section>
       ) : null}
 
+      {/* ============ FINDER + WHATSAPP CHANNEL ============ */}
+      <section className="container-page section-y-sm">
+        <div className="grid gap-6 lg:grid-cols-[1.3fr_1fr] lg:items-start">
+          <HardwareFinder />
+          <div className="grid gap-6">
+            <WhatsappChannelCard />
+            <CallbackBar />
+          </div>
+        </div>
+      </section>
+
       {/* ============ THE CURRENT STOCK ============ */}
       {products.length > 0 ? (
         <section className="border-y border-border bg-surface section-y">
