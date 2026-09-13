@@ -12,6 +12,10 @@ import { FadeIn, Stagger, StaggerItem } from "@/components/site/Motion";
 import { type HeroSlide } from "@/components/site/HeroSlider";
 import { CategoryShowcase, type ShowcaseItem } from "@/components/site/CategoryShowcase";
 import { HeroAdSlider } from "@/components/site/HeroAdSlider";
+import { HardwareFinder } from "@/components/site/HardwareFinder";
+import { WhatsappChannelCard } from "@/components/site/WhatsappChannelCard";
+import { CallbackBar } from "@/components/site/CallbackBar";
+import { QualityPromise } from "@/components/site/QualityPromise";
 import { PromoBannerSlider } from "@/components/site/PromoBannerSlider";
 import { MotionProvider, readBool, useMotion } from "@/components/site/MotionProvider";
 import { GlowButton } from "@/components/vengeance/GlowButton";
@@ -274,6 +278,17 @@ function HomeSections() {
         </section>
       ) : null}
 
+      {/* ============ FINDER + WHATSAPP CHANNEL ============ */}
+      <section className="container-page section-y-sm">
+        <div className="grid gap-6 lg:grid-cols-[1.3fr_1fr] lg:items-start">
+          <HardwareFinder />
+          <div className="grid gap-6">
+            <WhatsappChannelCard />
+            <CallbackBar />
+          </div>
+        </div>
+      </section>
+
       {/* ============ THE CURRENT STOCK ============ */}
       {products.length > 0 ? (
         <section className="border-y border-border bg-surface section-y">
@@ -295,6 +310,19 @@ function HomeSections() {
           </div>
         </section>
       ) : null}
+
+      {/* ============ QUALITY CHECK + GRADES ============ */}
+      <section className="container-page section-y-sm">
+        <QualityPromise />
+        <div className="mt-6 flex flex-wrap gap-3">
+          <Link
+            to="/stock-sheet"
+            className="inline-flex h-12 items-center gap-2 rounded-full bg-navy px-6 text-[0.75rem] font-bold uppercase tracking-[0.12em] text-navy-foreground transition-colors hover:bg-primary"
+          >
+            View live wholesale stock sheet <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
+      </section>
 
       {/* ============ WHY US + PROCESS — dark editorial band ============ */}
       <div className="bg-ink-ambient text-white">

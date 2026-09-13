@@ -5,6 +5,7 @@ import { MessageCircle } from "lucide-react";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { IntroReveal } from "./IntroReveal";
+import { EnquiryBasketBar } from "./EnquiryBasketBar";
 import { siteQueryOptions, whatsappLink, enquiryMessage } from "@/lib/site-query";
 
 export function SiteShell({ children }: { children: ReactNode }) {
@@ -28,6 +29,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
           <MessageCircle className="h-6 w-6" />
         </a>
       ) : null}
+      <EnquiryBasketBar />
     </div>
   );
 }

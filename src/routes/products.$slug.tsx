@@ -8,6 +8,10 @@ import { ProductCard } from "@/components/site/ProductCard";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { EnquiryDialog } from "@/components/site/EnquiryDialog";
 import { EnquiryForm } from "@/components/site/EnquiryForm";
+import { QualityPromise } from "@/components/site/QualityPromise";
+import { CallbackBar } from "@/components/site/CallbackBar";
+import { WhatsappChannelCard } from "@/components/site/WhatsappChannelCard";
+import { AddToBasketButton } from "@/components/site/AddToBasketButton";
 import { Lightbox, type LightboxImage } from "@/components/site/Lightbox";
 import { MotionProvider } from "@/components/site/MotionProvider";
 import { Badge } from "@/components/ui/badge";
@@ -347,6 +351,10 @@ function ProductDetail() {
                   </Button>
                 }
               />
+              <AddToBasketButton
+                product={{ id: product.id, name: product.name, slug: product.slug }}
+                className="h-14 w-full rounded-full sm:col-span-2"
+              />
               {phone ? (
                 <Button
                   asChild
@@ -438,6 +446,16 @@ function ProductDetail() {
           </div>
         </section>
       ) : null}
+
+      <section className="container-page section-y-sm">
+        <div className="mx-auto grid max-w-5xl gap-6">
+          <QualityPromise />
+          <div className="grid gap-6 lg:grid-cols-2">
+            <CallbackBar productId={product.id} productName={product.name} />
+            <WhatsappChannelCard />
+          </div>
+        </div>
+      </section>
 
       <section className="container-page section-y-sm">
         <div className="mx-auto max-w-3xl">

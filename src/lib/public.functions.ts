@@ -291,3 +291,23 @@ export const getPageBySlug = createServerFn({ method: "GET" })
       .maybeSingle();
     return page;
   });
+
+/** Compact wholesale stock listing for dealers (all active products). */
+export const listStockSheet = createServerFn({ method: "GET" }).handler(async () =>
+  cached("stock-sheet", 60000, async () => {
+    const { createPublicServerClient } = await import("./supabase-public.server");
+    const supabase = createPublicServerClient();
+
+    const { data } = await supabase
+      .from("products")
+      .select(
+        "id, name, slug, sku, condition, grade, processor_model, ram, storage_capacity, display_size, price, mrp, show_price, availability, stock_quantity, warranty, brands(name), categories(name, slug)",
+      )
+      .eq("is_active", true)
+      .order("sort_order")
+      .order("created_at", { ascending: false })
+      .limit(500);
+
+    return { products: data ?? [] };
+  }),
+);
