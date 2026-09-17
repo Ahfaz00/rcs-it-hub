@@ -39,6 +39,7 @@ import { Route as AuthenticatedAdminLogsRouteImport } from './routes/_authentica
 import { Route as AuthenticatedAdminSettingsRouteImport } from './routes/_authenticated/admin.settings'
 import { Route as AuthenticatedAdminWhatsappImportRouteImport } from './routes/_authenticated/admin.whatsapp-import'
 import { Route as ApiMediaSplatRouteImport } from './routes/api/media.$'
+import { Route as ApiPublicWhatsappInboxRouteImport } from './routes/api/public/whatsapp-inbox'
 import { Route as AuthenticatedAdminResourceIndexRouteImport } from './routes/_authenticated/admin.$resource.index'
 import { Route as AuthenticatedAdminResourceIdRouteImport } from './routes/_authenticated/admin.$resource.$id'
 
@@ -193,6 +194,11 @@ const ApiMediaSplatRoute = ApiMediaSplatRouteImport.update({
   path: '/api/media/$',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicWhatsappInboxRoute = ApiPublicWhatsappInboxRouteImport.update({
+  id: '/api/public/whatsapp-inbox',
+  path: '/api/public/whatsapp-inbox',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedAdminResourceIndexRoute =
   AuthenticatedAdminResourceIndexRouteImport.update({
     id: '/admin/$resource/',
@@ -235,6 +241,7 @@ export interface FileRoutesByFullPath {
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/admin/whatsapp-import': typeof AuthenticatedAdminWhatsappImportRoute
   '/api/media/$': typeof ApiMediaSplatRoute
+  '/api/public/whatsapp-inbox': typeof ApiPublicWhatsappInboxRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
   '/admin/$resource/$id': typeof AuthenticatedAdminResourceIdRoute
   '/admin/$resource/': typeof AuthenticatedAdminResourceIndexRoute
@@ -268,6 +275,7 @@ export interface FileRoutesByTo {
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/admin/whatsapp-import': typeof AuthenticatedAdminWhatsappImportRoute
   '/api/media/$': typeof ApiMediaSplatRoute
+  '/api/public/whatsapp-inbox': typeof ApiPublicWhatsappInboxRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
   '/admin/$resource/$id': typeof AuthenticatedAdminResourceIdRoute
   '/admin/$resource': typeof AuthenticatedAdminResourceIndexRoute
@@ -303,6 +311,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/_authenticated/admin/whatsapp-import': typeof AuthenticatedAdminWhatsappImportRoute
   '/api/media/$': typeof ApiMediaSplatRoute
+  '/api/public/whatsapp-inbox': typeof ApiPublicWhatsappInboxRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/_authenticated/admin/$resource/$id': typeof AuthenticatedAdminResourceIdRoute
   '/_authenticated/admin/$resource/': typeof AuthenticatedAdminResourceIndexRoute
@@ -338,6 +347,7 @@ export interface FileRouteTypes {
     | '/admin/settings'
     | '/admin/whatsapp-import'
     | '/api/media/$'
+    | '/api/public/whatsapp-inbox'
     | '/admin/'
     | '/admin/$resource/$id'
     | '/admin/$resource/'
@@ -371,6 +381,7 @@ export interface FileRouteTypes {
     | '/admin/settings'
     | '/admin/whatsapp-import'
     | '/api/media/$'
+    | '/api/public/whatsapp-inbox'
     | '/admin'
     | '/admin/$resource/$id'
     | '/admin/$resource'
@@ -405,6 +416,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/settings'
     | '/_authenticated/admin/whatsapp-import'
     | '/api/media/$'
+    | '/api/public/whatsapp-inbox'
     | '/_authenticated/admin/'
     | '/_authenticated/admin/$resource/$id'
     | '/_authenticated/admin/$resource/'
@@ -437,6 +449,7 @@ export interface RootRouteChildren {
   ProductsIndexRoute: typeof ProductsIndexRoute
   ServicesIndexRoute: typeof ServicesIndexRoute
   ApiMediaSplatRoute: typeof ApiMediaSplatRoute
+  ApiPublicWhatsappInboxRoute: typeof ApiPublicWhatsappInboxRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -651,6 +664,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiMediaSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/whatsapp-inbox': {
+      id: '/api/public/whatsapp-inbox'
+      path: '/api/public/whatsapp-inbox'
+      fullPath: '/api/public/whatsapp-inbox'
+      preLoaderRoute: typeof ApiPublicWhatsappInboxRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated/admin/$resource/': {
       id: '/_authenticated/admin/$resource/'
       path: '/admin/$resource'
@@ -716,6 +736,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProductsIndexRoute: ProductsIndexRoute,
   ServicesIndexRoute: ServicesIndexRoute,
   ApiMediaSplatRoute: ApiMediaSplatRoute,
+  ApiPublicWhatsappInboxRoute: ApiPublicWhatsappInboxRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
