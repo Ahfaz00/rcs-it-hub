@@ -25,9 +25,9 @@ export const Route = createFileRoute("/api/public/whatsapp-inbox")({
         }
 
         const text = typeof body.text === "string" ? body.text.trim() : "";
-        if (text.length < 10 || text.length > 20000) {
+        if (text.length < 3 || text.length > 20000) {
           return Response.json(
-            { ok: false, error: "Text must be between 10 and 20000 characters." },
+            { ok: false, error: "Text must be between 3 and 20000 characters." },
             { status: 422 },
           );
         }
