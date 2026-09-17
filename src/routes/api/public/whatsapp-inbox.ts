@@ -67,7 +67,7 @@ export const Route = createFileRoute("/api/public/whatsapp-inbox")({
         let productsCreated = 0;
         let errorMsg: string | null = null;
         let products: { name: string }[] = [];
-        let stored: { kind: "image" | "video"; path: string }[] = [];
+        let stored: { kind: "image"; path: string }[] = [];
         let productIds: string[] = [];
 
         try {
