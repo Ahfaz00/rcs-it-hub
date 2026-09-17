@@ -45,49 +45,42 @@ export function collectMediaUrls(body: Record<string, unknown>): string[] {
   return Array.from(new Set(out));
 }
 
-/** Download remote media and store it in the private "media" bucket. */
+/** Download remote images and store them in the private "media" bucket. */
 export async function storeRemoteMedia(
   client: SupabaseClient<Database>,
   urls: string[],
 ): Promise<StoredMedia[]> {
   const stored: StoredMedia[] = [];
   let images = 0;
-  let videos = 0;
 
   for (const url of urls) {
-    if (images >= MAX_IMAGES && videos >= MAX_VIDEOS) break;
+    if (images >= MAX_IMAGES) break;
     try {
       const res = await fetch(url, {
         headers: {
           // Some hosts (Wikimedia, CDNs) reject requests without a UA.
           "User-Agent": "RCS-Import/1.0 (+https://rcs-it-hub.lovable.app)",
-          Accept: "image/*,video/*;q=0.9,*/*;q=0.5",
+          Accept: "image/*,*/*;q=0.5",
         },
         redirect: "follow",
       });
       if (!res.ok) continue;
       const type = (res.headers.get("content-type") ?? "").split(";")[0]!.trim().toLowerCase();
-      const isImage = type.startsWith("image/");
-      const isVideo = type.startsWith("video/");
-      if (!isImage && !isVideo) continue;
-      if (isImage && images >= MAX_IMAGES) continue;
-      if (isVideo && videos >= MAX_VIDEOS) continue;
+      if (!type.startsWith("image/")) continue;
 
       const buffer = new Uint8Array(await res.arrayBuffer());
       if (!buffer.byteLength) continue;
-      if (isImage && buffer.byteLength > MAX_IMAGE_BYTES) continue;
-      if (isVideo && buffer.byteLength > MAX_VIDEO_BYTES) continue;
+      if (buffer.byteLength > MAX_IMAGE_BYTES) continue;
 
-      const ext = EXT_BY_TYPE[type] ?? (isImage ? "jpg" : "mp4");
+      const ext = EXT_BY_TYPE[type] ?? "jpg";
       const path = `whatsapp/${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
       const { error } = await client.storage
         .from("media")
         .upload(path, buffer, { contentType: type, upsert: false });
       if (error) continue;
 
-      stored.push({ kind: isImage ? "image" : "video", path });
-      if (isImage) images += 1;
-      else videos += 1;
+      stored.push({ kind: "image", path });
+      images += 1;
     } catch {
       /* skip unreachable media, keep importing the rest */
     }
