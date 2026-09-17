@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack-query/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import { Loader2, Sparkles, Trash2 } from "lucide-react";
+import { Loader2, Sparkles, Trash2, Inbox, Copy, RefreshCw, CheckCheck } from "lucide-react";
 import { toast } from "sonner";
 
 import { AdminShell, AdminHeader } from "@/components/admin/AdminShell";
@@ -15,6 +15,11 @@ import { slugify } from "@/lib/format";
 import { logActivity } from "@/lib/admin/log";
 import { CONDITIONS } from "@/lib/admin/resources";
 import { parseWhatsappPosts, type ParsedProductDraft } from "@/lib/whatsapp-import.functions";
+import {
+  getWhatsappInboxConfig,
+  listWhatsappInbox,
+  deleteWhatsappInboxRow,
+} from "@/lib/whatsapp-inbox.functions";
 
 export const Route = createFileRoute("/_authenticated/admin/whatsapp-import")({
   component: WhatsappImportPage,
@@ -30,8 +35,12 @@ function WhatsappImportPage() {
   const [drafts, setDrafts] = useState<Draft[]>([]);
   const [parsing, setParsing] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   const parse = useServerFn(parseWhatsappPosts);
+  const deleteRow = useServerFn(deleteWhatsappInboxRow);
+
+  const queryClient = useQueryClient();
 
   const { data: taxonomy } = useQuery({
     queryKey: ["import-taxonomy"],
@@ -43,6 +52,20 @@ function WhatsappImportPage() {
       return { categories: cats.data ?? [], brands: brands.data ?? [] };
     },
     staleTime: 5 * 60 * 1000,
+  });
+
+  const inboxConfig = useServerFn(getWhatsappInboxConfig);
+  const { data: config } = useQuery({
+    queryKey: ["whatsapp-inbox-config"],
+    queryFn: () => inboxConfig(),
+    staleTime: 60 * 1000,
+  });
+
+  const inboxList = useServerFn(listWhatsappInbox);
+  const inboxQuery = useQuery({
+    queryKey: ["whatsapp-inbox-list"],
+    queryFn: () => inboxList({ data: { limit: 20 } }),
+    staleTime: 30 * 1000,
   });
 
   async function handleParse() {
@@ -130,6 +153,29 @@ function WhatsappImportPage() {
     }
   }
 
+  async function copyInbox() {
+    const token = config?.token;
+    const url = config?.url;
+    if (!token || !url) return;
+    try {
+      await navigator.clipboard.writeText(url);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    } catch {
+      toast.error("Could not copy. Select the link and copy manually.");
+    }
+  }
+
+  async function handleDeleteRow(id: string) {
+    try {
+      await deleteRow({ data: { id } });
+      await queryClient.invalidateQueries({ queryKey: ["whatsapp-inbox-list"] });
+      toast.success("Removed.");
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Could not delete.");
+    }
+  }
+
   return (
     <AdminShell>
       <AdminHeader
@@ -137,6 +183,41 @@ function WhatsappImportPage() {
         description="Paste your WhatsApp channel post and turn it into product drafts."
       />
 
+      {/* Auto-inbox (Zapier) */}
+      <div className="mb-6 space-y-3 rounded-lg border border-border bg-card p-4">
+        <div className="flex items-center gap-2">
+          <Inbox className="size-4 text-primary" />
+          <h3 className="text-sm font-semibold">Auto-inbox (Zapier)</h3>
+        </div>
+        {config?.hasToken ? (
+          <div className="space-y-2">
+            <p className="text-xs text-muted-foreground">
+              Send WhatsApp post text to this secret URL. New posts become draft products automatically
+              (you still publish them from Products). Duplicates are skipped.
+            </p>
+            <div className="flex flex-wrap items-center gap-2">
+              <Input readOnly value={config.url} className="font-mono text-xs" />
+              <Button variant="outline" size="sm" onClick={copyInbox}>
+                {copied ? <CheckCheck className="mr-1 size-4" /> : <Copy className="mr-1 size-4" />}
+                {copied ? "Copied" : "Copy URL"}
+              </Button>
+            </div>
+            <details className="text-xs">
+              <summary className="cursor-pointer text-muted-foreground">Show secret token</summary>
+              <code className="mt-1 block break-all rounded bg-muted px-2 py-1 font-mono">
+                {config.token}
+              </code>
+            </details>
+          </div>
+        ) : (
+          <p className="text-xs text-muted-foreground">
+            Inbox token is not set yet. Add a secret named <code>WHATSAPP_INBOX_TOKEN</code> to enable
+            automatic imports.
+          </p>
+        )}
+      </div>
+
+      {/* Manual paste box */}
       <div className="space-y-3 rounded-lg border border-border bg-card p-4">
         <Label htmlFor="wa-text">WhatsApp post text</Label>
         <Textarea
@@ -288,6 +369,69 @@ function WhatsappImportPage() {
           </div>
         </div>
       )}
+
+      {/* Recent auto-imports */}
+      <div className="mt-8 space-y-3 rounded-lg border border-border bg-card p-4">
+        <div className="flex items-center justify-between">
+          <h3 className="text-sm font-semibold">Recent auto-imports</h3>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => inboxQuery.refetch()}
+            disabled={inboxQuery.isFetching}
+          >
+            <RefreshCw className={`mr-1 size-4 ${inboxQuery.isFetching ? "animate-spin" : ""}`} />
+            Refresh
+          </Button>
+        </div>
+        {(inboxQuery.data?.rows ?? []).length === 0 ? (
+          <p className="text-xs text-muted-foreground">No automatic imports yet.</p>
+        ) : (
+          <div className="space-y-2">
+            {(inboxQuery.data?.rows ?? []).map((row) => (
+              <div key={row.id} className="flex items-start justify-between gap-3 rounded-md border border-border p-3">
+                <div className="min-w-0 flex-1">
+                  <div className="flex flex-wrap items-center gap-2 text-xs">
+                    <StatusBadge status={row.status} />
+                    <span className="text-muted-foreground">{row.products_created} draft(s)</span>
+                    {row.source && (
+                      <span className="rounded bg-muted px-1.5 py-0.5 text-[10px]">{row.source}</span>
+                    )}
+                    <span className="text-muted-foreground">
+                      {new Date(row.created_at).toLocaleString()}
+                    </span>
+                  </div>
+                  <p className="mt-1 line-clamp-2 text-xs text-muted-foreground">
+                    {row.error ? row.error : row.raw_text}
+                  </p>
+                </div>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  aria-label="Remove"
+                  onClick={() => handleDeleteRow(row.id)}
+                >
+                  <Trash2 className="size-4" />
+                </Button>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
     </AdminShell>
+  );
+}
+
+function StatusBadge({ status }: { status: string }) {
+  const map: Record<string, string> = {
+    done: "bg-emerald-100 text-emerald-700",
+    pending: "bg-amber-100 text-amber-700",
+    no_products: "bg-slate-100 text-slate-600",
+    error: "bg-red-100 text-red-700",
+  };
+  return (
+    <span className={`rounded px-1.5 py-0.5 text-[10px] font-medium capitalize ${map[status] ?? "bg-muted"}`}>
+      {status.replace("_", " ")}
+    </span>
   );
 }
