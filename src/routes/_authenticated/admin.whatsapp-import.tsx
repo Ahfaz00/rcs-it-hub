@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
@@ -19,7 +19,7 @@ import {
   getWhatsappInboxConfig,
   listWhatsappInbox,
   deleteWhatsappInboxRow,
-  attachFrameToProduct,
+  
 } from "@/lib/whatsapp-inbox.functions";
 
 export const Route = createFileRoute("/_authenticated/admin/whatsapp-import")({
@@ -405,7 +405,7 @@ function WhatsappImportPage() {
                   <p className="mt-1 line-clamp-2 text-xs text-muted-foreground">
                     {row.error ? row.error : row.raw_text}
                   </p>
-                  <InboxMedia media={row.media} productIds={row.product_ids} />
+                  <InboxMedia media={row.media} />
                 </div>
                 <Button
                   variant="ghost"
