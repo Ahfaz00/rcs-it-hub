@@ -1,8 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { createHmac, timingSafeEqual } from "node:crypto";
 
-import { parseDraftsFromText, insertDraftProducts } from "@/lib/whatsapp-parse.server";
-
 export const Route = createFileRoute("/api/public/whatsapp-inbox")({
   server: {
     handlers: {
