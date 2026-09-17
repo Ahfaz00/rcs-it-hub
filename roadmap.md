@@ -1,2 +1,2 @@
-
-- [ ] WhatsApp import: AI key missing on external (Vercel) deploy — use Lovable-hosted site for admin import
+- [x] WhatsApp auto-inbox: secret public endpoint + admin config/recent-imports (use Lovable-hosted site; AI key present there)
+- [ ] Zapier setup: user to create a Zap (Trigger → Webhook POST) pointing at inbox URL; pending user action
