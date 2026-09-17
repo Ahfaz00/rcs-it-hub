@@ -172,8 +172,8 @@ type Taxonomy = { categories: { id: string; name: string }[]; brands: { id: stri
 export async function insertDraftProducts(
   client: SupabaseClient<Database>,
   products: ParsedProductDraft[],
-): Promise<{ created: number }> {
-  if (!products.length) return { created: 0 };
+): Promise<{ created: number; ids: string[] }> {
+  if (!products.length) return { created: 0, ids: [] };
 
   const [cats, brands] = await Promise.all([
     client.from("categories").select("id, name").order("name"),
@@ -185,13 +185,16 @@ export async function insertDraftProducts(
   };
 
   let created = 0;
+  const ids: string[] = [];
   for (const d of products) {
     const category = taxonomy.categories.find((c) => c.name === d.category);
     const brand = taxonomy.brands.find((b) => b.name === d.brand);
     const base = slugify(d.name) || "product";
     const slug = `${base}-${Math.random().toString(36).slice(2, 6)}`;
 
-    const { error } = await client.from("products").insert({
+    const { data: inserted, error } = await client
+      .from("products")
+      .insert({
       name: d.name.trim(),
       slug,
       category_id: category?.id ?? null,
@@ -208,10 +211,13 @@ export async function insertDraftProducts(
       price: d.price,
       show_price: d.price != null,
       availability: "Enquire for Availability",
-      is_active: false,
-    });
+        is_active: false,
+      })
+      .select("id")
+      .single();
     if (error) throw new Error(error.message);
+    if (inserted?.id) ids.push(inserted.id);
     created += 1;
   }
-  return { created };
+  return { created, ids };
 }
