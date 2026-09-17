@@ -50,7 +50,9 @@ export const listWhatsappInbox = createServerFn({ method: "GET" })
 
     const { data: rows, error } = await context.supabase
       .from("whatsapp_inbox")
-      .select("id, raw_text, source, status, products_created, error, created_at, processed_at")
+      .select(
+        "id, raw_text, source, status, products_created, media, product_ids, error, created_at, processed_at",
+      )
       .order("created_at", { ascending: false })
       .limit(data.limit);
 
@@ -69,4 +71,44 @@ export const deleteWhatsappInboxRow = createServerFn({ method: "POST" })
     const { error } = await context.supabase.from("whatsapp_inbox").delete().eq("id", data.id);
     if (error) throw new Error(error.message);
     return { ok: true };
+  });
+
+const frameSchema = z.object({
+  productId: z.string().uuid(),
+  dataUrl: z.string().max(12_000_000),
+});
+
+/** Save a frame captured from a post video as the product's photo. */
+export const attachFrameToProduct = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((data: unknown) => frameSchema.parse(data))
+  .handler(async ({ data, context }) => {
+    const { data: isAdmin } = await context.supabase.rpc("is_admin");
+    if (!isAdmin) throw new Error("Admin access required.");
+
+    const match = /^data:(image\/(?:jpeg|png|webp));base64,(.+)$/.exec(data.dataUrl);
+    if (!match) throw new Error("That frame could not be read.");
+    const contentType = match[1]!;
+    const bytes = Uint8Array.from(atob(match[2]!), (c) => c.charCodeAt(0));
+    if (!bytes.byteLength) throw new Error("That frame is empty.");
+
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+    const ext = contentType === "image/png" ? "png" : contentType === "image/webp" ? "webp" : "jpg";
+    const path = `whatsapp/frame-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+
+    const { error: upErr } = await supabaseAdmin.storage
+      .from("media")
+      .upload(path, bytes, { contentType, upsert: false });
+    if (upErr) throw new Error(upErr.message);
+
+    const { data: product } = await supabaseAdmin
+      .from("products")
+      .select("name")
+      .eq("id", data.productId)
+      .maybeSingle();
+
+    const { attachImagesToProduct } = await import("@/lib/whatsapp-media.server");
+    await attachImagesToProduct(supabaseAdmin, data.productId, [path], product?.name ?? "Product photo");
+
+    return { ok: true, path };
   });

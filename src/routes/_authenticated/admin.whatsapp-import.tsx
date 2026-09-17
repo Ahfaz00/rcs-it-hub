@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
@@ -19,6 +19,7 @@ import {
   getWhatsappInboxConfig,
   listWhatsappInbox,
   deleteWhatsappInboxRow,
+  attachFrameToProduct,
 } from "@/lib/whatsapp-inbox.functions";
 
 export const Route = createFileRoute("/_authenticated/admin/whatsapp-import")({
@@ -404,6 +405,7 @@ function WhatsappImportPage() {
                   <p className="mt-1 line-clamp-2 text-xs text-muted-foreground">
                     {row.error ? row.error : row.raw_text}
                   </p>
+                  <InboxMedia media={row.media} productIds={row.product_ids} />
                 </div>
                 <Button
                   variant="ghost"
@@ -433,5 +435,104 @@ function StatusBadge({ status }: { status: string }) {
     <span className={`rounded px-1.5 py-0.5 text-[10px] font-medium capitalize ${map[status] ?? "bg-muted"}`}>
       {status.replace("_", " ")}
     </span>
+  );
+}
+
+
+type InboxMediaItem = { kind: "image" | "video"; path: string };
+
+function toMediaItems(value: unknown): InboxMediaItem[] {
+  if (!Array.isArray(value)) return [];
+  return value.flatMap((item) => {
+    if (!item || typeof item !== "object") return [];
+    const { kind, path } = item as { kind?: unknown; path?: unknown };
+    if (typeof path !== "string" || !path) return [];
+    return [{ kind: kind === "video" ? "video" : "image", path }];
+  });
+}
+
+function toIds(value: unknown): string[] {
+  return Array.isArray(value) ? value.filter((v): v is string => typeof v === "string") : [];
+}
+
+/** Photos that came with the post, plus frame capture for post videos. */
+function InboxMedia({ media, productIds }: { media: unknown; productIds: unknown }) {
+  const items = toMediaItems(media);
+  const ids = toIds(productIds);
+  const saveFrame = useServerFn(attachFrameToProduct);
+  const [busy, setBusy] = useState(false);
+  const videoRefs = useRef<Record<string, HTMLVideoElement | null>>({});
+
+  if (!items.length) return null;
+  const images = items.filter((i) => i.kind === "image");
+  const videos = items.filter((i) => i.kind === "video");
+
+  async function capture(path: string) {
+    const video = videoRefs.current[path];
+    if (!video) return;
+    if (!ids.length) {
+      toast.error("This post has no draft product to attach the photo to.");
+      return;
+    }
+    const canvas = document.createElement("canvas");
+    canvas.width = video.videoWidth || 1280;
+    canvas.height = video.videoHeight || 720;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    let dataUrl = "";
+    try {
+      dataUrl = canvas.toDataURL("image/jpeg", 0.9);
+    } catch {
+      toast.error("This video frame could not be read.");
+      return;
+    }
+    setBusy(true);
+    try {
+      for (const id of ids) {
+        await saveFrame({ data: { productId: id, dataUrl } });
+      }
+      toast.success("Frame saved as the product photo.");
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Could not save the frame.");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  return (
+    <div className="mt-2 space-y-2">
+      {images.length > 0 && (
+        <div className="flex flex-wrap gap-2">
+          {images.map((item) => (
+            <img
+              key={item.path}
+              src={`/api/media/${item.path}`}
+              alt="Imported from the post"
+              loading="lazy"
+              className="size-16 rounded-md border border-border object-cover"
+            />
+          ))}
+        </div>
+      )}
+      {videos.map((item) => (
+        <div key={item.path} className="flex flex-wrap items-center gap-2">
+          <video
+            ref={(el) => {
+              videoRefs.current[item.path] = el;
+            }}
+            src={`/api/media/${item.path}`}
+            controls
+            playsInline
+            preload="metadata"
+            className="h-28 rounded-md border border-border bg-muted"
+          />
+          <Button variant="outline" size="sm" disabled={busy} onClick={() => capture(item.path)}>
+            {busy && <Loader2 className="mr-2 size-4 animate-spin" />}
+            Use this frame as photo
+          </Button>
+        </div>
+      ))}
+    </div>
   );
 }
