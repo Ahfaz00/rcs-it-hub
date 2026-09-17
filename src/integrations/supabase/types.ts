@@ -1535,6 +1535,39 @@ export type Database = {
         }
         Relationships: []
       }
+      whatsapp_inbox: {
+        Row: {
+          created_at: string
+          error: string | null
+          id: string
+          processed_at: string | null
+          products_created: number
+          raw_text: string
+          source: string | null
+          status: string
+        }
+        Insert: {
+          created_at?: string
+          error?: string | null
+          id?: string
+          processed_at?: string | null
+          products_created?: number
+          raw_text: string
+          source?: string | null
+          status?: string
+        }
+        Update: {
+          created_at?: string
+          error?: string | null
+          id?: string
+          processed_at?: string | null
+          products_created?: number
+          raw_text?: string
+          source?: string | null
+          status?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
