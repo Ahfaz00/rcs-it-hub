@@ -1540,7 +1540,9 @@ export type Database = {
           created_at: string
           error: string | null
           id: string
+          media: Json
           processed_at: string | null
+          product_ids: Json
           products_created: number
           raw_text: string
           source: string | null
@@ -1550,7 +1552,9 @@ export type Database = {
           created_at?: string
           error?: string | null
           id?: string
+          media?: Json
           processed_at?: string | null
+          product_ids?: Json
           products_created?: number
           raw_text: string
           source?: string | null
@@ -1560,7 +1564,9 @@ export type Database = {
           created_at?: string
           error?: string | null
           id?: string
+          media?: Json
           processed_at?: string | null
+          product_ids?: Json
           products_created?: number
           raw_text?: string
           source?: string | null
