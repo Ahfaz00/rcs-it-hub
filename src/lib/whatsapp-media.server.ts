@@ -66,7 +66,14 @@ export async function storeRemoteMedia(
   for (const url of urls) {
     if (images >= MAX_IMAGES && videos >= MAX_VIDEOS) break;
     try {
-      const res = await fetch(url);
+      const res = await fetch(url, {
+        headers: {
+          // Some hosts (Wikimedia, CDNs) reject requests without a UA.
+          "User-Agent": "RCS-Import/1.0 (+https://rcs-it-hub.lovable.app)",
+          Accept: "image/*,video/*;q=0.9,*/*;q=0.5",
+        },
+        redirect: "follow",
+      });
       if (!res.ok) continue;
       const type = (res.headers.get("content-type") ?? "").split(";")[0]!.trim().toLowerCase();
       const isImage = type.startsWith("image/");
