@@ -1,12 +1,10 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Database } from "@/integrations/supabase/types";
 
-export type StoredMedia = { kind: "image" | "video"; path: string };
+export type StoredMedia = { kind: "image"; path: string };
 
 const MAX_IMAGES = 6;
-const MAX_VIDEOS = 2;
 const MAX_IMAGE_BYTES = 10 * 1024 * 1024;
-const MAX_VIDEO_BYTES = 45 * 1024 * 1024;
 
 const EXT_BY_TYPE: Record<string, string> = {
   "image/jpeg": "jpg",
@@ -14,21 +12,14 @@ const EXT_BY_TYPE: Record<string, string> = {
   "image/png": "png",
   "image/webp": "webp",
   "image/gif": "gif",
-  "video/mp4": "mp4",
-  "video/quicktime": "mov",
-  "video/webm": "webm",
-  "video/3gpp": "3gp",
 };
 
-/** Pull image/video URLs out of a webhook payload (accepts strings, arrays or separated lists). */
+/** Pull image URLs out of a webhook payload (accepts strings, arrays or separated lists). */
 export function collectMediaUrls(body: Record<string, unknown>): string[] {
   const keys = [
     "image_url",
     "image_urls",
     "images",
-    "video_url",
-    "video_urls",
-    "videos",
     "media",
     "media_urls",
     "attachments",
