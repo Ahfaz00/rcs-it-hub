@@ -439,7 +439,7 @@ function StatusBadge({ status }: { status: string }) {
 }
 
 
-type InboxMediaItem = { kind: "image" | "video"; path: string };
+type InboxMediaItem = { kind: "image"; path: string };
 
 function toMediaItems(value: unknown): InboxMediaItem[] {
   if (!Array.isArray(value)) return [];
@@ -447,91 +447,26 @@ function toMediaItems(value: unknown): InboxMediaItem[] {
     if (!item || typeof item !== "object") return [];
     const { kind, path } = item as { kind?: unknown; path?: unknown };
     if (typeof path !== "string" || !path) return [];
-    return [{ kind: kind === "video" ? "video" : "image", path }];
+    if (kind && kind !== "image") return [];
+    return [{ kind: "image" as const, path }];
   });
 }
 
-function toIds(value: unknown): string[] {
-  return Array.isArray(value) ? value.filter((v): v is string => typeof v === "string") : [];
-}
-
-/** Photos that came with the post, plus frame capture for post videos. */
-function InboxMedia({ media, productIds }: { media: unknown; productIds: unknown }) {
-  const items = toMediaItems(media);
-  const ids = toIds(productIds);
-  const saveFrame = useServerFn(attachFrameToProduct);
-  const [busy, setBusy] = useState(false);
-  const videoRefs = useRef<Record<string, HTMLVideoElement | null>>({});
-
-  if (!items.length) return null;
-  const images = items.filter((i) => i.kind === "image");
-  const videos = items.filter((i) => i.kind === "video");
-
-  async function capture(path: string) {
-    const video = videoRefs.current[path];
-    if (!video) return;
-    if (!ids.length) {
-      toast.error("This post has no draft product to attach the photo to.");
-      return;
-    }
-    const canvas = document.createElement("canvas");
-    canvas.width = video.videoWidth || 1280;
-    canvas.height = video.videoHeight || 720;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-    let dataUrl = "";
-    try {
-      dataUrl = canvas.toDataURL("image/jpeg", 0.9);
-    } catch {
-      toast.error("This video frame could not be read.");
-      return;
-    }
-    setBusy(true);
-    try {
-      for (const id of ids) {
-        await saveFrame({ data: { productId: id, dataUrl } });
-      }
-      toast.success("Frame saved as the product photo.");
-    } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Could not save the frame.");
-    } finally {
-      setBusy(false);
-    }
-  }
+/** Photos that came with the post. */
+function InboxMedia({ media }: { media: unknown }) {
+  const images = toMediaItems(media);
+  if (!images.length) return null;
 
   return (
-    <div className="mt-2 space-y-2">
-      {images.length > 0 && (
-        <div className="flex flex-wrap gap-2">
-          {images.map((item) => (
-            <img
-              key={item.path}
-              src={`/api/media/${item.path}`}
-              alt="Imported from the post"
-              loading="lazy"
-              className="size-16 rounded-md border border-border object-cover"
-            />
-          ))}
-        </div>
-      )}
-      {videos.map((item) => (
-        <div key={item.path} className="flex flex-wrap items-center gap-2">
-          <video
-            ref={(el) => {
-              videoRefs.current[item.path] = el;
-            }}
-            src={`/api/media/${item.path}`}
-            controls
-            playsInline
-            preload="metadata"
-            className="h-28 rounded-md border border-border bg-muted"
-          />
-          <Button variant="outline" size="sm" disabled={busy} onClick={() => capture(item.path)}>
-            {busy && <Loader2 className="mr-2 size-4 animate-spin" />}
-            Use this frame as photo
-          </Button>
-        </div>
+    <div className="mt-2 flex flex-wrap gap-2">
+      {images.map((item) => (
+        <img
+          key={item.path}
+          src={`/api/media/${item.path}`}
+          alt="Imported from the post"
+          loading="lazy"
+          className="size-16 rounded-md border border-border object-cover"
+        />
       ))}
     </div>
   );
