@@ -35,6 +35,9 @@ export const Route = createFileRoute("/api/public/whatsapp-inbox")({
         const source = typeof body.source === "string" && body.source.length <= 120 ? body.source : "zapier";
 
         const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+        const { parseDraftsFromText, insertDraftProducts } = await import(
+          "@/lib/whatsapp-parse.server"
+        );
 
         // De-duplicate: skip identical text already processed.
         const { data: existing } = await supabaseAdmin
