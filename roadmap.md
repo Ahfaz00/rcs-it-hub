@@ -1,2 +1,3 @@
-- [x] WhatsApp auto-inbox: secret public endpoint + admin config/recent-imports (use Lovable-hosted site; AI key present there)
-- [ ] Zapier setup: user to create a Zap (Trigger → Webhook POST) pointing at inbox URL; pending user action
+- [x] WhatsApp auto-inbox: secret public endpoint + admin config/recent-imports
+- [ ] Zapier setup: user to publish the tested Zap and include image attachment field
+- [ ] Replace YouTube videos page with automatic Facebook and Instagram video feeds
