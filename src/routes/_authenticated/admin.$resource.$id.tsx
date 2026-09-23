@@ -162,7 +162,11 @@ function ResourceEditor() {
         queryClient.invalidateQueries({ queryKey: ["admin-row", resource, id] });
       }
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Could not save.");
+      const message =
+        typeof err === "object" && err && "message" in err
+          ? String((err as { message: unknown }).message)
+          : "Could not save.";
+      toast.error(message);
     } finally {
       setBusy(false);
     }
