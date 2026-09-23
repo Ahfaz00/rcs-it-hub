@@ -159,7 +159,7 @@ function VideosPage() {
             </div>
             <div className="mx-auto aspect-[9/16] max-h-[75vh] max-w-md overflow-hidden rounded-lg bg-card">
               <iframe
-                src={`${active.permalink.replace(/\/$/, "")}/embed`}
+                src={instagramEmbedUrl(active.permalink) ?? `${active.permalink.replace(/\/$/, "")}/embed`}
                 title={active.title}
                 allow="autoplay; encrypted-media; picture-in-picture"
                 allowFullScreen
