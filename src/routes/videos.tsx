@@ -97,6 +97,14 @@ function VideosPage() {
                         loading="lazy"
                         className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                       />
+                    ) : instagramEmbedUrl(v.permalink) ? (
+                      <iframe
+                        src={instagramEmbedUrl(v.permalink)!}
+                        title={v.title}
+                        loading="lazy"
+                        scrolling="no"
+                        className="pointer-events-none absolute left-1/2 top-1/2 h-[190%] w-full -translate-x-1/2 -translate-y-1/2 border-0"
+                      />
                     ) : null}
                     <span className="absolute inset-0 grid place-items-center bg-ink/30 transition-colors group-hover:bg-ink/45">
                       <span className="grid h-14 w-14 place-items-center rounded-full bg-background text-primary shadow-card">
