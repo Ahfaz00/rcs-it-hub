@@ -46,8 +46,9 @@ function ResourceList() {
   const [term, setTerm] = useState("");
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(0);
+  const [instagramStatus, setInstagramStatus] = useState<"all" | "published" | "unpublished">("all");
 
-  const queryKey = ["admin", resource, query, page];
+  const queryKey = ["admin", resource, query, page, instagramStatus];
 
   const { data, isPending } = useQuery({
     queryKey,
@@ -62,6 +63,14 @@ function ResourceList() {
         const safe = query.replace(/[%,()]/g, " ").trim();
         const filter = config.searchColumns.map((c) => `${c}.ilike.%${safe}%`).join(",");
         q = q.or(filter);
+      }
+
+      if (resource === "instagram_videos" && instagramStatus !== "all") {
+        q = q.eq("is_active", instagramStatus === "published");
+      }
+
+      if (resource === "instagram_videos") {
+        q = q.order("created_at", { ascending: false });
       }
 
       const { data: rows, count, error } = await q;
@@ -87,6 +96,10 @@ function ResourceList() {
       entity_label: String(row["name"] ?? row["title"] ?? row["question"] ?? row.id),
     });
     queryClient.invalidateQueries({ queryKey: ["admin", resource] });
+    if (resource === "instagram_videos") {
+      queryClient.invalidateQueries({ queryKey: ["social-videos"] });
+      toast.success(next ? "Video published." : "Video unpublished.");
+    }
   }
 
   async function remove(row: Row) {
@@ -103,6 +116,9 @@ function ResourceList() {
     });
     toast.success(`${config.singular} deleted.`);
     queryClient.invalidateQueries({ queryKey: ["admin", resource] });
+    if (resource === "instagram_videos") {
+      queryClient.invalidateQueries({ queryKey: ["social-videos"] });
+    }
   }
 
   function exportCsv() {
@@ -147,6 +163,25 @@ function ResourceList() {
       />
 
       {resource === "instagram_videos" ? <InstagramBulkAdd /> : null}
+
+      {resource === "instagram_videos" ? (
+        <div className="mb-4 flex flex-wrap gap-2" aria-label="Filter videos">
+          {(["all", "published", "unpublished"] as const).map((status) => (
+            <Button
+              key={status}
+              type="button"
+              size="sm"
+              variant={instagramStatus === status ? "default" : "outline"}
+              onClick={() => {
+                setInstagramStatus(status);
+                setPage(0);
+              }}
+            >
+              {status === "all" ? "All videos" : status === "published" ? "Published" : "Unpublished"}
+            </Button>
+          ))}
+        </div>
+      ) : null}
 
       <form
         onSubmit={(e) => {
@@ -300,7 +335,14 @@ function Cell({
   const value = row[column.name];
 
   if (column.type === "boolean") {
-    return <Switch checked={Boolean(value)} onCheckedChange={onToggle} aria-label={column.label} />;
+    return (
+      <div className="flex min-w-28 items-center gap-2">
+        <Switch checked={Boolean(value)} onCheckedChange={onToggle} aria-label={column.label} />
+        {resource === "instagram_videos" && column.name === "is_active" ? (
+          <span className="text-xs text-muted-foreground">{value ? "Published" : "Unpublished"}</span>
+        ) : null}
+      </div>
+    );
   }
   if (column.type === "image") {
     const src = mediaUrl(typeof value === "string" ? value : null);

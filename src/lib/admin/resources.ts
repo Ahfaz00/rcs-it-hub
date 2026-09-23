@@ -485,7 +485,7 @@ export const resources: Record<string, ResourceConfig> = {
       { name: "title", label: "Title" },
       { name: "instagram_url", label: "Instagram link" },
       { name: "published_at", label: "Published", type: "date" },
-      { name: "is_active", label: "Visible", type: "boolean" },
+      { name: "is_active", label: "Website status", type: "boolean" },
     ],
     fields: [
       { name: "title", label: "Video title", type: "text", required: true, group: "Video" },
@@ -507,7 +507,7 @@ export const resources: Record<string, ResourceConfig> = {
         help: "Leave blank to show the Instagram embed preview.",
       },
       { name: "published_at", label: "Published date", type: "date", group: "Video" },
-      { name: "is_active", label: "Visible on website", type: "boolean", group: "Display" },
+      { name: "is_active", label: "Published on website", type: "boolean", group: "Display" },
       { name: "sort_order", label: "Sort order", type: "number", group: "Display" },
     ],
   },
