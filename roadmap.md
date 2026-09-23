@@ -1,4 +1,4 @@
 - [x] WhatsApp auto-inbox: secret public endpoint + admin config/recent-imports
 - [ ] Zapier setup: user to publish the tested Zap and include image attachment field
-- [ ] Videos page: Instagram automatic feed blocked until user gets Meta Developer access token; never collect Instagram password
-- [ ] Optional fallback: add Instagram video links manually until Meta access is available
+- [x] Replace YouTube videos with manually managed Instagram reel links; no password/token required
+- [ ] Optional later: switch Instagram feed to automatic after official Meta access is available

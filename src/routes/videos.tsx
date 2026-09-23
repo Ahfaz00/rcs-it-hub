@@ -149,21 +149,14 @@ function VideosPage() {
                 <X className="h-5 w-5" />
               </Button>
             </div>
-            <div className="overflow-hidden rounded-lg bg-ink">
-              {active.videoUrl ? (
-                <video
-                  src={active.videoUrl}
-                  poster={active.thumbnail || undefined}
-                  controls
-                  autoPlay
-                  playsInline
-                  className="max-h-[75vh] w-full bg-ink object-contain"
-                />
-              ) : (
-                <div className="grid aspect-video place-items-center p-8 text-center text-primary-foreground">
-                  Open this video on Instagram to watch it.
-                </div>
-              )}
+            <div className="mx-auto aspect-[9/16] max-h-[75vh] max-w-md overflow-hidden rounded-lg bg-card">
+              <iframe
+                src={`${active.permalink.replace(/\/$/, "")}/embed`}
+                title={active.title}
+                allow="autoplay; encrypted-media; picture-in-picture"
+                allowFullScreen
+                className="h-full w-full border-0"
+              />
             </div>
             <div className="mt-3 flex justify-end">
               <Button asChild variant="secondary">
