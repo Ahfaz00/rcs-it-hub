@@ -7,6 +7,7 @@ import { SiteShell, PageHero } from "@/components/site/SiteShell";
 import { Button } from "@/components/ui/button";
 import { listSocialVideos, type SocialVideo } from "@/lib/social-videos.functions";
 import { Stagger, StaggerItem } from "@/components/site/Motion";
+import { instagramEmbedUrl } from "@/lib/instagram";
 
 const videosQueryOptions = queryOptions({
   queryKey: ["social-videos"],
