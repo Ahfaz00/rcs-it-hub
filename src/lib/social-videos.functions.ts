@@ -33,7 +33,7 @@ export const listSocialVideos = createServerFn({ method: "GET" }).handler(async 
     .order("sort_order", { ascending: true })
     .order("published_at", { ascending: false, nullsFirst: false })
     .order("created_at", { ascending: false })
-    .limit(24);
+    .limit(100);
   if (error) throw new Error(error.message);
 
   const videos = (data ?? []).map((media) => ({
