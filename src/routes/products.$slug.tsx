@@ -34,7 +34,7 @@ export const Route = createFileRoute("/products/$slug")({
     if (!data) throw notFound();
     return { name: data.product.name, seo: data.product };
   },
-  head: ({ loaderData }) => {
+  head: ({ params, loaderData }) => {
     if (!loaderData) {
       return { meta: [{ title: "Product not found" }, { name: "robots", content: "noindex" }] };
     }
@@ -44,6 +44,9 @@ export const Route = createFileRoute("/products/$slug")({
       p.seo_description ||
       p.short_description ||
       `Refurbished ${p.name} available from R Computer Solutions, Navi Mumbai. Contact us for price and availability.`;
+    const url = `https://rcs-it-hub.lovable.app/products/${params.slug}`;
+    const image = mediaUrl(p.main_image_url);
+    const absoluteImage = image && /^https:\/\//i.test(image) ? image : null;
     return {
       meta: [
         { title },
@@ -51,8 +54,21 @@ export const Route = createFileRoute("/products/$slug")({
         { property: "og:title", content: title },
         { property: "og:description", content: description },
         { property: "og:type", content: "product" },
+        { property: "og:site_name", content: "R Computer Solutions" },
+        { property: "og:url", content: url },
+        { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:title", content: title },
+        { name: "twitter:description", content: description },
+        ...(absoluteImage
+          ? [
+              { property: "og:image", content: absoluteImage },
+              { property: "og:image:alt", content: p.main_image_alt || p.name },
+              { name: "twitter:image", content: absoluteImage },
+            ]
+          : []),
         ...(p.seo_keywords ? [{ name: "keywords", content: p.seo_keywords }] : []),
       ],
+      links: [{ rel: "canonical", href: url }],
     };
   },
   notFoundComponent: ProductNotFound,

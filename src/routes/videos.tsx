@@ -18,29 +18,44 @@ const videosQueryOptions = queryOptions({
 
 export const Route = createFileRoute("/videos")({
   loader: ({ context }) => context.queryClient.ensureQueryData(videosQueryOptions),
-  head: () => ({
-    meta: [
-      { title: "Instagram Videos & Reels | R Computer Solutions" },
-      {
-        name: "description",
-        content:
-          "Watch the latest Instagram reels, stock walkthroughs and hardware videos from R Computer Solutions, Navi Mumbai.",
-      },
-      { property: "og:title", content: "Instagram Videos & Reels | R Computer Solutions" },
-      {
-        property: "og:description",
-        content: "Latest stock tours, configuration breakdowns and deals from our Instagram page.",
-      },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-      {
-        name: "keywords",
-        content: "refurbished laptop reels, bulk laptop stock videos, r computer solutions instagram",
-      },
-      { property: "og:url", content: "https://rcs-it-hub.lovable.app/videos" },
-    ],
-    links: [{ rel: "canonical", href: "https://rcs-it-hub.lovable.app/videos" }],
-  }),
+  head: ({ loaderData }) => {
+    const first = loaderData?.videos?.[0];
+    const cover = first
+      ? `https://rcs-it-hub.lovable.app/api/public/instagram-thumb?url=${encodeURIComponent(first.permalink)}`
+      : null;
+    const title = "Instagram Videos & Reels | R Computer Solutions";
+    const description =
+      "Watch the latest Instagram reels, stock walkthroughs and hardware videos from R Computer Solutions, Navi Mumbai.";
+    return {
+      meta: [
+        { title },
+        { name: "description", content: description },
+        { property: "og:title", content: title },
+        {
+          property: "og:description",
+          content: "Latest stock tours, configuration breakdowns and deals from our Instagram page.",
+        },
+        { property: "og:type", content: "website" },
+        { property: "og:site_name", content: "R Computer Solutions" },
+        { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:title", content: title },
+        { name: "twitter:description", content: description },
+        ...(cover
+          ? [
+              { property: "og:image", content: cover },
+              { property: "og:image:alt", content: first!.title },
+              { name: "twitter:image", content: cover },
+            ]
+          : []),
+        {
+          name: "keywords",
+          content: "refurbished laptop reels, bulk laptop stock videos, r computer solutions instagram",
+        },
+        { property: "og:url", content: "https://rcs-it-hub.lovable.app/videos" },
+      ],
+      links: [{ rel: "canonical", href: "https://rcs-it-hub.lovable.app/videos" }],
+    };
+  },
   component: VideosPage,
 });
 
