@@ -1,3 +1,4 @@
 - [x] WhatsApp auto-inbox: secret public endpoint + admin config/recent-imports
 - [ ] Zapier setup: user to publish the tested Zap and include image attachment field
-- [ ] Videos page: Instagram-only automatic feed (no Facebook login available); Facebook later when login available
+- [ ] Videos page: Instagram automatic feed blocked until user gets Meta Developer access token; never collect Instagram password
+- [ ] Optional fallback: add Instagram video links manually until Meta access is available
