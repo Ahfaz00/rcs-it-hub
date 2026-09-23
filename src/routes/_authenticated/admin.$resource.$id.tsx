@@ -97,6 +97,16 @@ function ResourceEditor() {
       }
     }
 
+    if (resource === "instagram_videos") {
+      const clean = cleanInstagramUrl(String(payload["instagram_url"] ?? ""));
+      if (!clean) {
+        toast.error("Paste a valid Instagram reel or post link.");
+        return;
+      }
+      payload["instagram_url"] = clean;
+      if (payload["sort_order"] == null) payload["sort_order"] = 0;
+    }
+
     setBusy(true);
     try {
       if (isNew) {
