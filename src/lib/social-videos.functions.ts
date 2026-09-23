@@ -47,9 +47,10 @@ export const listSocialVideos = createServerFn({ method: "GET" }).handler(async 
     accountName: "Instagram",
   }));
 
-  return {
+  const feed: SocialVideoFeed = {
     videos,
     profiles: [],
     notice: videos.length ? null : "Instagram reels will be added here soon.",
   };
+  return feed;
 });
