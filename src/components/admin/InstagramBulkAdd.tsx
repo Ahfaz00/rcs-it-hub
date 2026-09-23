@@ -30,16 +30,32 @@ export function InstagramBulkAdd() {
 
     setBusy(true);
     try {
-      const rows = links.map((url, index) => ({
+      const [{ data: existing, error: existingError }, { data: lastRow, error: orderError }] = await Promise.all([
+        supabase.from("instagram_videos").select("instagram_url").in("instagram_url", links),
+        supabase.from("instagram_videos").select("sort_order").order("sort_order", { ascending: false }).limit(1),
+      ]);
+      if (existingError) throw existingError;
+      if (orderError) throw orderError;
+
+      const existingLinks = new Set((existing ?? []).map((row) => row.instagram_url));
+      const newLinks = links.filter((url) => !existingLinks.has(url));
+      if (!newLinks.length) {
+        toast.info("All these links are already in the video list.");
+        setText("");
+        return;
+      }
+
+      const nextSortOrder = Number(lastRow?.[0]?.sort_order ?? -1) + 1;
+      const rows = newLinks.map((url, index) => ({
         title: `Instagram reel ${instagramShortcode(url) ?? index + 1}`,
         instagram_url: url,
         is_active: true,
-        sort_order: index,
+        sort_order: nextSortOrder + index,
       }));
 
       const { data, error } = await supabase
         .from("instagram_videos")
-        .upsert(rows, { onConflict: "instagram_url", ignoreDuplicates: true })
+        .insert(rows)
         .select("id");
       if (error) throw error;
 
@@ -54,6 +70,7 @@ export function InstagramBulkAdd() {
       );
       setText("");
       queryClient.invalidateQueries({ queryKey: ["admin", "instagram_videos"] });
+      queryClient.invalidateQueries({ queryKey: ["social-videos"] });
     } catch (err) {
       const message =
         typeof err === "object" && err && "message" in err

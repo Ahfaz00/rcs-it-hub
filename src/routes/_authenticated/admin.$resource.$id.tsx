@@ -105,7 +105,18 @@ function ResourceEditor() {
         return;
       }
       payload["instagram_url"] = clean;
-      if (payload["sort_order"] == null) payload["sort_order"] = 0;
+      if (payload["sort_order"] == null && isNew) {
+        const { data: lastRow, error: orderError } = await supabase
+          .from("instagram_videos")
+          .select("sort_order")
+          .order("sort_order", { ascending: false })
+          .limit(1);
+        if (orderError) {
+          toast.error(orderError.message);
+          return;
+        }
+        payload["sort_order"] = Number(lastRow?.[0]?.sort_order ?? -1) + 1;
+      }
     }
 
     setBusy(true);
@@ -126,7 +137,12 @@ function ResourceEditor() {
         });
         toast.success(`${config.singular} created.`);
         queryClient.invalidateQueries({ queryKey: ["admin", resource] });
-        navigate({ to: "/admin/$resource/$id", params: { resource, id: newId } });
+        if (resource === "instagram_videos") {
+          queryClient.invalidateQueries({ queryKey: ["social-videos"] });
+          navigate({ to: "/admin/$resource", params: { resource } });
+        } else {
+          navigate({ to: "/admin/$resource/$id", params: { resource, id: newId } });
+        }
       } else {
         const { error } = await supabase
           .from(config.table as never)
@@ -161,6 +177,9 @@ function ResourceEditor() {
         toast.success("Saved.");
         queryClient.invalidateQueries({ queryKey: ["admin", resource] });
         queryClient.invalidateQueries({ queryKey: ["admin-row", resource, id] });
+        if (resource === "instagram_videos") {
+          queryClient.invalidateQueries({ queryKey: ["social-videos"] });
+        }
       }
     } catch (err) {
       const message =
