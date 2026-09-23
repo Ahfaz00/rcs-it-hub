@@ -39,6 +39,7 @@ import { Route as AuthenticatedAdminLogsRouteImport } from './routes/_authentica
 import { Route as AuthenticatedAdminSettingsRouteImport } from './routes/_authenticated/admin.settings'
 import { Route as AuthenticatedAdminWhatsappImportRouteImport } from './routes/_authenticated/admin.whatsapp-import'
 import { Route as ApiMediaSplatRouteImport } from './routes/api/media.$'
+import { Route as ApiPublicInstagramThumbRouteImport } from './routes/api/public/instagram-thumb'
 import { Route as ApiPublicWhatsappInboxRouteImport } from './routes/api/public/whatsapp-inbox'
 import { Route as AuthenticatedAdminResourceIndexRouteImport } from './routes/_authenticated/admin.$resource.index'
 import { Route as AuthenticatedAdminResourceIdRouteImport } from './routes/_authenticated/admin.$resource.$id'
@@ -194,6 +195,11 @@ const ApiMediaSplatRoute = ApiMediaSplatRouteImport.update({
   path: '/api/media/$',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicInstagramThumbRoute = ApiPublicInstagramThumbRouteImport.update({
+  id: '/api/public/instagram-thumb',
+  path: '/api/public/instagram-thumb',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicWhatsappInboxRoute = ApiPublicWhatsappInboxRouteImport.update({
   id: '/api/public/whatsapp-inbox',
   path: '/api/public/whatsapp-inbox',
@@ -241,6 +247,7 @@ export interface FileRoutesByFullPath {
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/admin/whatsapp-import': typeof AuthenticatedAdminWhatsappImportRoute
   '/api/media/$': typeof ApiMediaSplatRoute
+  '/api/public/instagram-thumb': typeof ApiPublicInstagramThumbRoute
   '/api/public/whatsapp-inbox': typeof ApiPublicWhatsappInboxRoute
   '/admin/': typeof AuthenticatedAdminIndexRoute
   '/admin/$resource/$id': typeof AuthenticatedAdminResourceIdRoute
@@ -275,6 +282,7 @@ export interface FileRoutesByTo {
   '/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/admin/whatsapp-import': typeof AuthenticatedAdminWhatsappImportRoute
   '/api/media/$': typeof ApiMediaSplatRoute
+  '/api/public/instagram-thumb': typeof ApiPublicInstagramThumbRoute
   '/api/public/whatsapp-inbox': typeof ApiPublicWhatsappInboxRoute
   '/admin': typeof AuthenticatedAdminIndexRoute
   '/admin/$resource/$id': typeof AuthenticatedAdminResourceIdRoute
@@ -311,6 +319,7 @@ export interface FileRoutesById {
   '/_authenticated/admin/settings': typeof AuthenticatedAdminSettingsRoute
   '/_authenticated/admin/whatsapp-import': typeof AuthenticatedAdminWhatsappImportRoute
   '/api/media/$': typeof ApiMediaSplatRoute
+  '/api/public/instagram-thumb': typeof ApiPublicInstagramThumbRoute
   '/api/public/whatsapp-inbox': typeof ApiPublicWhatsappInboxRoute
   '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
   '/_authenticated/admin/$resource/$id': typeof AuthenticatedAdminResourceIdRoute
@@ -347,6 +356,7 @@ export interface FileRouteTypes {
     | '/admin/settings'
     | '/admin/whatsapp-import'
     | '/api/media/$'
+    | '/api/public/instagram-thumb'
     | '/api/public/whatsapp-inbox'
     | '/admin/'
     | '/admin/$resource/$id'
@@ -381,6 +391,7 @@ export interface FileRouteTypes {
     | '/admin/settings'
     | '/admin/whatsapp-import'
     | '/api/media/$'
+    | '/api/public/instagram-thumb'
     | '/api/public/whatsapp-inbox'
     | '/admin'
     | '/admin/$resource/$id'
@@ -416,6 +427,7 @@ export interface FileRouteTypes {
     | '/_authenticated/admin/settings'
     | '/_authenticated/admin/whatsapp-import'
     | '/api/media/$'
+    | '/api/public/instagram-thumb'
     | '/api/public/whatsapp-inbox'
     | '/_authenticated/admin/'
     | '/_authenticated/admin/$resource/$id'
@@ -449,6 +461,7 @@ export interface RootRouteChildren {
   ProductsIndexRoute: typeof ProductsIndexRoute
   ServicesIndexRoute: typeof ServicesIndexRoute
   ApiMediaSplatRoute: typeof ApiMediaSplatRoute
+  ApiPublicInstagramThumbRoute: typeof ApiPublicInstagramThumbRoute
   ApiPublicWhatsappInboxRoute: typeof ApiPublicWhatsappInboxRoute
 }
 
@@ -664,6 +677,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiMediaSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/instagram-thumb': {
+      id: '/api/public/instagram-thumb'
+      path: '/api/public/instagram-thumb'
+      fullPath: '/api/public/instagram-thumb'
+      preLoaderRoute: typeof ApiPublicInstagramThumbRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/whatsapp-inbox': {
       id: '/api/public/whatsapp-inbox'
       path: '/api/public/whatsapp-inbox'
@@ -736,6 +756,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProductsIndexRoute: ProductsIndexRoute,
   ServicesIndexRoute: ServicesIndexRoute,
   ApiMediaSplatRoute: ApiMediaSplatRoute,
+  ApiPublicInstagramThumbRoute: ApiPublicInstagramThumbRoute,
   ApiPublicWhatsappInboxRoute: ApiPublicWhatsappInboxRoute,
 }
 export const routeTree = rootRouteImport
