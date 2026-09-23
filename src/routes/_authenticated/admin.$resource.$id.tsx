@@ -13,6 +13,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { slugify } from "@/lib/format";
 import { missingAltCount, readingMinutes } from "@/lib/article";
 import { BlogEditorPanels } from "@/components/admin/BlogEditorPanels";
+import { cleanInstagramUrl } from "@/lib/instagram";
 
 export const Route = createFileRoute("/_authenticated/admin/$resource/$id")({
   beforeLoad: ({ params }) => {
@@ -97,6 +98,16 @@ function ResourceEditor() {
       }
     }
 
+    if (resource === "instagram_videos") {
+      const clean = cleanInstagramUrl(String(payload["instagram_url"] ?? ""));
+      if (!clean) {
+        toast.error("Paste a valid Instagram reel or post link.");
+        return;
+      }
+      payload["instagram_url"] = clean;
+      if (payload["sort_order"] == null) payload["sort_order"] = 0;
+    }
+
     setBusy(true);
     try {
       if (isNew) {
@@ -152,7 +163,11 @@ function ResourceEditor() {
         queryClient.invalidateQueries({ queryKey: ["admin-row", resource, id] });
       }
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Could not save.");
+      const message =
+        typeof err === "object" && err && "message" in err
+          ? String((err as { message: unknown }).message)
+          : "Could not save.";
+      toast.error(message);
     } finally {
       setBusy(false);
     }

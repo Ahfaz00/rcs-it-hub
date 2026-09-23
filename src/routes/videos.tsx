@@ -7,6 +7,7 @@ import { SiteShell, PageHero } from "@/components/site/SiteShell";
 import { Button } from "@/components/ui/button";
 import { listSocialVideos, type SocialVideo } from "@/lib/social-videos.functions";
 import { Stagger, StaggerItem } from "@/components/site/Motion";
+import { instagramEmbedUrl } from "@/lib/instagram";
 
 const videosQueryOptions = queryOptions({
   queryKey: ["social-videos"],
@@ -97,6 +98,14 @@ function VideosPage() {
                         loading="lazy"
                         className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                       />
+                    ) : instagramEmbedUrl(v.permalink) ? (
+                      <iframe
+                        src={instagramEmbedUrl(v.permalink)!}
+                        title={v.title}
+                        loading="lazy"
+                        scrolling="no"
+                        className="pointer-events-none absolute left-1/2 top-1/2 h-[190%] w-full -translate-x-1/2 -translate-y-1/2 border-0"
+                      />
                     ) : null}
                     <span className="absolute inset-0 grid place-items-center bg-ink/30 transition-colors group-hover:bg-ink/45">
                       <span className="grid h-14 w-14 place-items-center rounded-full bg-background text-primary shadow-card">
@@ -151,7 +160,7 @@ function VideosPage() {
             </div>
             <div className="mx-auto aspect-[9/16] max-h-[75vh] max-w-md overflow-hidden rounded-lg bg-card">
               <iframe
-                src={`${active.permalink.replace(/\/$/, "")}/embed`}
+                src={instagramEmbedUrl(active.permalink) ?? `${active.permalink.replace(/\/$/, "")}/embed`}
                 title={active.title}
                 allow="autoplay; encrypted-media; picture-in-picture"
                 allowFullScreen

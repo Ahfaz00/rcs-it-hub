@@ -25,6 +25,7 @@ import { logActivity } from "@/lib/admin/log";
 import { supabase } from "@/integrations/supabase/client";
 import { mediaUrl } from "@/lib/media";
 import { formatDateTime } from "@/lib/format";
+import { InstagramBulkAdd } from "@/components/admin/InstagramBulkAdd";
 
 const PER_PAGE = 25;
 
@@ -144,6 +145,8 @@ function ResourceList() {
           </div>
         }
       />
+
+      {resource === "instagram_videos" ? <InstagramBulkAdd /> : null}
 
       <form
         onSubmit={(e) => {
