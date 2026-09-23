@@ -22,6 +22,13 @@
       "when": 1790162584631,
       "tag": "0002_create_instagram_videos",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1790162653163,
+      "tag": "0003_fix_instagram_video_public_policy",
+      "breakpoints": true
     }
   ]
 }
