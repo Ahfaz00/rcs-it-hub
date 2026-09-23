@@ -13,6 +13,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { slugify } from "@/lib/format";
 import { missingAltCount, readingMinutes } from "@/lib/article";
 import { BlogEditorPanels } from "@/components/admin/BlogEditorPanels";
+import { cleanInstagramUrl } from "@/lib/instagram";
 
 export const Route = createFileRoute("/_authenticated/admin/$resource/$id")({
   beforeLoad: ({ params }) => {
