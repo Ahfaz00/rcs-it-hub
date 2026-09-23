@@ -44,6 +44,35 @@ export const Route = createFileRoute("/videos")({
   component: VideosPage,
 });
 
+function VideoCover({ video }: { video: SocialVideo }) {
+  const sources = [
+    video.thumbnail,
+    `/api/public/instagram-thumb?url=${encodeURIComponent(video.permalink)}`,
+  ].filter(Boolean) as string[];
+  const [index, setIndex] = useState(0);
+  const src = sources[index];
+
+  if (!src) {
+    return (
+      <div className="absolute inset-0 grid place-items-center bg-primary/10">
+        <Instagram className="h-16 w-16 text-primary/45" aria-hidden="true" />
+      </div>
+    );
+  }
+
+  return (
+    <img
+      src={src}
+      alt={video.title}
+      loading="lazy"
+      referrerPolicy="no-referrer"
+      onError={() => setIndex((current) => current + 1)}
+      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+    />
+  );
+}
+
+
 function VideosPage() {
   const { data: feed } = useSuspenseQuery(videosQueryOptions);
   const [active, setActive] = useState<SocialVideo | null>(null);
@@ -92,18 +121,7 @@ function VideosPage() {
                   className="group block w-full overflow-hidden rounded-lg border border-border bg-card text-left shadow-card transition-all hover:-translate-y-1 hover:shadow-lift"
                 >
                   <div className="relative aspect-video overflow-hidden bg-muted">
-                    {v.thumbnail ? (
-                      <img
-                        src={v.thumbnail}
-                        alt={v.title}
-                        loading="lazy"
-                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      />
-                    ) : (
-                      <div className="absolute inset-0 grid place-items-center bg-primary/10">
-                        <Instagram className="h-16 w-16 text-primary/45" aria-hidden="true" />
-                      </div>
-                    )}
+                    <VideoCover video={v} />
                     <span className="absolute inset-0 grid place-items-center bg-ink/30 transition-colors group-hover:bg-ink/45">
                       <span className="grid h-14 w-14 place-items-center rounded-full bg-background text-primary shadow-card">
                         <Play className="ml-0.5 h-6 w-6 fill-current" />
