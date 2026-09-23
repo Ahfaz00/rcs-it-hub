@@ -145,6 +145,8 @@ function ResourceList() {
         }
       />
 
+      {resource === "instagram_videos" ? <InstagramBulkAdd /> : null}
+
       <form
         onSubmit={(e) => {
           e.preventDefault();
