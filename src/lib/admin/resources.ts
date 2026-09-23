@@ -473,6 +473,44 @@ export const resources: Record<string, ResourceConfig> = {
       { name: "robots", label: "Robots", type: "text", group: "Basics" },
     ],
   },
+  instagram_videos: {
+    key: "instagram_videos",
+    table: "instagram_videos",
+    label: "Instagram videos",
+    singular: "Instagram video",
+    description: "Reels and videos displayed on the public Videos page.",
+    orderBy: { column: "sort_order", ascending: true },
+    searchColumns: ["title", "caption", "instagram_url"],
+    columns: [
+      { name: "title", label: "Title" },
+      { name: "instagram_url", label: "Instagram link" },
+      { name: "published_at", label: "Published", type: "date" },
+      { name: "is_active", label: "Visible", type: "boolean" },
+    ],
+    fields: [
+      { name: "title", label: "Video title", type: "text", required: true, group: "Video" },
+      {
+        name: "instagram_url",
+        label: "Instagram reel or video link",
+        type: "text",
+        required: true,
+        group: "Video",
+        placeholder: "https://www.instagram.com/reel/.../",
+        help: "Open the reel in Instagram, tap Share, then Copy link and paste it here.",
+      },
+      { name: "caption", label: "Caption", type: "textarea", group: "Video" },
+      {
+        name: "thumbnail_url",
+        label: "Optional cover image URL",
+        type: "text",
+        group: "Video",
+        help: "Leave blank to show the Instagram embed preview.",
+      },
+      { name: "published_at", label: "Published date", type: "date", group: "Video" },
+      { name: "is_active", label: "Visible on website", type: "boolean", group: "Display" },
+      { name: "sort_order", label: "Sort order", type: "number", group: "Display" },
+    ],
+  },
 };
 
 import { extraResources } from "./resources.extra";
