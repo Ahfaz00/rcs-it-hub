@@ -2,4 +2,5 @@
 - [ ] Zapier setup: user to publish the tested Zap and include image attachment field
 - [x] Replace YouTube videos with manually managed Instagram reel links; no password/token required
 - [x] Instagram admin: preserve existing videos on multi-add; list, edit, delete, publish and unpublish controls
+- [x] Instagram links: automatically extract titles/captions and refresh existing placeholder titles
 - [ ] Optional later: switch Instagram feed to automatic after official Meta access is available

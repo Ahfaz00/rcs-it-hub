@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { createFileRoute, Link, useNavigate, notFound } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { ArrowLeft } from "lucide-react";
@@ -14,6 +15,7 @@ import { slugify } from "@/lib/format";
 import { missingAltCount, readingMinutes } from "@/lib/article";
 import { BlogEditorPanels } from "@/components/admin/BlogEditorPanels";
 import { cleanInstagramUrl } from "@/lib/instagram";
+import { getInstagramMetadata } from "@/lib/instagram-metadata.functions";
 
 export const Route = createFileRoute("/_authenticated/admin/$resource/$id")({
   beforeLoad: ({ params }) => {
@@ -30,6 +32,7 @@ function ResourceEditor() {
   const isNew = id === "new";
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const fetchInstagramMetadata = useServerFn(getInstagramMetadata);
   const [values, setValues] = useState<Values>({});
   const [busy, setBusy] = useState(false);
   const [touchedSlug, setTouchedSlug] = useState(false);
@@ -73,13 +76,6 @@ function ResourceEditor() {
   }
 
   async function save() {
-    for (const field of config.fields) {
-      if (field.required && !String(values[field.name] ?? "").trim()) {
-        toast.error(`${field.label} is required.`);
-        return;
-      }
-    }
-
     const isBlog = resource === "blog";
     if (isBlog) {
       const body = String(values["body"] ?? "");
@@ -105,6 +101,24 @@ function ResourceEditor() {
         return;
       }
       payload["instagram_url"] = clean;
+      const currentTitle = String(payload["title"] ?? "").trim();
+      if (!currentTitle || currentTitle.startsWith("Instagram reel ")) {
+        try {
+          const [metadata] = await fetchInstagramMetadata({ data: { urls: [clean] } });
+          if (metadata) {
+            payload["title"] = metadata.title;
+            if (!payload["caption"] && metadata.caption) payload["caption"] = metadata.caption;
+            setValues((previous) => ({
+              ...previous,
+              title: metadata.title,
+              caption: previous["caption"] || metadata.caption,
+            }));
+          }
+        } catch (error) {
+          toast.error(error instanceof Error ? error.message : "Could not fetch the Instagram title.");
+          return;
+        }
+      }
       if (payload["sort_order"] == null && isNew) {
         const { data: lastRow, error: orderError } = await supabase
           .from("instagram_videos")
@@ -116,6 +130,13 @@ function ResourceEditor() {
           return;
         }
         payload["sort_order"] = Number(lastRow?.[0]?.sort_order ?? -1) + 1;
+      }
+    }
+
+    for (const field of config.fields) {
+      if (field.required && !String(payload[field.name] ?? "").trim()) {
+        toast.error(`${field.label} is required.`);
+        return;
       }
     }
 

@@ -488,7 +488,13 @@ export const resources: Record<string, ResourceConfig> = {
       { name: "is_active", label: "Website status", type: "boolean" },
     ],
     fields: [
-      { name: "title", label: "Video title", type: "text", required: true, group: "Video" },
+      {
+        name: "title",
+        label: "Video title",
+        type: "text",
+        group: "Video",
+        help: "Leave blank to fetch the reel's first caption line automatically when saving.",
+      },
       {
         name: "instagram_url",
         label: "Instagram reel or video link",
