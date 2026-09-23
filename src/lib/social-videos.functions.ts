@@ -1,7 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
 
-import { cached } from "./cache.server";
-
 export type SocialVideo = {
   id: string;
   platform: "instagram";
@@ -26,34 +24,32 @@ function summary(value: string | undefined, fallback: string): string {
 }
 
 export const listSocialVideos = createServerFn({ method: "GET" }).handler(async () => {
-  return cached<SocialVideoFeed>("social-videos", 30 * 60 * 1000, async () => {
-    const { createPublicServerClient } = await import("./supabase-public.server");
-    const supabase = createPublicServerClient();
-    const { data, error } = await supabase
-      .from("instagram_videos")
-      .select("id,title,caption,instagram_url,thumbnail_url,published_at,created_at")
-      .eq("is_active", true)
-      .order("sort_order", { ascending: true })
-      .order("published_at", { ascending: false, nullsFirst: false })
-      .order("created_at", { ascending: false })
-      .limit(24);
-    if (error) throw new Error(error.message);
+  const { createPublicServerClient } = await import("./supabase-public.server");
+  const supabase = createPublicServerClient();
+  const { data, error } = await supabase
+    .from("instagram_videos")
+    .select("id,title,caption,instagram_url,thumbnail_url,published_at,created_at")
+    .eq("is_active", true)
+    .order("sort_order", { ascending: true })
+    .order("published_at", { ascending: false, nullsFirst: false })
+    .order("created_at", { ascending: false })
+    .limit(24);
+  if (error) throw new Error(error.message);
 
-    const videos = (data ?? []).map((media) => ({
-          id: `instagram-${media.id}`,
-          platform: "instagram" as const,
-          title: summary(media.title || media.caption || undefined, "Instagram reel"),
-          published: media.published_at || media.created_at,
-          thumbnail: media.thumbnail_url || null,
-          videoUrl: null,
-          permalink: media.instagram_url,
-          accountName: "Instagram",
-        }));
+  const videos = (data ?? []).map((media) => ({
+    id: `instagram-${media.id}`,
+    platform: "instagram" as const,
+    title: summary(media.title || media.caption || undefined, "Instagram reel"),
+    published: media.published_at || media.created_at,
+    thumbnail: media.thumbnail_url || null,
+    videoUrl: null,
+    permalink: media.instagram_url,
+    accountName: "Instagram",
+  }));
 
-    return {
-      videos,
-      profiles: [],
-      notice: videos.length ? null : "Instagram reels will be added here soon.",
-    };
-  });
+  return {
+    videos,
+    profiles: [],
+    notice: videos.length ? null : "Instagram reels will be added here soon.",
+  };
 });

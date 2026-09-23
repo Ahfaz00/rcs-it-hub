@@ -12,7 +12,8 @@ import { instagramEmbedUrl } from "@/lib/instagram";
 const videosQueryOptions = queryOptions({
   queryKey: ["social-videos"],
   queryFn: () => listSocialVideos(),
-  staleTime: 30 * 60 * 1000,
+  staleTime: 0,
+  refetchOnMount: "always",
 });
 
 export const Route = createFileRoute("/videos")({
@@ -83,7 +84,9 @@ function VideosPage() {
           </div>
         ) : (
           <Stagger className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {feed.videos.map((v) => (
+            {feed.videos.map((v) => {
+              const embedUrl = instagramEmbedUrl(v.permalink);
+              return (
               <StaggerItem key={v.id}>
                 <button
                   type="button"
@@ -98,9 +101,9 @@ function VideosPage() {
                         loading="lazy"
                         className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                       />
-                    ) : instagramEmbedUrl(v.permalink) ? (
+                    ) : embedUrl ? (
                       <iframe
-                        src={instagramEmbedUrl(v.permalink)!}
+                        src={embedUrl}
                         title={v.title}
                         loading="lazy"
                         scrolling="no"
@@ -133,7 +136,8 @@ function VideosPage() {
                   </div>
                 </button>
               </StaggerItem>
-            ))}
+              );
+            })}
           </Stagger>
         )}
       </div>
