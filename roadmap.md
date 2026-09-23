@@ -1,3 +1,3 @@
 - [x] WhatsApp auto-inbox: secret public endpoint + admin config/recent-imports
 - [ ] Zapier setup: user to publish the tested Zap and include image attachment field
-- [ ] Replace YouTube videos page with automatic Facebook and Instagram video feeds
+- [ ] Videos page: Instagram-only automatic feed (no Facebook login available); Facebook later when login available
