@@ -53,6 +53,19 @@ export async function fetchInstagramMetadata(value: string): Promise<InstagramMe
 
   const fallback = `Instagram reel ${instagramShortcode(url) ?? "video"}`;
   try {
+    const oembedResponse = await fetch(
+      `https://www.instagram.com/api/v1/oembed/?url=${encodeURIComponent(url)}`,
+      {
+        headers: { "user-agent": "Mozilla/5.0" },
+        signal: AbortSignal.timeout(8_000),
+      },
+    );
+    if (oembedResponse.ok) {
+      const oembed = (await oembedResponse.json()) as { title?: unknown };
+      const caption = typeof oembed.title === "string" ? oembed.title.trim() : null;
+      if (caption) return { url, title: titleFromCaption(caption, fallback), caption };
+    }
+
     const response = await fetch(url, {
       headers: {
         "user-agent":
