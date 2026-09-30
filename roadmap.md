@@ -4,3 +4,4 @@
 - [x] Instagram admin: preserve existing videos on multi-add; list, edit, delete, publish and unpublish controls
 - [x] Instagram links: automatically extract titles/captions and refresh existing placeholder titles
 - [ ] Optional later: switch Instagram feed to automatic after official Meta access is available
+- [x] Admin stock list update: paste, preview, publish (replace mode)

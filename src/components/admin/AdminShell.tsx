@@ -53,6 +53,7 @@ const navGroups: { title: string; items: NavItem[] }[] = [
       { to: "/admin/$resource", params: { resource: "usage_tags" }, label: "Shop by usage", icon: Target },
       { to: "/admin/$resource", params: { resource: "attributes" }, label: "Attributes", icon: SlidersHorizontal },
       { to: "/admin/whatsapp-import", label: "WhatsApp import", icon: MessageCircle },
+      { to: "/admin/stock-update", label: "Stock list update", icon: MessageCircle },
     ],
   },
   {
