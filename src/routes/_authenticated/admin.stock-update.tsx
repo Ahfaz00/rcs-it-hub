@@ -39,8 +39,8 @@ function StockUpdatePage() {
 
   async function doPublish() {
     const bad = rows.find((r) => r.name.trim().length < 2);
-    if (bad) return toast.error("Every row needs a model name.");
-    if (!confirm("Publish this list? Products not in it will be hidden from the website.")) return;
+    if (bad) { toast.error("Every row needs a model name."); return; }
+    if (!confirm("Publish this list? Products not in it will be hidden from the website.")) { return; }
     setBusy(true);
     try {
       const r = await publish({ data: { rows } });
