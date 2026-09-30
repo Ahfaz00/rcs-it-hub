@@ -94,9 +94,11 @@ export const publishStockList = createServerFn({ method: "POST" })
         processor_model: r.processor_model,
         ram: r.ram,
         storage_capacity: r.storage_capacity,
-        category_id: cats.data?.find((c) => c.name === r.category)?.id ?? undefined,
-        brand_id: brands.data?.find((b) => b.name === r.brand)?.id ?? undefined,
       };
+      const catId = cats.data?.find((c) => c.name === r.category)?.id;
+      const brandId = brands.data?.find((b) => b.name === r.brand)?.id;
+      if (catId) Object.assign(common, { category_id: catId });
+      if (brandId) Object.assign(common, { brand_id: brandId });
       if (r.match_id) {
         const { error } = await sb.from("products").update(common).eq("id", r.match_id);
         if (error) throw new Error(`${r.name}: ${error.message}`);
