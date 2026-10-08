@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
-import { ExternalLink, Instagram, Play, X } from "lucide-react";
+import { ExternalLink, Facebook, Instagram, Play, X } from "lucide-react";
 
 import { SiteShell, PageHero } from "@/components/site/SiteShell";
 import { Button } from "@/components/ui/button";
-import { listSocialVideos, type SocialVideo } from "@/lib/social-videos.functions";
+import { listSocialVideos, type SocialPlatform, type SocialVideo } from "@/lib/social-videos.functions";
 import { Stagger, StaggerItem } from "@/components/site/Motion";
 import { instagramEmbedUrl } from "@/lib/instagram";
 
@@ -19,7 +19,7 @@ const videosQueryOptions = queryOptions({
 export const Route = createFileRoute("/videos")({
   loader: ({ context }) => context.queryClient.ensureQueryData(videosQueryOptions),
   head: ({ loaderData }) => {
-    const first = loaderData?.videos?.[0];
+    const first = loaderData?.videos?.find((v) => v.platform === "instagram");
     const cover = first
       ? `https://rcs-it-hub.lovable.app/api/public/instagram-thumb?url=${encodeURIComponent(first.permalink)}`
       : null;
@@ -62,7 +62,9 @@ export const Route = createFileRoute("/videos")({
 function VideoCover({ video }: { video: SocialVideo }) {
   const sources = [
     video.thumbnail,
-    `/api/public/instagram-thumb?url=${encodeURIComponent(video.permalink)}`,
+    video.platform === "instagram"
+      ? `/api/public/instagram-thumb?url=${encodeURIComponent(video.permalink)}`
+      : null,
   ].filter(Boolean) as string[];
   const [index, setIndex] = useState(0);
   const src = sources[index];
@@ -91,6 +93,13 @@ function VideoCover({ video }: { video: SocialVideo }) {
 function VideosPage() {
   const { data: feed } = useSuspenseQuery(videosQueryOptions);
   const [active, setActive] = useState<SocialVideo | null>(null);
+  const [tab, setTab] = useState<SocialPlatform>("instagram");
+  const videos = feed.videos.filter((v) => v.platform === tab);
+  const emptyNotice = tab === "instagram" ? feed.notice : feed.facebookNotice;
+  const tabs = [
+    { id: "instagram" as const, label: "Instagram", Icon: Instagram },
+    { id: "facebook" as const, label: "Facebook", Icon: Facebook },
+  ];
 
   return (
     <SiteShell>
@@ -99,9 +108,24 @@ function VideosPage() {
         subtitle="Latest stock tours, configuration walkthroughs and deals from our Instagram page."
       />
       <div className="container-page py-12">
+        <div className="mb-6 grid grid-cols-2 gap-3 sm:inline-grid" role="tablist">
+          {tabs.map(({ id, label, Icon }) => (
+            <Button
+              key={id}
+              type="button"
+              role="tab"
+              aria-selected={tab === id}
+              variant={tab === id ? "default" : "outline"}
+              className="rounded-full px-6"
+              onClick={() => setTab(id)}
+            >
+              <Icon className="mr-2 h-4 w-4" /> {label} ({feed.videos.filter((v) => v.platform === id).length})
+            </Button>
+          ))}
+        </div>
         <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
           <p className="text-sm text-muted-foreground">
-            {feed.videos.length > 0 ? `${feed.videos.length} latest reels & videos` : "Latest videos"}
+            {videos.length > 0 ? `${videos.length} latest videos` : "Latest videos"}
           </p>
           {feed.profiles.map((profile) => (
             <Button key={profile.url} asChild variant="outline" className="rounded-full">
@@ -112,11 +136,13 @@ function VideosPage() {
           ))}
         </div>
 
-        {feed.videos.length === 0 ? (
+        {videos.length === 0 ? (
           <div className="rounded-lg border border-dashed border-border p-12 text-center">
-            <h2 className="font-display text-lg font-semibold">Instagram videos coming soon</h2>
+            <h2 className="font-display text-lg font-semibold">
+              {tab === "instagram" ? "Instagram" : "Facebook"} videos coming soon
+            </h2>
             <p className="mt-2 text-sm text-muted-foreground">
-              {feed.notice || "New Instagram reels and videos will appear here automatically."}
+              {emptyNotice || "New videos will appear here automatically."}
             </p>
             {feed.profiles.length > 0 ? (
               <Button asChild className="mt-5 rounded-full">
@@ -128,7 +154,7 @@ function VideosPage() {
           </div>
         ) : (
           <Stagger className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {feed.videos.map((v) => (
+            {videos.map((v) => (
               <StaggerItem key={v.id}>
                 <button
                   type="button"
@@ -143,7 +169,11 @@ function VideosPage() {
                       </span>
                     </span>
                     <span className="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-md bg-background/90 px-2.5 py-1 text-xs font-semibold text-foreground">
-                      <Instagram className="h-3.5 w-3.5" /> Instagram
+                      {v.platform === "instagram" ? (
+                        <><Instagram className="h-3.5 w-3.5" /> Instagram</>
+                      ) : (
+                        <><Facebook className="h-3.5 w-3.5" /> Facebook</>
+                      )}
                     </span>
                   </div>
                   <div className="p-4">
@@ -190,7 +220,11 @@ function VideosPage() {
             </div>
             <div className="mx-auto aspect-[9/16] max-h-[75vh] max-w-md overflow-hidden rounded-lg bg-card">
               <iframe
-                src={instagramEmbedUrl(active.permalink) ?? `${active.permalink.replace(/\/$/, "")}/embed`}
+                src={
+                  active.platform === "facebook"
+                    ? `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(active.permalink)}&show_text=false&autoplay=true`
+                    : (instagramEmbedUrl(active.permalink) ?? `${active.permalink.replace(/\/$/, "")}/embed`)
+                }
                 title={active.title}
                 allow="autoplay; encrypted-media; picture-in-picture"
                 allowFullScreen
@@ -200,7 +234,7 @@ function VideosPage() {
             <div className="mt-3 flex justify-end">
               <Button asChild variant="secondary">
                 <a href={active.permalink} target="_blank" rel="noopener noreferrer">
-                  <ExternalLink /> Open on Instagram
+                  <ExternalLink /> Open on {active.platform === "facebook" ? "Facebook" : "Instagram"}
                 </a>
               </Button>
             </div>
