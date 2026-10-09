@@ -26,6 +26,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { mediaUrl } from "@/lib/media";
 import { formatDateTime } from "@/lib/format";
 import { InstagramBulkAdd } from "@/components/admin/InstagramBulkAdd";
+import { FacebookBulkAdd } from "@/components/admin/FacebookBulkAdd";
 
 const PER_PAGE = 25;
 
@@ -65,11 +66,11 @@ function ResourceList() {
         q = q.or(filter);
       }
 
-      if (resource === "instagram_videos" && instagramStatus !== "all") {
+      if ((resource === "instagram_videos" || resource === "facebook_videos") && instagramStatus !== "all") {
         q = q.eq("is_active", instagramStatus === "published");
       }
 
-      if (resource === "instagram_videos") {
+      if ((resource === "instagram_videos" || resource === "facebook_videos")) {
         q = q.order("created_at", { ascending: false });
       }
 
@@ -96,7 +97,7 @@ function ResourceList() {
       entity_label: String(row["name"] ?? row["title"] ?? row["question"] ?? row.id),
     });
     queryClient.invalidateQueries({ queryKey: ["admin", resource] });
-    if (resource === "instagram_videos") {
+    if ((resource === "instagram_videos" || resource === "facebook_videos")) {
       queryClient.invalidateQueries({ queryKey: ["social-videos"] });
       toast.success(next ? "Video published." : "Video unpublished.");
     }
@@ -116,7 +117,7 @@ function ResourceList() {
     });
     toast.success(`${config.singular} deleted.`);
     queryClient.invalidateQueries({ queryKey: ["admin", resource] });
-    if (resource === "instagram_videos") {
+    if ((resource === "instagram_videos" || resource === "facebook_videos")) {
       queryClient.invalidateQueries({ queryKey: ["social-videos"] });
     }
   }
@@ -163,8 +164,9 @@ function ResourceList() {
       />
 
       {resource === "instagram_videos" ? <InstagramBulkAdd /> : null}
+      {resource === "facebook_videos" ? <FacebookBulkAdd /> : null}
 
-      {resource === "instagram_videos" ? (
+      {(resource === "instagram_videos" || resource === "facebook_videos") ? (
         <div className="mb-4 flex flex-wrap gap-2" aria-label="Filter videos">
           {(["all", "published", "unpublished"] as const).map((status) => (
             <Button
@@ -338,7 +340,7 @@ function Cell({
     return (
       <div className="flex min-w-28 items-center gap-2">
         <Switch checked={Boolean(value)} onCheckedChange={onToggle} aria-label={column.label} />
-        {resource === "instagram_videos" && column.name === "is_active" ? (
+        {(resource === "instagram_videos" || resource === "facebook_videos") && column.name === "is_active" ? (
           <span className="text-xs text-muted-foreground">{value ? "Published" : "Unpublished"}</span>
         ) : null}
       </div>

@@ -16,6 +16,8 @@ import { missingAltCount, readingMinutes } from "@/lib/article";
 import { BlogEditorPanels } from "@/components/admin/BlogEditorPanels";
 import { cleanInstagramUrl } from "@/lib/instagram";
 import { getInstagramMetadata } from "@/lib/instagram-metadata.functions";
+import { cleanFacebookUrl } from "@/lib/facebook";
+import { getFacebookMetadata } from "@/lib/facebook-metadata.functions";
 
 export const Route = createFileRoute("/_authenticated/admin/$resource/$id")({
   beforeLoad: ({ params }) => {
@@ -94,6 +96,37 @@ function ResourceEditor() {
       }
     }
 
+    if (resource === "facebook_videos") {
+      const clean = cleanFacebookUrl(String(payload["facebook_url"] ?? ""));
+      if (!clean) {
+        toast.error("Paste a valid Facebook video or reel link.");
+        return;
+      }
+      payload["facebook_url"] = clean;
+      const currentTitle = String(payload["title"] ?? "").trim();
+      if (!currentTitle || currentTitle === "Facebook video") {
+        try {
+          const [m] = await fetchFacebookMeta({ data: { urls: [clean] } });
+          if (m) {
+            payload["title"] = m.title;
+            if (!payload["caption"] && m.caption) payload["caption"] = m.caption;
+            if (!payload["thumbnail_url"] && m.thumbnail) payload["thumbnail_url"] = m.thumbnail;
+          }
+        } catch (error) {
+          toast.error(error instanceof Error ? error.message : "Could not fetch the Facebook title.");
+          return;
+        }
+      }
+      if (payload["sort_order"] == null && isNew) {
+        const { data: lastRow } = await supabase
+          .from("facebook_videos")
+          .select("sort_order")
+          .order("sort_order", { ascending: false })
+          .limit(1);
+        payload["sort_order"] = Number(lastRow?.[0]?.sort_order ?? -1) + 1;
+      }
+    }
+
     if (resource === "instagram_videos") {
       const clean = cleanInstagramUrl(String(payload["instagram_url"] ?? ""));
       if (!clean) {
@@ -158,7 +191,7 @@ function ResourceEditor() {
         });
         toast.success(`${config.singular} created.`);
         queryClient.invalidateQueries({ queryKey: ["admin", resource] });
-        if (resource === "instagram_videos") {
+        if (resource === "instagram_videos" || resource === "facebook_videos") {
           queryClient.invalidateQueries({ queryKey: ["social-videos"] });
           navigate({ to: "/admin/$resource", params: { resource } });
         } else {
@@ -198,7 +231,7 @@ function ResourceEditor() {
         toast.success("Saved.");
         queryClient.invalidateQueries({ queryKey: ["admin", resource] });
         queryClient.invalidateQueries({ queryKey: ["admin-row", resource, id] });
-        if (resource === "instagram_videos") {
+        if (resource === "instagram_videos" || resource === "facebook_videos") {
           queryClient.invalidateQueries({ queryKey: ["social-videos"] });
         }
       }
