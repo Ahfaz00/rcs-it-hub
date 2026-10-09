@@ -517,6 +517,30 @@ export const resources: Record<string, ResourceConfig> = {
       { name: "sort_order", label: "Sort order", type: "number", group: "Display" },
     ],
   },
+  facebook_videos: {
+    key: "facebook_videos",
+    table: "facebook_videos",
+    label: "Facebook videos",
+    singular: "Facebook video",
+    description: "Facebook videos and reels displayed on the public Videos page.",
+    orderBy: { column: "sort_order", ascending: true },
+    searchColumns: ["title", "caption", "facebook_url"],
+    columns: [
+      { name: "title", label: "Title" },
+      { name: "facebook_url", label: "Facebook link" },
+      { name: "published_at", label: "Published", type: "date" },
+      { name: "is_active", label: "Website status", type: "boolean" },
+    ],
+    fields: [
+      { name: "title", label: "Video title", type: "text", group: "Video", help: "Leave blank to fetch the title automatically when saving." },
+      { name: "facebook_url", label: "Facebook video or reel link", type: "text", required: true, group: "Video", placeholder: "https://www.facebook.com/reel/.../", help: "Open the video on Facebook, tap Share, then Copy link and paste it here." },
+      { name: "caption", label: "Caption", type: "textarea", group: "Video" },
+      { name: "thumbnail_url", label: "Optional cover image URL", type: "text", group: "Video" },
+      { name: "published_at", label: "Published date", type: "date", group: "Video" },
+      { name: "is_active", label: "Published on website", type: "boolean", group: "Display" },
+      { name: "sort_order", label: "Sort order", type: "number", group: "Display" },
+    ],
+  },
 };
 
 import { extraResources } from "./resources.extra";

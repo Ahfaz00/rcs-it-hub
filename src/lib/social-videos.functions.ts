@@ -26,64 +26,30 @@ function summary(value: string | undefined, fallback: string): string {
   return text.length > 120 ? `${text.slice(0, 117)}...` : text;
 }
 
-const GRAPH = "https://graph.facebook.com/v21.0";
-
-async function fetchFacebookVideos(): Promise<{ videos: SocialVideo[]; error: string | null }> {
-  const pageId = process.env["FACEBOOK_PAGE_ID"];
-  const token = process.env["FACEBOOK_ACCESS_TOKEN"];
-  if (!pageId || !token) return { videos: [], error: "Facebook videos will be added here soon." };
-  try {
-    // A user token is swapped for the Page token; a Page token is used as-is.
-    let pageToken = token;
-    const accounts = await fetch(`${GRAPH}/me/accounts?fields=id,access_token&access_token=${token}`, {
-      signal: AbortSignal.timeout(8_000),
-    });
-    if (accounts.ok) {
-      const json = (await accounts.json()) as { data?: { id: string; access_token?: string }[] };
-      const match = json.data?.find((p) => p.id === pageId);
-      if (match?.access_token) pageToken = match.access_token;
-    }
-    const res = await fetch(
-      `${GRAPH}/${pageId}/videos?fields=id,title,description,created_time,picture,permalink_url,from{name}&limit=50&access_token=${pageToken}`,
-      { signal: AbortSignal.timeout(10_000) },
-    );
-    const json = (await res.json()) as {
-      data?: {
-        id: string;
-        title?: string;
-        description?: string;
-        created_time: string;
-        picture?: string;
-        permalink_url?: string;
-        from?: { name?: string };
-      }[];
-      error?: { message?: string };
-    };
-    if (!res.ok || !json.data) {
-      console.error("Facebook videos error:", json.error?.message);
-      return { videos: [], error: "Facebook videos will appear here soon." };
-    }
-    return {
-      error: null,
-      videos: json.data.map((v) => ({
-        id: `facebook-${v.id}`,
-        platform: "facebook" as const,
-        title: summary(v.title || v.description, "Facebook video"),
-        published: v.created_time,
-        thumbnail: v.picture || null,
-        videoUrl: null,
-        permalink: v.permalink_url
-          ? v.permalink_url.startsWith("http")
-            ? v.permalink_url
-            : `https://www.facebook.com${v.permalink_url}`
-          : `https://www.facebook.com/watch/?v=${v.id}`,
-        accountName: v.from?.name || "Facebook",
-      })),
-    };
-  } catch (e) {
-    console.error("Facebook videos failed:", e);
-    return { videos: [], error: "Facebook videos will appear here soon." };
-  }
+async function fetchFacebookVideos(
+  supabase: ReturnType<typeof import("./supabase-public.server").createPublicServerClient>,
+): Promise<{ videos: SocialVideo[]; error: string | null }> {
+  const { data, error } = await supabase
+    .from("facebook_videos")
+    .select("id,title,caption,facebook_url,thumbnail_url,published_at,created_at")
+    .eq("is_active", true)
+    .order("sort_order", { ascending: true })
+    .order("created_at", { ascending: false })
+    .limit(100);
+  if (error) return { videos: [], error: "Facebook videos will appear here soon." };
+  return {
+    error: data?.length ? null : "Facebook videos will appear here soon.",
+    videos: (data ?? []).map((v) => ({
+      id: `facebook-${v.id}`,
+      platform: "facebook" as const,
+      title: summary(v.title || v.caption || undefined, "Facebook video"),
+      published: v.published_at || v.created_at,
+      thumbnail: v.thumbnail_url || null,
+      videoUrl: null,
+      permalink: v.facebook_url,
+      accountName: "Facebook",
+    })),
+  };
 }
 
 export const listSocialVideos = createServerFn({ method: "GET" }).handler(async () => {
@@ -98,7 +64,7 @@ export const listSocialVideos = createServerFn({ method: "GET" }).handler(async 
       .order("published_at", { ascending: false, nullsFirst: false })
       .order("created_at", { ascending: false })
       .limit(100),
-    fetchFacebookVideos(),
+    fetchFacebookVideos(supabase),
   ]);
   if (error) throw new Error(error.message);
 

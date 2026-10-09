@@ -72,7 +72,11 @@ function VideoCover({ video }: { video: SocialVideo }) {
   if (!src) {
     return (
       <div className="absolute inset-0 grid place-items-center bg-primary/10">
-        <Instagram className="h-16 w-16 text-primary/45" aria-hidden="true" />
+        {video.platform === "facebook" ? (
+          <Facebook className="h-16 w-16 text-primary/45" aria-hidden="true" />
+        ) : (
+          <Instagram className="h-16 w-16 text-primary/45" aria-hidden="true" />
+        )}
       </div>
     );
   }

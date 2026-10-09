@@ -646,6 +646,45 @@ export type Database = {
           },
         ]
       }
+      facebook_videos: {
+        Row: {
+          caption: string | null
+          created_at: string
+          facebook_url: string
+          id: string
+          is_active: boolean
+          published_at: string | null
+          sort_order: number
+          thumbnail_url: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          caption?: string | null
+          created_at?: string
+          facebook_url: string
+          id?: string
+          is_active?: boolean
+          published_at?: string | null
+          sort_order?: number
+          thumbnail_url?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Update: {
+          caption?: string | null
+          created_at?: string
+          facebook_url?: string
+          id?: string
+          is_active?: boolean
+          published_at?: string | null
+          sort_order?: number
+          thumbnail_url?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       faqs: {
         Row: {
           answer: string
