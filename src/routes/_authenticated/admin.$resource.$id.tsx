@@ -35,6 +35,7 @@ function ResourceEditor() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const fetchInstagramMetadata = useServerFn(getInstagramMetadata);
+  const fetchFacebookMeta = useServerFn(getFacebookMetadata);
   const [values, setValues] = useState<Values>({});
   const [busy, setBusy] = useState(false);
   const [touchedSlug, setTouchedSlug] = useState(false);
