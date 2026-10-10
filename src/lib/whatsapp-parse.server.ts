@@ -209,7 +209,7 @@ export async function insertDraftProducts(
       short_description: d.short_description,
       description: d.quantity ? `Available quantity: ${d.quantity}` : null,
       price: d.price,
-      show_price: d.price != null,
+      show_price: false,
       availability: "Enquire for Availability",
         is_active: false,
       })

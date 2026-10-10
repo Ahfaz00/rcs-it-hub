@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import { AddToBasketButton } from "./AddToBasketButton";
 import { mediaUrl } from "@/lib/media";
 import { siteQueryOptions, whatsappLink } from "@/lib/site-query";
-import { discountPercent, formatINR, formatPrice } from "@/lib/format";
+import { PRICES_HIDDEN, discountPercent, formatPrice } from "@/lib/format";
 import { useShortlist } from "@/lib/shortlist";
 import { cn } from "@/lib/utils";
 
@@ -46,7 +46,7 @@ export function ProductCard({ product }: { product: ProductCardData }) {
   const reduced = useReducedMotion();
   const img = mediaUrl(product.main_image_url);
   const chips = specChips(product);
-  const hasPrice = Boolean(product.show_price) && product.price != null;
+  const hasPrice = !PRICES_HIDDEN && Boolean(product.show_price) && product.price != null;
   const off = hasPrice ? discountPercent(product.price, product.mrp, product.discount) : null;
   const wa = site.settings["whatsapp"];
   const wishlist = useShortlist("wishlist");
@@ -156,15 +156,24 @@ export function ProductCard({ product }: { product: ProductCardData }) {
 
         <div className="mt-auto pt-4">
           <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
-            <span className="text-[1.05rem] font-bold tracking-tight text-foreground sm:text-[1.15rem]">
-              {formatPrice(product.price, product.show_price)}
-            </span>
-            {hasPrice && product.mrp != null && Number(product.mrp) > Number(product.price) ? (
-              <span className="text-[0.82rem] text-muted-foreground line-through">
-                {formatINR(Number(product.mrp))}
+            {wa ? (
+              <a
+                href={whatsappLink(
+                  wa,
+                  `Hi, please share the best bulk price for: ${product.name}${chips.length ? ` (${chips.join(", ")})` : ""}. Quantity required: `,
+                )}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 text-[0.95rem] font-bold tracking-tight text-success hover:underline"
+              >
+                <MessageCircle className="h-4 w-4" />
+                Get price on WhatsApp
+              </a>
+            ) : (
+              <span className="text-[1.05rem] font-bold tracking-tight text-foreground">
+                {formatPrice(product.price, product.show_price)}
               </span>
-            ) : null}
-            {off ? <span className="text-[0.82rem] font-semibold text-success">{off}% off</span> : null}
+            )}
           </div>
 
           {product.warranty ? (

@@ -322,18 +322,7 @@ function ProductDetail() {
               <p className="font-display text-[clamp(1.75rem,3.2vw,2.5rem)] font-bold tracking-tight">
                 {formatPrice(product.price, product.show_price)}
               </p>
-              {product.show_price && product.mrp != null && Number(product.mrp) > Number(product.price ?? 0) ? (
-                <>
-                  <span className="text-lg text-muted-foreground line-through">
-                    {formatINR(Number(product.mrp))}
-                  </span>
-                  {discountPercent(product.price, product.mrp, product.discount) ? (
-                    <span className="bg-success px-2.5 py-1 text-sm font-semibold text-success-foreground">
-                      {discountPercent(product.price, product.mrp, product.discount)}% off
-                    </span>
-                  ) : null}
-                </>
-              ) : null}
+              <span className="text-sm text-muted-foreground">Best bulk price on WhatsApp</span>
             </div>
 
             <div className="mt-7 grid gap-3 sm:grid-cols-2">
@@ -346,7 +335,12 @@ function ProductDetail() {
                   <a
                     href={whatsappLink(
                       wa,
-                      enquiryMessage(site.settings["default_enquiry_message"], product.name),
+                      `Hi, please share the best bulk price for: ${product.name}${
+                        [product.processor_model, product.ram, product.storage_capacity, product.display_size]
+                          .filter(Boolean).length
+                          ? ` (${[product.processor_model, product.ram, product.storage_capacity, product.display_size].filter(Boolean).join(", ")})`
+                          : ""
+                      }. Quantity required: `,
                     )}
                     target="_blank"
                     rel="noopener noreferrer"
