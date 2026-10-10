@@ -87,7 +87,7 @@ export const publishStockList = createServerFn({ method: "POST" })
     for (const r of data.rows) {
       const common = {
         price: r.price,
-        show_price: r.price != null,
+        show_price: false,
         stock_quantity: qtyNum(r.quantity),
         availability: "In Stock",
         is_active: true,

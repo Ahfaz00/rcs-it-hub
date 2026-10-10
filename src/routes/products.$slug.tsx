@@ -335,7 +335,12 @@ function ProductDetail() {
                   <a
                     href={whatsappLink(
                       wa,
-                      enquiryMessage(site.settings["default_enquiry_message"], product.name),
+                      `Hi, please share the best bulk price for: ${product.name}${
+                        [product.processor_model, product.ram, product.storage_capacity, product.display_size]
+                          .filter(Boolean).length
+                          ? ` (${[product.processor_model, product.ram, product.storage_capacity, product.display_size].filter(Boolean).join(", ")})`
+                          : ""
+                      }. Quantity required: `,
                     )}
                     target="_blank"
                     rel="noopener noreferrer"
