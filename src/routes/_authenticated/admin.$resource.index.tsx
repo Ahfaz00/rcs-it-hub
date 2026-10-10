@@ -2,7 +2,7 @@ import { useState } from "react";
 import { createFileRoute, Link, useNavigate, notFound } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { Download, Plus, Search, Trash2 } from "lucide-react";
+import { ArrowDown, ArrowUp, ChevronsUp, Download, Plus, Search, Trash2 } from "lucide-react";
 
 import { AdminShell, AdminHeader } from "@/components/admin/AdminShell";
 import { Badge } from "@/components/ui/badge";
@@ -122,6 +122,40 @@ function ResourceList() {
     }
   }
 
+  const isVideo = resource === "instagram_videos" || resource === "facebook_videos";
+
+  async function move(row: Row, to: "up" | "down" | "top") {
+    const { data: all, error } = await supabase
+      .from(config.table as never)
+      .select("id")
+      .order("sort_order", { ascending: true })
+      .order("created_at", { ascending: false });
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+    const ids = ((all ?? []) as { id: string }[]).map((r) => r.id);
+    const from = ids.indexOf(row.id);
+    if (from < 0) return;
+    const target = to === "top" ? 0 : to === "up" ? Math.max(0, from - 1) : Math.min(ids.length - 1, from + 1);
+    if (target === from) return;
+    ids.splice(from, 1);
+    ids.splice(target, 0, row.id);
+    const results = await Promise.all(
+      ids.map((id, index) =>
+        supabase.from(config.table as never).update({ sort_order: index } as never).eq("id", id),
+      ),
+    );
+    const failed = results.find((r) => r.error);
+    if (failed?.error) {
+      toast.error(failed.error.message);
+      return;
+    }
+    toast.success(`Moved to position ${target + 1}.`);
+    queryClient.invalidateQueries({ queryKey: ["admin", resource] });
+    queryClient.invalidateQueries({ queryKey: ["social-videos"] });
+  }
+
   function exportCsv() {
     const rows = data?.rows ?? [];
     if (!rows.length) return;
@@ -225,6 +259,7 @@ function ResourceList() {
         <table className="w-full text-sm">
           <thead className="border-b border-border bg-muted/60">
             <tr>
+              {isVideo ? <th className="px-4 py-2.5 text-left font-medium text-muted-foreground">Position</th> : null}
               {config.columns.map((c) => (
                 <th key={c.name} className="px-4 py-2.5 text-left font-medium text-muted-foreground">
                   {c.label}
@@ -236,13 +271,29 @@ function ResourceList() {
           <tbody className="divide-y divide-border">
             {isPending ? (
               <tr>
-                <td colSpan={config.columns.length + 1} className="px-4 py-10 text-center text-muted-foreground">
+                <td colSpan={config.columns.length + (isVideo ? 2 : 1)} className="px-4 py-10 text-center text-muted-foreground">
                   Loading...
                 </td>
               </tr>
             ) : data?.rows.length ? (
               data.rows.map((row) => (
                 <tr key={row.id} className="hover:bg-muted/40">
+                  {isVideo ? (
+                    <td className="px-4 py-2.5 align-middle">
+                      <div className="flex items-center gap-1">
+                        <span className="w-6 font-semibold">{Number(row["sort_order"] ?? 0) + 1}</span>
+                        <Button size="icon" variant="ghost" className="h-7 w-7" aria-label="Move to top" title="Move to top" onClick={() => move(row, "top")}>
+                          <ChevronsUp className="h-4 w-4" />
+                        </Button>
+                        <Button size="icon" variant="ghost" className="h-7 w-7" aria-label="Move up" title="Move up" onClick={() => move(row, "up")}>
+                          <ArrowUp className="h-4 w-4" />
+                        </Button>
+                        <Button size="icon" variant="ghost" className="h-7 w-7" aria-label="Move down" title="Move down" onClick={() => move(row, "down")}>
+                          <ArrowDown className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </td>
+                  ) : null}
                   {config.columns.map((c) => (
                     <td key={c.name} className="px-4 py-2.5 align-middle">
                       <Cell
@@ -289,7 +340,7 @@ function ResourceList() {
               ))
             ) : (
               <tr>
-                <td colSpan={config.columns.length + 1} className="px-4 py-10 text-center text-muted-foreground">
+                <td colSpan={config.columns.length + (isVideo ? 2 : 1)} className="px-4 py-10 text-center text-muted-foreground">
                   Nothing here yet.
                 </td>
               </tr>
