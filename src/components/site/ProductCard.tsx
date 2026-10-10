@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import { AddToBasketButton } from "./AddToBasketButton";
 import { mediaUrl } from "@/lib/media";
 import { siteQueryOptions, whatsappLink } from "@/lib/site-query";
-import { discountPercent, formatINR, formatPrice } from "@/lib/format";
+import { PRICES_HIDDEN, discountPercent, formatPrice } from "@/lib/format";
 import { useShortlist } from "@/lib/shortlist";
 import { cn } from "@/lib/utils";
 
@@ -46,7 +46,7 @@ export function ProductCard({ product }: { product: ProductCardData }) {
   const reduced = useReducedMotion();
   const img = mediaUrl(product.main_image_url);
   const chips = specChips(product);
-  const hasPrice = Boolean(product.show_price) && product.price != null;
+  const hasPrice = !PRICES_HIDDEN && Boolean(product.show_price) && product.price != null;
   const off = hasPrice ? discountPercent(product.price, product.mrp, product.discount) : null;
   const wa = site.settings["whatsapp"];
   const wishlist = useShortlist("wishlist");
