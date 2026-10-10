@@ -116,18 +116,31 @@ export const publishStockList = createServerFn({ method: "POST" })
         added++;
       }
     }
-    let q = sb
-      .from("products")
-      .update({ is_active: false, availability: "Out of Stock" })
-      .eq("is_active", true);
-    if (keep.length) q = q.not("id", "in", `(${keep.join(",")})`);
-    const { data: hiddenRows, error: hideErr } = await q.select("id");
-    if (hideErr) throw new Error(hideErr.message);
-    const hidden = hiddenRows?.length ?? 0;
+    // Every product not in the new list is removed from the catalogue completely.
+    let oldQ = sb.from("products").select("id");
+    if (keep.length) oldQ = oldQ.not("id", "in", `(${keep.join(",")})`);
+    const { data: oldRows, error: oldErr } = await oldQ;
+    if (oldErr) throw new Error(oldErr.message);
+    const oldIds = (oldRows ?? []).map((r) => r.id);
+    for (let i = 0; i < oldIds.length; i += 100) {
+      const chunk = oldIds.slice(i, i + 100);
+      await Promise.all([
+        sb.from("product_images").delete().in("product_id", chunk),
+        sb.from("product_usage_tags").delete().in("product_id", chunk),
+        sb.from("collection_products").delete().in("product_id", chunk),
+        sb.from("enquiries").update({ product_id: null }).in("product_id", chunk),
+      ]);
+      const { error: delErr } = await sb.from("products").delete().in("id", chunk);
+      if (delErr) {
+        // Fall back to hiding anything that cannot be deleted.
+        await sb.from("products").update({ is_active: false, availability: "Out of Stock" }).in("id", chunk);
+      }
+    }
+    const hidden = oldIds.length;
     await sb.from("activity_logs").insert({
       action: "stock list published",
       entity_type: "products",
-      details: `${added} added, ${updated} updated, ${hidden} hidden`,
+      details: `${added} added, ${updated} updated, ${hidden} removed`,
       user_id: context.userId,
     });
     return { added, updated, hidden };

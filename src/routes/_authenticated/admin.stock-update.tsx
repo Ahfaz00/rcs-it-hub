@@ -40,11 +40,11 @@ function StockUpdatePage() {
   async function doPublish() {
     const bad = rows.find((r) => r.name.trim().length < 2);
     if (bad) { toast.error("Every row needs a model name."); return; }
-    if (!confirm("Publish this list? Products not in it will be hidden from the website.")) { return; }
+    if (!confirm("Publish this list? All old products not in this list will be DELETED from Products and the website.")) { return; }
     setBusy(true);
     try {
       const r = await publish({ data: { rows } });
-      toast.success(`Published: ${r.added} new, ${r.updated} updated, ${r.hidden} hidden.`);
+      toast.success(`Published: ${r.added} new, ${r.updated} updated, ${r.hidden} old removed.`);
       setRows([]);
       setText("");
       qc.invalidateQueries();
@@ -68,7 +68,7 @@ function StockUpdatePage() {
     <AdminShell>
       <AdminHeader
         title="Stock list update"
-        description="Paste your full stock list, check the preview, then publish. Items not in the new list are hidden from the website."
+        description="Paste your full stock list, check the preview, then publish. New items are added to Products automatically; old products not in the list are removed."
       />
       <div className="rounded-lg border border-border bg-card p-5">
         <Textarea
@@ -87,7 +87,7 @@ function StockUpdatePage() {
         <div className="mt-6">
           <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
             <p className="text-sm text-muted-foreground">
-              {rows.length} items: {newCount} new, {rows.length - newCount} update. Other website products will be hidden.
+              {rows.length} items: {newCount} new, {rows.length - newCount} update. All other old products will be removed.
             </p>
             <Button onClick={doPublish} disabled={busy}>
               {busy ? "Publishing…" : "Publish to website"}
