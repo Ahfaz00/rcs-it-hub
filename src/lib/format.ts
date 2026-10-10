@@ -6,8 +6,11 @@ export function formatINR(value: number) {
   }).format(Number(value));
 }
 
+/** Prices are hidden site-wide (bulk discounts are quoted on WhatsApp). */
+export const PRICES_HIDDEN = true;
+
 export function formatPrice(price?: number | null, showPrice?: boolean | null) {
-  if (!showPrice || price == null) return "Contact for Price";
+  if (PRICES_HIDDEN || !showPrice || price == null) return "Contact for Price";
   return formatINR(Number(price));
 }
 
