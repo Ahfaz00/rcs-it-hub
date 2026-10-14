@@ -12,7 +12,6 @@ import { FadeIn, Stagger, StaggerItem } from "@/components/site/Motion";
 import { type HeroSlide } from "@/components/site/HeroSlider";
 import { CategoryShowcase, type ShowcaseItem } from "@/components/site/CategoryShowcase";
 import { HeroAdSlider } from "@/components/site/HeroAdSlider";
-import buyingPoster from "@/assets/ram-ssd-wanted.jpg.asset.json";
 import { HardwareFinder } from "@/components/site/HardwareFinder";
 import { WhatsappChannelCard } from "@/components/site/WhatsappChannelCard";
 import { CallbackBar } from "@/components/site/CallbackBar";
@@ -34,7 +33,7 @@ import {
 } from "@/components/ui/accordion";
 import { getHomeData } from "@/lib/public.functions";
 import { siteQueryOptions } from "@/lib/site-query";
-import { mediaUrl, assetCdnUrl } from "@/lib/media";
+import { mediaUrl } from "@/lib/media";
 const slider1 = { url: "/slider1.jpg" };
 const slider2 = { url: "/slider2.jpg" };
 const slider3 = { url: "/slider3.jpg" };
@@ -76,8 +75,6 @@ export const Route = createFileRoute("/")({
           "Quality tested refurbished IT hardware from Navi Mumbai. Bulk orders, repair, AMC and rental services.",
       },
       { property: "og:type", content: "website" },
-      { property: "og:image", content: assetCdnUrl(buyingPoster.url) },
-      { name: "twitter:image", content: assetCdnUrl(buyingPoster.url) },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "keywords", content: "r computer solutions, rcomputersolution, computer wholesaler navi mumbai, refurbished laptops wholesale india, used laptops bulk, refurbished desktops, workstations, monitors, ram wholesale, intel processor bulk, laptop repair amc rental" },
       { property: "og:url", content: "https://rcs-it-hub.lovable.app/" },
