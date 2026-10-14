@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import adDellImport from "@/assets/ad-dell-import.png.asset.json";
+import adDellImport from "@/assets/ad-dell-import-noprice.png.asset.json";
 import adWholesaleStock from "@/assets/ad-wholesale-stock.png.asset.json";
 import adServerRam from "@/assets/ad-server-ram.png.asset.json";
 import adDesktopRam from "@/assets/ad-desktop-ram.png.asset.json";
