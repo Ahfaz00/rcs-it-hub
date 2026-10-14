@@ -5,4 +5,4 @@
 - [x] Instagram links: automatically extract titles/captions and refresh existing placeholder titles
 - [ ] Optional later: switch Instagram feed to automatic after official Meta access is available
 - [x] Admin stock list update: paste, preview, publish (replace mode)
-- [ ] Add October 14 stock without duplicate configurations and attach only positively matched uploaded product photos
+- [x] Add October 14 stock without duplicate configurations and attach only positively matched uploaded product photos; verified P15v, P15s, E41-55 and OptiPlex 3060 pages and hidden prices
