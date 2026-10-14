@@ -19,6 +19,8 @@ R Computer Solutions — The IT Hub. Full-stack business website + admin CMS.
 
 ## Ground rules
 
+- Keep homepage buying/selling promotions in the existing ad sliders, separate from product inventory, so wanted stock is never presented as sale availability.
+
 - Don't rewrite git history.
 - Keep dependencies Worker-runtime compatible (see server constraints in code
   comments); no native binaries or child processes in server functions.
