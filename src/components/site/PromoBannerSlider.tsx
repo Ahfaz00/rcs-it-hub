@@ -23,6 +23,7 @@ export function PromoBannerSlider({ interval = 5500 }: { interval?: number }) {
         </div>
         <Button asChild size="sm">
           {buying ? <a target="_blank" rel="noopener noreferrer" href={whatsappLink("918691914641", "Hi, I have RAM / SSD stock to sell. Quantity: \nDetails: \nBest price: ")}>Send stock details<ArrowRight className="h-4 w-4" /></a> : <Link to="/products">View stock<ArrowRight className="h-4 w-4" /></Link>}
+        </Button>
       </div>
     </section>
   );
