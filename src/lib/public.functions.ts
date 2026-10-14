@@ -189,6 +189,7 @@ export const getHomeData = createServerFn({ method: "GET" }).handler(async () =>
         )
         .eq("is_active", true)
         .eq("is_featured", true)
+        .not("main_image_url", "is", null)
         .order("sort_order")
         .limit(8),
       supabase
@@ -197,6 +198,7 @@ export const getHomeData = createServerFn({ method: "GET" }).handler(async () =>
           "id, name, slug, short_description, condition, price, mrp, discount, show_price, main_image_url, main_image_alt, availability, warranty, processor_model, ram, storage_capacity, operating_system, display_size, brands(name)",
         )
         .eq("is_active", true)
+        .not("main_image_url", "is", null)
         .order("created_at", { ascending: false })
         .limit(8),
       supabase.from("testimonials").select("*").eq("is_active", true).order("sort_order").limit(6),
