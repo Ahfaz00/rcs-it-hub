@@ -7,4 +7,4 @@
 - [x] Admin stock list update: paste, preview, publish (replace mode)
 - [x] Add October 14 stock without duplicate configurations and attach only positively matched uploaded product photos; verified P15v, P15s, E41-55 and OptiPlex 3060 pages and hidden prices
 - [x] Homepage ads reverted to the original offer sliders (RAM/SSD buying slides removed); promo-slider price text removed so no rupee prices show
-- [ ] Dell "pure import" hero ad poster still has rupee prices printed inside the image — awaiting user decision on a price-free version
+- [x] Dell "pure import" hero ad poster repainted without rupee prices (model names, specs and quantities kept); price-free version live in the homepage hero slider
