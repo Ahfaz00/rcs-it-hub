@@ -191,7 +191,8 @@ export const getHomeData = createServerFn({ method: "GET" }).handler(async () =>
         .eq("is_featured", true)
         .not("main_image_url", "is", null)
         .order("sort_order")
-        .limit(8),
+        .order("created_at", { ascending: true })
+        .limit(12),
       supabase
         .from("products")
         .select(
