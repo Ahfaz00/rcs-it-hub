@@ -288,34 +288,63 @@ function ProductDetail() {
           ) : null}
         </div>
 
-        <div>
+        <div className="rounded-2xl border border-border bg-card p-6 shadow-card sm:p-8">
           {product.brands?.name ? (
             <p className="text-eyebrow text-primary">{product.brands.name}</p>
           ) : null}
 
-          <h1 className="mt-3 font-display text-[clamp(1.9rem,4.4vw,3rem)] font-bold leading-[1.05] tracking-[-0.03em]">
+          <h1 className="mt-3 font-display text-[clamp(1.6rem,3.4vw,2.4rem)] font-semibold leading-[1.15] tracking-[-0.02em]">
             {product.name}
           </h1>
 
           {configChips(product, 4).length > 0 ? (
-            <p className="mt-4 text-body-lg text-muted-foreground">{configChips(product, 4).join("  ·  ")}</p>
+            <p className="mt-3 text-body text-muted-foreground">{configChips(product, 4).join("  ·  ")}</p>
           ) : product.short_description ? (
-            <p className="mt-4 text-body-lg text-muted-foreground">{product.short_description}</p>
+            <p className="mt-3 text-body text-muted-foreground">{product.short_description}</p>
           ) : null}
 
-          <div className="mt-6 flex flex-wrap items-center gap-3">
+          <div className="mt-5 flex flex-wrap items-center gap-2">
             {product.condition ? (
-              <Badge className="rounded-full bg-navy px-3 py-1.5 text-[0.7rem] uppercase tracking-[0.12em] text-navy-foreground">
+              <Badge className="rounded-full bg-navy px-3 py-1 text-[0.7rem] uppercase tracking-[0.12em] text-navy-foreground">
                 {product.condition}
               </Badge>
             ) : null}
-            {product.warranty ? (
-              <span className="text-[0.95rem] text-muted-foreground">{product.warranty}</span>
+            {product.grade ? (
+              <Badge variant="outline" className="rounded-full px-3 py-1 text-[0.7rem]">Grade {product.grade}</Badge>
             ) : null}
             {product.availability ? (
-              <span className="text-[0.95rem] text-muted-foreground">· {product.availability}</span>
+              <Badge variant="outline" className="rounded-full border-success/40 px-3 py-1 text-[0.7rem] text-success">
+                {product.availability}
+              </Badge>
             ) : null}
           </div>
+
+          {(() => {
+            const options: [string, unknown][] = [
+              ["RAM", product.ram],
+              ["SSD / Storage", product.storage_capacity],
+              ["Display", product.display_size],
+              ["Warranty", product.warranty],
+            ];
+            const shown = options.filter(([, v]) => v);
+            return shown.length ? (
+              <div className="mt-6 grid gap-5">
+                {shown.map(([label, value]) => (
+                  <div key={label}>
+                    <p className="text-sm font-semibold">{label}</p>
+                    <div className="mt-2 flex flex-wrap gap-2">
+                      <span className="rounded-lg border-2 border-foreground px-4 py-2 text-sm font-medium">
+                        {String(value)}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+                <p className="text-xs text-muted-foreground">Other configurations available on request — ask on WhatsApp.</p>
+              </div>
+            ) : null;
+          })()}
+
+
 
           <div className="mt-8 border-y border-border py-7">
             <div className="flex flex-wrap items-baseline gap-3">
