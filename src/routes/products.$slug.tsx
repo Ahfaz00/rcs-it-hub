@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useSuspenseQuery, queryOptions } from "@tanstack/react-query";
-import { Expand, ImageOff, MessageCircle, Phone } from "lucide-react";
+import { Expand, ImageOff, MessageCircle, Phone, BadgeCheck, Cpu, MemoryStick, HardDrive, Monitor, Settings2 } from "lucide-react";
 
 import { SiteShell } from "@/components/site/SiteShell";
 import { ProductCard } from "@/components/site/ProductCard";
@@ -225,9 +225,9 @@ function ProductDetail() {
         </nav>
       </div>
 
-      <div className="container-page grid items-start gap-12 py-10 md:py-14 lg:grid-cols-[1.15fr_1fr] lg:gap-16">
+      <div className="bg-surface"><div className="container-page grid items-start gap-8 py-10 md:py-14 lg:grid-cols-[1.15fr_1fr] lg:gap-16">
         <div className="lg:sticky lg:top-28">
-          <div className="group relative flex aspect-square items-center justify-center overflow-hidden rounded-2xl border border-border bg-[oklch(0.978_0.005_250)] sm:aspect-4/3">
+          <div className="group relative flex aspect-square items-center justify-center overflow-hidden rounded-2xl border border-border bg-card shadow-card sm:aspect-4/3">
 
             <span aria-hidden="true" className="absolute inset-0 grid-blueprint opacity-70" />
             {activeImage ? (
@@ -346,7 +346,7 @@ function ProductDetail() {
 
 
 
-          <div className="mt-8 border-y border-border py-7">
+          <div className="mt-7 border-t border-border pt-6">
             <div className="flex flex-wrap items-baseline gap-3">
               <p className="font-display text-[clamp(1.75rem,3.2vw,2.5rem)] font-bold tracking-tight">
                 {formatPrice(product.price, product.show_price)}
@@ -431,6 +431,32 @@ function ProductDetail() {
           ) : null}
         </div>
       </div>
+
+      </div>
+
+      <section className="container-page section-y-sm">
+        <p className="text-eyebrow text-primary">Key highlights</p>
+        <div className="mt-6 grid grid-cols-2 gap-4 md:grid-cols-3">
+          {([
+            [BadgeCheck, "Condition", product.condition],
+            [Cpu, "Processor", [product.processor_model, product.processor_generation].filter(Boolean).join(" ")],
+            [MemoryStick, "RAM", product.ram],
+            [HardDrive, "Storage", [product.storage_capacity, product.storage_type].filter(Boolean).join(" ")],
+            [Monitor, "Display", product.display_size],
+            [Settings2, "Operating system", product.operating_system],
+          ] as const)
+            .filter(([, , v]) => v)
+            .map(([Icon, label, value]) => (
+              <div key={label} className="rounded-2xl border border-border bg-card p-6 shadow-card transition-transform hover:-translate-y-1">
+                <span className="grid h-14 w-14 place-items-center rounded-xl bg-success/10 text-success">
+                  <Icon className="h-8 w-8" />
+                </span>
+                <p className="mt-5 font-display text-lg font-semibold">{label}</p>
+                <p className="mt-1 text-sm text-muted-foreground">{String(value)}</p>
+              </div>
+            ))}
+        </div>
+      </section>
 
       {specGroups.length > 0 ? (
         <section className="border-t border-border bg-surface section-y-sm">
