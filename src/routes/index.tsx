@@ -437,7 +437,7 @@ function HomeSections() {
               Power when performance matters.
             </h2>
             <p className="mt-6 max-w-lg text-body-lg text-white/70">
-              Xeon and Core workstations for design, engineering and development teams — configured,
+              Xeon and Core workstation laptops for design, engineering and development teams — configured,
               tested and supplied in volume.
             </p>
             <Button
@@ -446,7 +446,7 @@ function HomeSections() {
               className="group mt-9 h-14 rounded-none bg-cyan px-8 text-[0.78rem] font-bold uppercase tracking-[0.14em] text-cyan-foreground hover:bg-white"
             >
               <Link to="/products">
-                Browse workstations
+                Browse workstation laptops
                 <ArrowUpRight className="ml-3 h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </Link>
             </Button>
@@ -454,7 +454,7 @@ function HomeSections() {
 
           <Stagger className="grid gap-px bg-white/12 sm:grid-cols-2" stagger={0.07}>
             {[
-              { k: "Workstations", v: "Tower & mobile" },
+              { k: "Workstation laptops", v: "Tower & mobile" },
               { k: "Desktops", v: "Business grade" },
               { k: "Laptops", v: "Enterprise series" },
               { k: "Support", v: "Repair · AMC · Rental" },
