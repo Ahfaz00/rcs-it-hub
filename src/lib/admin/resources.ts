@@ -62,7 +62,7 @@ export const AVAILABILITY = [
 export const PRODUCT_TYPES = [
   "Laptop",
   "Desktop",
-  "Workstation",
+  "Workstation Laptop",
   "Server",
   "Monitor",
   "Accessory",

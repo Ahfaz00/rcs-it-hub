@@ -11,7 +11,7 @@ type Usage = { id: string; label: string; hint: string; term: string };
 const USAGES: Usage[] = [
   { id: "office", label: "Office & accounting", hint: "Tally, billing, email, browsing", term: "i5" },
   { id: "study", label: "Study & coding", hint: "College, programming, online classes", term: "i5 SSD" },
-  { id: "design", label: "Design & workstation", hint: "CAD, editing, rendering", term: "workstation" },
+  { id: "design", label: "Workstation laptops", hint: "CAD, editing, rendering", term: "workstation" },
   { id: "bulk", label: "Bulk / dealer stock", hint: "Lots for resale and corporates", term: "lot" },
 ];
 
