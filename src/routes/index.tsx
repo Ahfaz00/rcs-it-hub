@@ -454,7 +454,7 @@ function HomeSections() {
 
           <Stagger className="grid gap-px bg-white/12 sm:grid-cols-2" stagger={0.07}>
             {[
-              { k: "Workstation laptops", v: "Tower & mobile" },
+              { k: "Workstation laptops", v: "High performance" },
               { k: "Desktops", v: "Business grade" },
               { k: "Laptops", v: "Enterprise series" },
               { k: "Support", v: "Repair · AMC · Rental" },
