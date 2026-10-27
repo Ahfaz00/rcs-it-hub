@@ -432,7 +432,7 @@ function HomeSections() {
         />
         <div className="container-page relative grid gap-10 section-y lg:grid-cols-[1.1fr_1fr] lg:items-end">
           <FadeIn>
-            <p className="text-eyebrow text-cyan">Workstations</p>
+            <p className="text-eyebrow text-cyan">Workstation laptops</p>
             <h2 className="mt-5 max-w-2xl font-display text-section font-bold uppercase text-white">
               Power when performance matters.
             </h2>
